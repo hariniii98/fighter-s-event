@@ -5,9 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header d-flex justify-content-center">{{ __('Login') }}</div>
 
                 <div class="card-body">
+                <div class="login-brand">
+                        <img src="assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
+                    </div>
+                <p align="center">Don't have an account? <a href="{{route('register')}}">Register</a></p>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 

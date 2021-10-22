@@ -20,3 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+/** Settings */
+Route::prefix('settings')->group(function () {
+
+    Route::get('/index', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/store', [App\Http\Controllers\SettingsController::class, 'store'])->name('settings.store');
+
+});
+

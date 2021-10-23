@@ -55,4 +55,12 @@ Route::prefix('roles')->group(function () {
 
 });
 
+Route::prefix('users')->group(function () {
+
+    Route::get('/index', [App\Http\Controllers\HomeController::class, 'users'])->name('users');
+    Route::get('/edit/{id}', [App\Http\Controllers\HomeController::class, 'edit'])->name('users.edit');
+    Route::post('/update/{id}', [App\Http\Controllers\HomeController::class, 'update'])->name('users.update');
+
+});
+
 

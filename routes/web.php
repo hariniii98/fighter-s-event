@@ -35,3 +35,11 @@ Route::prefix('event_categories')->group(function () {
 });
 
 
+Route::prefix('roles')->group(function () {
+
+    Route::get('/index', [App\Http\Controllers\RoleController::class, 'index'])->name('roles.index');
+    Route::post('/store', [App\Http\Controllers\RoleController::class, 'store'])->name('roles.store');
+
+});
+
+

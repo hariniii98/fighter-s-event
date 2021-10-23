@@ -60,36 +60,51 @@ gtag('config', 'UA-94034622-3');
     <!--**********************************
             Sidebar start
         ***********************************-->
-    @include('elements.sidebar')
-    <!--**********************************
-                Sidebar end
-    ***********************************-->
+          <div class="main-sidebar sidebar-style-2">
+            <aside id="sidebar-wrapper">
+              <div class="sidebar-brand">
+                <a href="{{url('/')}}"><img src="@yield('logo')" width="150" height="75" class="img-fluid"></a>
+              </div>
 
-    <!--**********************************
-        Content body start
-    ***********************************-->
-    <div class="main-content">
-        <section class="section">
-        <!-- row -->
-        @yield('content')
+                    @include('elements.sidebar')
 
-        </section>
+                </aside>
+                </div>
 
-    </div>
-    <!--**********************************
-        Content body end
-    ***********************************-->
+                    <!--**********************************
+                                Sidebar end
+                    ***********************************-->
 
-    <!--**********************************
-        Footer start
-    ***********************************-->
+                    <!--**********************************
+                        Content body start
+                    ***********************************-->
+                    <div class="main-content">
+                        <section class="section">
 
-    @include('elements.footer')
+                        <!-- row -->
+                        @yield('content')
 
-    <!--**********************************
-                Footer end
-    ***********************************-->
-    </div>
+
+
+                        </section>
+
+
+                    </div>
+
+                    <!--**********************************
+                        Content body end
+                    ***********************************-->
+
+                    <!--**********************************
+                        Footer start
+                    ***********************************-->
+
+                    @include('elements.footer')
+
+                    <!--**********************************
+                                Footer end
+                    ***********************************-->
+                    </div>
 </div>
 </body>
 

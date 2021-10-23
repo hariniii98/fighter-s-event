@@ -29,3 +29,11 @@ Route::prefix('settings')->group(function () {
 
 });
 
+/** Roles */
+Route::prefix('roles')->group(function () {
+
+    Route::get('/index', [App\Http\Controllers\RoleController::class, 'index'])->name('roles.index');
+    Route::post('/store', [App\Http\Controllers\RoleController::class, 'store'])->name('roles.store');
+
+});
+

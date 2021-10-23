@@ -14,7 +14,12 @@
 
             </ul>
           </li>
+          <li class="dropdown">
+            <a href="{{route('users')}}" class="nav-link"><i class="fas fa-user"></i><span>Users</span></a>
+
+          </li>
         @endrole
+
 
       </ul>
 

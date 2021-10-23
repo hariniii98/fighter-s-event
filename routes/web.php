@@ -26,6 +26,12 @@ Route::prefix('settings')->group(function () {
 
     Route::get('/index', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
     Route::post('/store', [App\Http\Controllers\SettingsController::class, 'store'])->name('settings.store');
-
 });
+
+Route::prefix('event_categories')->group(function () {
+
+    Route::get('/index', [App\Http\Controllers\EventController::class, 'showEventCategories'])->name('event_categories.index');
+    Route::post('/store', [App\Http\Controllers\EventController::class, 'store'])->name('event_categories.store');
+});
+
 

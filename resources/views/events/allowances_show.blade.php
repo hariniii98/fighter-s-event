@@ -9,15 +9,15 @@
 
       <div class="section-header">
 
-        <h1>Event Categories</h1>
+        <h1>Allowances</h1>
         <div class="section-header-breadcrumb">
           <div class="breadcrumb-item active"><a href="{{url('/events')}}">Events</a></div>
-          <div class="breadcrumb-item">Event Categories</div>
+          <div class="breadcrumb-item">Allowances</div>
         </div>
       </div>
 
       <div class="section-body">
-        <h2 class="section-title">Event Categories</h2>
+        <h2 class="section-title">Allowances</h2>
 
 
         <div id="output-status"></div>
@@ -25,7 +25,7 @@
             <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                <h4>Event Categories <a href="{{route('event_category.create')}}" class="btn btn-primary">Add Event Category</a></h4>
+                <h4>Allowances <a href="{{route('allowance.create')}}" class="btn btn-primary">Add Allowance</a></h4>
                 <div class="card-header-form">
                     <form>
                     <div class="input-group">
@@ -52,7 +52,7 @@
                         <th>Action</th>
                     </tr>
                     @php $s_no=1; @endphp
-                    @foreach($event_categories as $row)
+                    @foreach($allowances as $row)
                     <tr>
                         <td class="p-0 text-center">
                         <div class="custom-checkbox custom-control">
@@ -62,7 +62,7 @@
                         </td>
                         <td>{{$s_no++}}</td>
                         <td>{{$row->name}}</td>
-                        <td><a href="{{route('event_category.delete',$row->id)}}" class="btn btn-secondary" onclick="return confirm('Are you sure,you want to delete?')"><i class="fa fa-trash btn-danger"></i></a></td>
+                        <td><a href="{{route('allowance.delete',$row->id)}}" class="btn btn-secondary" onclick="return confirm('Are you sure,you want to delete?')"><i class="fa fa-trash btn-danger"></i></a></td>
                     </tr>
                     @endforeach
                     </table>

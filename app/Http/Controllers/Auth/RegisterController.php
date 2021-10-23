@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -38,6 +39,11 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    public function showRegisterForm($role){
+        $data['role'] = $role;
+        return view('auth.register')->with($data);
     }
 
     /**
@@ -72,8 +78,12 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        if(isset($data['role'])&&$data['role']!=null){
+            $role = Role::where('slug',$data['role'])->first();
+        }else{
+            $role = config('roles.models.role')::where('slug','user')->first();  //set the user role
+        }
 
-        $role = config('roles.models.role')::where('slug','user')->first();  //set the user role
         $user->attachRole($role);
 
         return $user;

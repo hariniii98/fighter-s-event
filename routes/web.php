@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::get('{role}/register',[App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('role.register');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /** Settings */
@@ -31,7 +31,17 @@ Route::prefix('settings')->group(function () {
 Route::prefix('event_categories')->group(function () {
 
     Route::get('/index', [App\Http\Controllers\EventController::class, 'showEventCategories'])->name('event_categories.index');
-    Route::post('/store', [App\Http\Controllers\EventController::class, 'store'])->name('event_categories.store');
+    Route::get('/create', [App\Http\Controllers\EventController::class, 'addEventCategory'])->name('event_category.create');
+    Route::post('/store', [App\Http\Controllers\EventController::class, 'storeEventCategory'])->name('event_category.store');
+    Route::get('/delete/{id}', [App\Http\Controllers\EventController::class, 'deleteEventCategory'])->name('event_category.delete');
+});
+
+Route::prefix('allowances')->group(function () {
+
+    Route::get('/index', [App\Http\Controllers\EventController::class, 'showAllowances'])->name('allowances.index');
+    Route::get('/create', [App\Http\Controllers\EventController::class, 'addAllowance'])->name('allowance.create');
+    Route::post('/store', [App\Http\Controllers\EventController::class, 'storeAllowance'])->name('allowance.store');
+    Route::get('/delete/{id}', [App\Http\Controllers\EventController::class, 'deleteAllowance'])->name('allowance.delete');
 });
 
 

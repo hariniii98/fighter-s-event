@@ -54,13 +54,33 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'password_confirmation' => ['required_with:password|same:password|min:6'],
-        ]);
+        if(isset($data['role'])&&$data['role']=='fighter'){
+            return Validator::make($data, [
+                'first_name' => ['required', 'string', 'max:255'],
+                'last_name' => ['nullable', 'string', 'max:255'],
+                'date_of_birth' => ['required'],
+                'occupation' => ['string','required', 'string', 'max:255'],
+                'club_name' => ['string','required', 'string'],
+                'address' => ['string','required', 'string'],
+                'weight' => ['required','integer'],
+                'height' => ['required','integer'],
+                'mobile_number' => ['required','integer','max:10'],
+                'mobile_number2' => ['required','integer','max:10'],
+                'blood_group' => ['required','string'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'password_confirmation' => ['required_with:password|same:password|min:6'],
+            ]);
+        }else{
+            return Validator::make($data, [
+                'first_name' => ['required', 'string', 'max:255'],
+                'last_name' => ['nullable', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'mobile_number' => ['required','integer','max:10'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'password_confirmation' => ['required_with:password|same:password|min:6'],
+            ]);
+        }
     }
 
     /**
@@ -75,6 +95,7 @@ class RegisterController extends Controller
         $user = config('roles.models.defaultUser')::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
+            'mobile_number' => $data['mobile_number'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

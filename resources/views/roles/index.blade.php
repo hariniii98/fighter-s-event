@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="{{asset('assets/modules/datatables/datatables.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/modules/fontawesome/css/all.min.css')}}">
 @endpush
 
 
@@ -13,26 +14,26 @@
 
       <div class="section-header">
 
-        <h1>General Settings</h1>
+        <h1>Roles</h1>
         <div class="section-header-breadcrumb">
-          <div class="breadcrumb-item active"><a href="{{url('/')}}">Dashboard</a></div>
-          <div class="breadcrumb-item">General Settings</div>
+          <div class="breadcrumb-item"><a href="{{url('/')}}">Dashboard</a></div>
+          <div class="breadcrumb-item active">Roles</div>
         </div>
       </div>
 
       <div class="section-body">
-        <h2 class="section-title">DataTables</h2>
-        <p class="section-lead">
-          We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
-        </p>
+        <h2 class="section-title">Roles</h2>
+
 
 
         <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h4>Advanced Table</h4>
+                <h4>Roles</h4>
+                <span><a href="{{route('roles.create')}}" class="btn btn-icon icon-left btn-info"><i class="fas fa-plus"></i> Add</a></span>
               </div>
+
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table table-striped" id="table-2">
@@ -44,15 +45,15 @@
                             <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                           </div>
                         </th>
-                        <th>Task Name</th>
-                        <th>Progress</th>
-                        <th>Members</th>
-                        <th>Due Date</th>
-                        <th>Status</th>
+                        <th>Name</th>
+                        <th>Slug</th>
+                        <th>Description</th>
+                        <th>Level</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
+                        @foreach($roles as $row)
                       <tr>
                         <td>
                           <div class="custom-checkbox custom-control">
@@ -60,85 +61,14 @@
                             <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                           </div>
                         </td>
-                        <td>Create a mobile app</td>
-                        <td class="align-middle">
-                          <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
-                            <div class="progress-bar bg-success" data-width="100%"></div>
-                          </div>
-                        </td>
-                        <td>
-                          <img alt="image" src="{{asset('assets/img/avatar/avatar-5.png')}}" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian">
-                        </td>
-                        <td>2018-01-20</td>
-                        <td><div class="badge badge-success">Completed</div></td>
-                        <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                        <td>{{$row->name}}</td>
+                        <td>{{$row->slug}}</td>
+                        <td>{{$row->description}}</td>
+                        <td><div class="badge badge-success">{{$row->level}}</div></td>
+                        <td><a href="{{route('roles.edit',$row->id)}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a></td>
                       </tr>
-                      <tr>
-                        <td>
-                          <div class="custom-checkbox custom-control">
-                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-2">
-                            <label for="checkbox-2" class="custom-control-label">&nbsp;</label>
-                          </div>
-                        </td>
-                        <td>Redesign homepage</td>
-                        <td class="align-middle">
-                          <div class="progress" data-height="4" data-toggle="tooltip" title="0%">
-                            <div class="progress-bar" data-width="0"></div>
-                          </div>
-                        </td>
-                        <td>
-                          <img alt="image" src="{{asset('assets/img/avatar/avatar-1.png')}}" class="rounded-circle" width="35" data-toggle="tooltip" title="Nur Alpiana">
-                          <img alt="image" src="{{asset('assets/img/avatar/avatar-3.png')}}" class="rounded-circle" width="35" data-toggle="tooltip" title="Hariono Yusup">
-                          <img alt="image" src="{{asset('assets/img/avatar/avatar-4.png')}}" class="rounded-circle" width="35" data-toggle="tooltip" title="Bagus Dwi Cahya">
-                        </td>
-                        <td>2018-04-10</td>
-                        <td><div class="badge badge-info">Todo</div></td>
-                        <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="custom-checkbox custom-control">
-                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-3">
-                            <label for="checkbox-3" class="custom-control-label">&nbsp;</label>
-                          </div>
-                        </td>
-                        <td>Backup database</td>
-                        <td class="align-middle">
-                          <div class="progress" data-height="4" data-toggle="tooltip" title="70%">
-                            <div class="progress-bar bg-warning" data-width="70%"></div>
-                          </div>
-                        </td>
-                        <td>
-                          <img alt="image" src="{{asset('assets/img/avatar/avatar-1.png')}}" class="rounded-circle" width="35" data-toggle="tooltip" title="Rizal Fakhri">
-                          <img alt="image" src="{{asset('assets/img/avatar/avatar-2.png')}}" class="rounded-circle" width="35" data-toggle="tooltip" title="Hasan Basri">
-                        </td>
-                        <td>2018-01-29</td>
-                        <td><div class="badge badge-warning">In Progress</div></td>
-                        <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="custom-checkbox custom-control">
-                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-4">
-                            <label for="checkbox-4" class="custom-control-label">&nbsp;</label>
-                          </div>
-                        </td>
-                        <td>Input data</td>
-                        <td class="align-middle">
-                          <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
-                            <div class="progress-bar bg-success" data-width="100%"></div>
-                          </div>
-                        </td>
-                        <td>
-                          <img alt="image" src="{{asset('assets/img/avatar/avatar-2.png')}}" class="rounded-circle" width="35" data-toggle="tooltip" title="Rizal Fakhri">
-                          <img alt="image" src="{{asset('assets/img/avatar/avatar-5.png')}}" class="rounded-circle" width="35" data-toggle="tooltip" title="Isnap Kiswandi">
-                          <img alt="image" src="{{asset('assets/img/avatar/avatar-4.png')}}" class="rounded-circle" width="35" data-toggle="tooltip" title="Yudi Nawawi">
-                          <img alt="image" src="{{asset('assets/img/avatar/avatar-1.png')}}" class="rounded-circle" width="35" data-toggle="tooltip" title="Khaerul Anwar">
-                        </td>
-                        <td>2018-01-16</td>
-                        <td><div class="badge badge-success">Completed</div></td>
-                        <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                      </tr>
+                      @endforeach
+
                     </tbody>
                   </table>
                 </div>

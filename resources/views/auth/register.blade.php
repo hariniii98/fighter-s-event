@@ -38,6 +38,22 @@
                             <input id="last_name" type="text" class="form-control" autocomplete="off" name="last_name" >
                             </div>
                         </div>
+                        <div class="form-group row align-items-center">
+                            <label class="form-control-label col-sm-2">Photo<span class="text-danger"> *</span></label>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="custom-file">
+                                <input type="file" name="user_image" class="custom-file-input" id="user_image" @error('first_name') is-invalid @enderror value="{{ old('user_image') }}" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                                <label class="custom-file-label">Choose File</label>
+                                @error('user_image')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                              </div>
+                              <div class="form-text text-muted">The image must have a maximum size of 1MB</div>
+                            </div>
+                            <img src="{{asset('vf')}}"  id="blah" class="col-sm-3" width="1000" height="150">
+                        </div>
                         @if(isset($role)&&$role=="fighter")
                         <div class="row">
                             <div class="form-group col-lg-6 col-md-6 col-sm-12">
@@ -130,7 +146,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
                             <label for="club_name">Club Name</label><span class="text-danger"> *</span>
                             <input id="club_name" type="text" class="form-control" @error('club_name') step="0.01" is-invalid @enderror value="{{ old('club_name') }}" name="club_name" autocomplete="off">
                             @error('club_name')
@@ -139,8 +155,8 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group col-lg-4 col-md-4 col-sm-12">
-                            <label for="address">Club Name</label><span class="text-danger"> *</span>
+                        <div class="form-group">
+                            <label for="address">Complete Address</label><span class="text-danger"> *</span>
                             <input id="address" type="text" class="form-control" @error('address') step="0.01" is-invalid @enderror value="{{ old('address') }}" name="address" autocomplete="off">
                             @error('address')
                                 <span class="invalid-feedback" role="alert">

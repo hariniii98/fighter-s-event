@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Role;
+use App\Models\FighterProfile;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -64,10 +66,11 @@ class RegisterController extends Controller
                 'address' => ['string','required', 'string'],
                 'weight' => ['required','integer'],
                 'height' => ['required','integer'],
-                'mobile_number' => ['required','integer','max:10'],
-                'mobile_number2' => ['required','integer','max:10'],
+                'mobile_number' => ['required','string','max:10'],
+                'mobile_number2' => ['required','string','max:10'],
                 'blood_group' => ['required','string'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'user_image' => ['required'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
                 'password_confirmation' => ['required_with:password|same:password|min:6'],
             ]);
@@ -76,7 +79,8 @@ class RegisterController extends Controller
                 'first_name' => ['required', 'string', 'max:255'],
                 'last_name' => ['nullable', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'mobile_number' => ['required','integer','max:10'],
+                'mobile_number' => ['required','string','max:10'],
+                'user_image' => ['required'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
                 'password_confirmation' => ['required_with:password|same:password|min:6'],
             ]);
@@ -91,7 +95,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
         $user = config('roles.models.defaultUser')::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -99,7 +102,20 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
         if(isset($data['role'])&&$data['role']!=null){
+            $fighter = new FighterProfile();
+            $fighter->user_id = $user->id;
+            $fighter->date_of_birth = $data['date_of_birth'];
+            $fighter->emergency_number = $data['mobile_number2'];
+            $fighter->height = $data['height'];
+            $fighter->weight = $data['weight'];
+            $fighter->club_name = $data['club_name'];
+            $fighter->address = $data['address'];
+            $fighter->facebook_id = $data['facebook_id'];
+            $fighter->instagram_id = $data['instagram_id'];
+            $fighter->blood_group = $data['blood_group'];
+            $fighter->save();
             $role = Role::where('slug',$data['role'])->first();
         }else{
             $role = config('roles.models.role')::where('slug','user')->first();  //set the user role

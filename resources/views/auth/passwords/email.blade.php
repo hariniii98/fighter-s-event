@@ -4,13 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            
-        <div class="card">
-                <div class="card-header d-flex justify-content-center">Reset Password</div>
+            <div class="card">
+                <div class="card-header d-flex justify-content-center">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">
-                <div class="login-brand">
-                        <img src="assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
+                    <div class="login-brand">
+                        <img src="{{asset('assets/img/stisla-fill.svg')}}" alt="logo" width="100" class="shadow-light rounded-circle">
                     </div>
                         <p align="center">Go back to Login?<a href="{{route('login')}}">Login</a></p>
                             @if (session('status'))

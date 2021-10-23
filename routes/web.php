@@ -48,7 +48,10 @@ Route::prefix('allowances')->group(function () {
 Route::prefix('roles')->group(function () {
 
     Route::get('/index', [App\Http\Controllers\RoleController::class, 'index'])->name('roles.index');
+    Route::get('/create', [App\Http\Controllers\RoleController::class, 'create'])->name('roles.create');
+    Route::get('/edit/{id}', [App\Http\Controllers\RoleController::class, 'edit'])->name('roles.edit');
     Route::post('/store', [App\Http\Controllers\RoleController::class, 'store'])->name('roles.store');
+    Route::post('/update/{id}', [App\Http\Controllers\RoleController::class, 'update'])->name('roles.update');
 
 });
 

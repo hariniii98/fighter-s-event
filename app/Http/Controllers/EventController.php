@@ -53,4 +53,9 @@ class EventController extends Controller
 
         return redirect(route('allowances.index'));
     }
+
+    public function addEvent(){
+        $data['event_categories'] = EventCategory::all();
+        return view('events.add_event')->with($data);
+    }
 }

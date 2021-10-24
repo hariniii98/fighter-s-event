@@ -91,4 +91,11 @@ Route::prefix('users')->group(function () {
 
 });
 
+Route::get('/draw', function () {
+
+    return view('draw.tournament_draw');
+});
+
+
+
 

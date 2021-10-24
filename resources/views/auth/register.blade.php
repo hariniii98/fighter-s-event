@@ -6,17 +6,19 @@
     }
 </style>
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-sm-12">
-            <div class="card my-2">
-                <div class="card-header d-flex justify-content-center">{{ __('Register') }}</div>
+@include('elements.settings_section')
+
+        <div class="col-sm-8 offset-sm-2">
+            <div class="card card-primary">
+                <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
                     <div class="login-brand">
-                        <img src="assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
+
+                        <a href="{{url('/')}}"><img src="@yield('logo')" alt="logo" width="200" class="shadow-light"></a>
+
                     </div>
-                    <p align="center">Already have an account? <a href="{{route('login')}}">Login</a></p>
+
                     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
 
@@ -39,7 +41,8 @@
                             </div>
                         </div>
                         <div class="form-group row align-items-center">
-                            <label class="form-control-label col-sm-2">Photo<span class="text-danger"> *</span></label>
+                            <label class="form-control-label col-sm-3">Photo<span class="text-danger"> *</span></label>
+                            <img src="{{asset('assets/Deafult-Profile-Picture.png')}}"  id="blah" class="col-sm-3" width="1000" height="150">
                             <div class="col-sm-6 col-md-6">
                                 <div class="custom-file">
                                 <input type="file" name="user_image" class="custom-file-input" id="user_image" @error('first_name') is-invalid @enderror value="{{ old('user_image') }}" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
@@ -52,7 +55,7 @@
                               </div>
                               <div class="form-text text-muted">The image must have a maximum size of 1MB</div>
                             </div>
-                            <img src="{{asset('vf')}}"  id="blah" class="col-sm-3" width="1000" height="150">
+
                         </div>
                         @if(isset($role)&&$role=="fighter")
                         <div class="row">
@@ -215,11 +218,11 @@
                             <button type="submit" class="btn btn-primary btn-lg btn-block">
                             Register
                             </button>
+                            <p align="center">Already have an account? <a href="{{route('login')}}">Login</a></p>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
 @endsection

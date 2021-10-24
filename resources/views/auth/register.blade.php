@@ -17,7 +17,7 @@
                         <img src="assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
                     </div>
                     <p align="center">Already have an account? <a href="{{route('login')}}">Login</a></p>
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row">

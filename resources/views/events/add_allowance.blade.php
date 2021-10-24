@@ -1,15 +1,10 @@
 @extends('layouts.master_layout')
-@section('description', isset($settings->site_description)?$settings->site_description:'')
-@section('title', isset($settings->site_title)?$settings->site_title:config('app.name'))
-@section('favicon', isset($settings->site_favicon)?asset('assets/images/site_favicons/'.$settings->site_favicon):'')
 
 
 @section('content')
 
-@php
-    $site_logo=isset($settings->site_logo)?'assets/images/site_logos/'.$settings->site_logo:'assets/default_placeholder.png';
-    $site_favicon=isset($settings->site_favicon)?'assets/images/site_favicons/'.$settings->site_favicon:'assets/default_placeholder.png';
-@endphp
+@include('elements.settings_section')
+
 
  <!-- Main Content -->
 

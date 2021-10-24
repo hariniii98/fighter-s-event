@@ -1,17 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header d-flex justify-content-center">{{ __('Login') }}</div>
+@include('elements.settings_section')
+
+            <div class="col-sm-8 offset-sm-2">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                    {{ __('Login') }}
+
+
+                </div>
 
                 <div class="card-body">
-                <div class="login-brand">
-                        <img src="assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
-                    </div>
-                <p align="center">Don't have an account? <a href="{{route('register')}}">Register</a></p>
+                    <div class="login-brand">
+                        <a href="{{url('/')}}"><img src="@yield('logo')" alt="logo" width="200" class="shadow-light"></a>
+                        </div>
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -66,12 +71,17 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+
+                                <a class="btn btn-link" href="{{route('register')}}"">
+                                    Don't have an account?
+                                </a>
+
                             </div>
+
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+            </div>
+
 @endsection

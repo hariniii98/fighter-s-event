@@ -14,6 +14,14 @@
 
             </ul>
           </li>
+          <li class="dropdown">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fa fa-gear"></i> <span>Events</span></a>
+            <ul class="dropdown-menu">
+              <li><a class="nav-link" href="{{route('event_categories.index')}}">Event Categories</a></li>
+              <li><a class="nav-link" href="{{route('allowances.index')}}">Allowances</a></li>
+
+            </ul>
+          </li>
         @endrole
 
       </ul>

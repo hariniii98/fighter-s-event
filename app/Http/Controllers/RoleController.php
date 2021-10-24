@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
@@ -14,7 +15,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('roles.index');
+
+        $roles=Role::all();
+        return view('roles.index',compact('roles'));
     }
 
     /**
@@ -24,7 +27,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('roles.create');
     }
 
     /**
@@ -35,7 +39,17 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $roles=new Role();
+        $roles->name=$request->role_name;
+        $roles->slug=Str::slug($request->role_name, '-');
+        $roles->description=$request->role_description;
+        $roles->level=$request->role_level;
+        $roles->save();
+
+
+
+        return redirect('roles/index');
     }
 
     /**
@@ -55,9 +69,11 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit($id)
     {
-        //
+        $roles=Role::find($id);
+
+        return view('roles.edit',compact('roles'));
     }
 
     /**
@@ -67,9 +83,16 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request,$id)
     {
-        //
+        $roles=Role::find($id);
+        $roles->name=$request->role_name;
+        $roles->slug=Str::slug($request->role_name, '-');
+        $roles->description=$request->role_description;
+        $roles->level=$request->role_level;
+        $roles->save();
+
+        return redirect('roles/index');
     }
 
     /**

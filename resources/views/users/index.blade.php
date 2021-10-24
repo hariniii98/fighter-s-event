@@ -14,15 +14,15 @@
 
       <div class="section-header">
 
-        <h1>Roles</h1>
+        <h1>Users</h1>
         <div class="section-header-breadcrumb">
           <div class="breadcrumb-item"><a href="{{url('/')}}">Dashboard</a></div>
-          <div class="breadcrumb-item active">Roles</div>
+          <div class="breadcrumb-item active">Users</div>
         </div>
       </div>
 
       <div class="section-body">
-        <h2 class="section-title">Roles</h2>
+        <h2 class="section-title">Users</h2>
 
 
 
@@ -30,13 +30,13 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h4>Roles</h4>
-                <span><a href="{{route('roles.create')}}" class="btn btn-icon icon-left btn-info"><i class="fas fa-plus"></i> Add</a></span>
-              </div>
+                <h4>Users</h4>
+                <a href="javascript:void(0);" class="btn btn-icon icon-left btn-dark exportToExcel"><i class="fas fa-file-export"></i>Export to Excel</a>
+                </div>
 
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-striped" id="table-2">
+                  <table class="table table-striped table2excel" id="table-2">
                     <thead>
                       <tr>
                         <th class="text-center">
@@ -45,15 +45,16 @@
                             <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                           </div>
                         </th>
-                        <th>Name</th>
-                        <th>Slug</th>
-                        <th>Description</th>
-                        <th>Level</th>
-                        <th>Action</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Mobile Number</th>
+                        <th>Role</th>
+                        <th class="noExl">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                        @foreach($roles as $row)
+                        @foreach($users as $row)
                       <tr>
                         <td>
                           <div class="custom-checkbox custom-control">
@@ -61,11 +62,12 @@
                             <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                           </div>
                         </td>
-                        <td>{{$row->name}}</td>
-                        <td>{{$row->slug}}</td>
-                        <td>{{$row->description}}</td>
-                        <td><div class="badge badge-success">{{$row->level}}</div></td>
-                        <td><a href="{{route('roles.edit',$row->id)}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a></td>
+                        <td>{{$row->first_name}}</td>
+                        <td>{{$row->last_name}}</td>
+                        <td>{{$row->email}}</td>
+                        <td>{{$row->mobile_number}}</td>
+                        <td><div class="badge badge-success">{{$row->role}}</div></td>
+                        <td class="noExl"><a href="{{route('users.edit',$row->id)}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a></td>
                       </tr>
                       @endforeach
 
@@ -90,5 +92,31 @@
 
   <!-- Page Specific JS File -->
   <script src="{{asset('assets/js/page/modules-datatables.js')}}"></script>
+
+  <!-- Export to Excel/Csv -->
+  <script src="{{asset('assets/js/jquery.table2excel.js')}}"></script>
+  <script>
+    $(function() {
+        $(".exportToExcel").click(function(e){
+
+            var table = $('.table2excel');
+
+            if(table && table.length){
+                var preserveColors = (table.hasClass('table2excel_with_colors') ? true : false);
+                $(table).table2excel({
+                    exclude: ".noExl",
+                    name: "Excel Document Name",
+                    filename: "UserList" + new Date().toISOString().replace(/[\-\:\.]/g, "") + ".xls",
+                    fileext: ".xls",
+                    exclude_img: true,
+                    exclude_links: true,
+                    exclude_inputs: true,
+                    preserveColors: preserveColors
+                });
+            }
+        });
+
+    });
+</script>
 @endpush
 

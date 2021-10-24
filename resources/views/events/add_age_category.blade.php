@@ -1,7 +1,6 @@
 @extends('layouts.master_layout')
 
 
-
 @section('content')
 
 @include('elements.settings_section')
@@ -11,10 +10,10 @@
 
       <div class="section-header">
 
-        <h1>Event Categories</h1>
+        <h1>Age Categories</h1>
         <div class="section-header-breadcrumb">
           <div class="breadcrumb-item active"><a href="{{url('/')}}">Events</a></div>
-          <div class="breadcrumb-item">Event Categories</div>
+          <div class="breadcrumb-item">Age Categories</div>
         </div>
       </div>
 
@@ -25,17 +24,23 @@
             <div class="row">
 
                 <div class="col-md-12">
-                    <form id="setting-form" method="POST" action="{{route('event_category.store')}}" enctype="multipart/form-data">
+                    <form id="setting-form" method="POST" action="{{route('age_category.store')}}" enctype="multipart/form-data">
                     @csrf
                         <div class="card" id="settings-card">
                         <div class="card-header">
-                        <h4>Add Event Category</h4>
+                        <h4>Add Age Category</h4>
                         </div>
                         <div class="card-body">
                             <div class="form-group row align-items-center">
-                                <label for="site-title" class="form-control-label col-sm-3 text-md-right">Category Name<span class="text-danger"> *</span></label>
+                                <label for="min_age" class="form-control-label col-sm-3 text-md-right">Minimum Age<span class="text-danger"> *</span></label>
                                 <div class="col-sm-6 col-md-9">
-                                <input type="text" name="name" class="form-control" id="site-title" autocomplete="off" required>
+                                <input type="number" name="min_age" class="form-control" id="min_age" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-center">
+                                <label for="max_age" class="form-control-label col-sm-3 text-md-right">Maximum Age<span class="text-danger"> *</span></label>
+                                <div class="col-sm-6 col-md-9">
+                                <input type="number" name="max_age" class="form-control" id="max_age" autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="card-footer bg-whitesmoke text-md-right">

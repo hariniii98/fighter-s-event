@@ -44,6 +44,29 @@ Route::prefix('allowances')->group(function () {
     Route::get('/delete/{id}', [App\Http\Controllers\EventController::class, 'deleteAllowance'])->name('allowance.delete');
 });
 
+Route::prefix('age_categories')->group(function () {
+
+    Route::get('/index', [App\Http\Controllers\EventController::class, 'showAgeCategories'])->name('age_categories.index');
+    Route::get('/create', [App\Http\Controllers\EventController::class, 'addAgeCategory'])->name('age_category.create');
+    Route::post('/store', [App\Http\Controllers\EventController::class, 'storeAgeCategory'])->name('age_category.store');
+    Route::get('/delete/{id}', [App\Http\Controllers\EventController::class, 'deleteAgeCategory'])->name('age_category.delete');
+});
+
+Route::prefix('weight_categories')->group(function () {
+
+    Route::get('/index', [App\Http\Controllers\EventController::class, 'showWeightCategories'])->name('weight_categories.index');
+    Route::get('/create', [App\Http\Controllers\EventController::class, 'addWeightCategory'])->name('weight_category.create');
+    Route::post('/store', [App\Http\Controllers\EventController::class, 'storeWeightCategory'])->name('weight_category.store');
+    Route::get('/delete/{id}', [App\Http\Controllers\EventController::class, 'deleteWeightCategory'])->name('weight_category.delete');
+});
+
+Route::prefix('sponsors')->group(function () {
+
+    Route::get('/index', [App\Http\Controllers\EventController::class, 'showSponsors'])->name('sponsors.index');
+    Route::get('/create', [App\Http\Controllers\EventController::class, 'addSponsor'])->name('sponsor.create');
+    Route::post('/store', [App\Http\Controllers\EventController::class, 'storeSponsor'])->name('sponsor.store');
+    Route::get('/delete/{id}', [App\Http\Controllers\EventController::class, 'deleteSponsor'])->name('sponsor.delete');
+});
 
 Route::prefix('roles')->group(function () {
 
@@ -54,6 +77,11 @@ Route::prefix('roles')->group(function () {
     Route::post('/update/{id}', [App\Http\Controllers\RoleController::class, 'update'])->name('roles.update');
 
 });
+
+
+Route::resource('events', 'App\Http\Controllers\EventsController');
+Route::post('events/update/{id}','App\Http\Controllers\EventsController@updateEvent')->name('event.update');
+Route::post('/event_user/store','App\Http\Controllers\EventController@storeEventUser')->name('event_user.store');
 
 Route::prefix('users')->group(function () {
 

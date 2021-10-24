@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFighterProfilesTable extends Migration
+class CreateEventUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,12 @@ class CreateFighterProfilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fighter_profiles', function (Blueprint $table) {
+        Schema::create('event_users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->unsigned()->index();
+            $table->unsignedBigInteger('event_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->date('date_of_birth');
-            $table->string('emergency_number');
-            $table->integer('height');
-            $table->float('weight');
-            $table->string('club_name');
-            $table->string('address');
-            $table->string('facebook_id');
-            $table->string('instagram_id');
-            $table->string('blood_group');
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -37,6 +30,6 @@ class CreateFighterProfilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fighter_profiles');
+        Schema::dropIfExists('event_users');
     }
 }

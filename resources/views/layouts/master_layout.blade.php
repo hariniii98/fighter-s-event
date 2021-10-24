@@ -106,10 +106,60 @@ gtag('config', 'UA-94034622-3');
                     ***********************************-->
                     </div>
 </div>
+@role('fighter|user')
+<div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Register for Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <form id="setting-form" method="POST" action="{{route('event_user.store')}}" enctype="multipart/form-data">
+                    @csrf
+                <div class="modal-body">
+                    You are being registered with event {{isset($event->name)?$event->name:''}}. Please select the mode of payment online or offline.<br>
+                    <div class="form-group row align-items-center mt-3">
+                        <label for="site-title" class="form-control-label col-sm-3 text-md-right">Payment Mode<span class="text-danger"> *</span></label>
+                        <div class="col-sm-6 col-md-9">
+                            <select name="payment_mode" class="form-control" id="payment_mode" required>
+                                <option value="">--select--</option>
+                                <option value="offline">Offline</option>
+                                <option value="online">Online</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row align-items-center">
+                        <label for="site-title" class="form-control-label col-sm-3 text-md-right" id="ref_code" style="display: none;">Reference Number<span class="text-danger"> *</span></label>
+                        <div class="col-sm-6 col-md-9">
+                            <input id="ref_number" name="reference_number" class="form-control" autocomplete="off" style="display:none;">
+                            <input id="event_id" name="event_id" class="form-control" value="{{isset($event->id)?$event->id:''}}" autocomplete="off" style="display:none;">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  @endrole
 </body>
 
 @include('elements.footer_scripts')
 @stack('scripts')
 {{-- @yield('footer_scripts') --}}
+<script>
+    $('#payment_mode').click(function(){
+        if($(this).val()=="online"){
+            $('#ref_number').css('display','block');
+            $('#ref_code').css('display','block');
+        }
+    });
+</script>
 </html>
 

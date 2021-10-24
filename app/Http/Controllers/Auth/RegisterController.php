@@ -95,15 +95,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $user_image='';
+
+        if ($data['user_image']) {
+            $image = $data['user_image'];
+            $user_image = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/assets/images/user_images');
+            $image->move($destinationPath, $user_image);
+        }
+
         $user = config('roles.models.defaultUser')::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'mobile_number' => $data['mobile_number'],
+            'user_image' => $user_image,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
 
-        if(isset($data['role'])&&$data['role']!=null){
+        if(isset($data['role'])&&$data['role']!=null&&$data['role']=='fighter'){
             $fighter = new FighterProfile();
             $fighter->user_id = $user->id;
             $fighter->date_of_birth = $data['date_of_birth'];
@@ -117,9 +127,12 @@ class RegisterController extends Controller
             $fighter->blood_group = $data['blood_group'];
             $fighter->save();
             $role = Role::where('slug',$data['role'])->first();
+        }else if(isset($data['role'])&&$data['role']!="fighter"&&$data['role']!="user"){
+            $role = Role::where('slug',$data['role'])->first();
         }else{
             $role = config('roles.models.role')::where('slug','user')->first();  //set the user role
         }
+
 
         $user->attachRole($role);
 

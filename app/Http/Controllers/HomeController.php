@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Event;
 
 class HomeController extends Controller
 {
@@ -26,8 +28,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        return view('home');
+        $data['events'] = Event::where('end_date','>',Carbon::today())->get();
+        return view('home')->with($data);
     }
 
     public function users()

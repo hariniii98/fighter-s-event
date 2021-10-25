@@ -91,10 +91,7 @@ Route::prefix('users')->group(function () {
 
 });
 
-Route::get('/draw', function () {
-
-    return view('draw.tournament_draw');
-});
+Route::get('/draw', [App\Http\Controllers\TournamentDrawController::class, 'draw'])->name('tournament.draws');
 
 
 

@@ -23,6 +23,7 @@
               <li><a class="nav-link" href="{{route('age_categories.index')}}">Age Categories</a></li>
               <li><a class="nav-link" href="{{route('weight_categories.index')}}">Weight Categories</a></li>
               <li><a class="nav-link" href="{{route('sponsors.index')}}">Sponsors</a></li>
+              <li><a class="nav-link" href="{{route('payments.index')}}">Payments</a></li>
             </ul>
           <li>
             <a href="{{route('users')}}" class="nav-link"><i class="fas fa-user"></i><span>Users</span></a>

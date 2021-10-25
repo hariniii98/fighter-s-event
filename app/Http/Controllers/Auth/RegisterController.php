@@ -135,7 +135,6 @@ class RegisterController extends Controller
 
 
         $user->attachRole($role);
-
         return $user;
     }
 }

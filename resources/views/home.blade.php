@@ -19,7 +19,12 @@
                             <div class="accordion-body collapse show" id="panel-body{{$event->id}}" data-parent="#accordion">
                                   <p class="mb-0">{{$event->description}}</p>
                                   <!-- Button trigger modal -->
-                                  <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Regiter Now!</button>
+                                  @if(in_array($event->id,$events_registered_ids))
+                                  <p>You have registered for this event!</p>
+
+                                  @else
+                                  <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="btn-event" data-id="{{$event->id}}" data-name="{{$event->name}}">Regiter Now!</button>
+                                 @endif
                             </div>
                         </div>
                         @endforeach

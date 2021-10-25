@@ -90,6 +90,9 @@ Route::prefix('users')->group(function () {
     Route::post('/update/{id}', [App\Http\Controllers\HomeController::class, 'update'])->name('users.update');
 
 });
+Route::get('payments','App\Http\Controllers\EventController@payments')->name('payments.index');
+Route::get('create_whatsapp_push_notification','App\Http\Controllers\ChannelsController@createWhatsappPushNotification');
+Route::get('send_whatsapp_push_notification','App\Http\Controllers\ChannelsController@sendWhatsappPushNotification');
 
 Route::get('/draw', function () {
 

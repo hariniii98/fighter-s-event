@@ -23,6 +23,7 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
+        'mobile_number',
         'password',
     ];
 
@@ -45,5 +46,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function routeNotificationForWhatsApp()
+    {
+        return $this->mobile_number;
+    }
 
 }

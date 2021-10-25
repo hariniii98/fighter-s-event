@@ -8,6 +8,9 @@ use App\Models\WeightCategory;
 use App\Models\Sponsor;
 use App\Models\Payment;
 use App\Models\EventUser;
+use App\Models\Event;
+use App\Models\User;
+use App\Notifications\WhatsappPushNotification;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -149,9 +152,24 @@ class EventController extends Controller
         $event_user->save();
         $payment = new Payment();
         $payment->event_user_id = $event_user->id;
+        $payment->payment_mode = $request->payment_mode;
         $payment->reference_number = $request->reference_number;
         $payment->save();
+
+        auth()->user()->notify(new WhatsappPushNotification(auth()->user()));
         return redirect('/home');
+    }
+
+    public function payments(){
+        $data['payments'] = Payment::select('*')->join('event_users','event_users.id','=','payments.event_user_id')->get();
+        foreach($data['payments'] as $key=>$row){
+            $event[$key] = Event::find($row->event_id);
+            $data['payments'][$key]['event_name'] = $event[$key]->name;
+            $user[$key] = User::find($row->user_id);
+            $data['payments'][$key]['user_name'] = $user[$key]->first_name.' '.$user[$key]->last_name;
+            $data['payments'][$key]['mobile_number'] = $user[$key]->mobile_number;
+        }
+        return view('events.payments')->with($data);
     }
 
 }

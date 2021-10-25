@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Event;
+use App\Models\EventUser;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -29,6 +31,7 @@ class HomeController extends Controller
     public function index()
     {
         $data['events'] = Event::where('end_date','>',Carbon::today())->get();
+        $data['events_registered_ids'] = EventUser::where('user_id',Auth::id())->pluck('event_id')->toArray();
         return view('home')->with($data);
     }
 

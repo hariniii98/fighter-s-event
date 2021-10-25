@@ -120,7 +120,7 @@ gtag('config', 'UA-94034622-3');
                 <form id="setting-form" method="POST" action="{{route('event_user.store')}}" enctype="multipart/form-data">
                     @csrf
                 <div class="modal-body">
-                    You are being registered with event {{isset($event->name)?$event->name:''}}. Please select the mode of payment online or offline.<br>
+                    You are being registered with event <span id="event_name"></span>. Please select the mode of payment online or offline.<br>
                     <div class="form-group row align-items-center mt-3">
                         <label for="site-title" class="form-control-label col-sm-3 text-md-right">Payment Mode<span class="text-danger"> *</span></label>
                         <div class="col-sm-6 col-md-9">
@@ -135,7 +135,7 @@ gtag('config', 'UA-94034622-3');
                         <label for="site-title" class="form-control-label col-sm-3 text-md-right" id="ref_code" style="display: none;">Reference Number<span class="text-danger"> *</span></label>
                         <div class="col-sm-6 col-md-9">
                             <input id="ref_number" name="reference_number" class="form-control" autocomplete="off" style="display:none;">
-                            <input id="event_id" name="event_id" class="form-control" value="{{isset($event->id)?$event->id:''}}" autocomplete="off" style="display:none;">
+                            <input id="event__id" name="event_id" class="form-control" value="" autocomplete="off" style="display:none;">
                         </div>
                     </div>
                 </div>
@@ -154,6 +154,12 @@ gtag('config', 'UA-94034622-3');
 @stack('scripts')
 {{-- @yield('footer_scripts') --}}
 <script>
+    $('#btn-event').click(function(){
+        var event_id = $(this).data("id");
+        var event_name = $(this).data("name");
+        $('#event__id').val(event_id);
+        $('#event_name').text(event_name);
+    });
     $('#payment_mode').click(function(){
         if($(this).val()=="online"){
             $('#ref_number').css('display','block');

@@ -17,6 +17,8 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('event_user_id')->unsigned()->index();
             $table->foreign('event_user_id')->references('id')->on('event_users')->onDelete('cascade');
+            $table->string('payment_mode');
+            $table->enum('status',['pending','completed'])->default('pending');
             $table->string('reference_number')->nullable();
             $table->timestamps();
         });

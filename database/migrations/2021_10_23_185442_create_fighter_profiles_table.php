@@ -23,9 +23,12 @@ class CreateFighterProfilesTable extends Migration
             $table->float('weight');
             $table->string('club_name');
             $table->string('address');
-            $table->string('facebook_id');
-            $table->string('instagram_id');
+            $table->string('facebook_id')->nullable();
+            $table->string('instagram_id')->nullable();
             $table->string('blood_group');
+            $table->string('state');
+            $table->unsignedBigInteger('ranking_id')->unsigned()->index()->nullable();
+            $table->foreign('ranking_id')->references('id')->on('extra_ranking_points')->onDelete('cascade');
             $table->timestamps();
         });
     }

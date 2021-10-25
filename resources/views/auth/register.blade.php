@@ -6,6 +6,9 @@
     }
 </style>
 @section('content')
+@php $rankings = App\Models\ExtraRankingPoint::get();
+$states = CountryState::getStates('IN');
+@endphp
 @include('elements.settings_section')
 
         <div class="col-sm-8 offset-sm-2">
@@ -151,7 +154,7 @@
                         </div>
                         <div class="form-group">
                             <label for="club_name">Club Name</label><span class="text-danger"> *</span>
-                            <input id="club_name" type="text" class="form-control" @error('club_name') step="0.01" is-invalid @enderror value="{{ old('club_name') }}" name="club_name" autocomplete="off">
+                            <input id="club_name" type="text" class="form-control" @error('club_name') is-invalid @enderror value="{{ old('club_name') }}" name="club_name" autocomplete="off">
                             @error('club_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -160,8 +163,37 @@
                         </div>
                         <div class="form-group">
                             <label for="address">Complete Address</label><span class="text-danger"> *</span>
-                            <input id="address" type="text" class="form-control" @error('address') step="0.01" is-invalid @enderror value="{{ old('address') }}" name="address" autocomplete="off">
+                            <input id="address" type="text" class="form-control" step="0.01" @error('address') is-invalid @enderror value="{{ old('address') }}" name="address" autocomplete="off">
                             @error('address')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label><span class="text-danger"> *</span>
+                            <select id="state" class="form-control" @error('state') is-invalid @enderror value="{{ old('state') }}" name="state">
+                                <option value="">--select--</option>
+                                @foreach($states as $key=>$state)
+                                <option value="{{$key}}">{{$state}}</option>
+                                @endforeach
+                            </select>
+                            @error('state')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="ranking">Do you hold any ranking?</label><span class="text-danger"> *</span>
+                            <select id="ranking" class="form-control" @error('ranking') is-invalid @enderror value="{{ old('ranking') }}" name="ranking">
+                                <option value="">--select--</option>
+                                @foreach($rankings as $ranking)
+                                    <option value="{{$ranking->id}}">{{$ranking->name}}</option>
+                                @endforeach
+                                <option value="none">None</option>
+                            </select>
+                            @error('ranking')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

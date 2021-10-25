@@ -68,6 +68,14 @@ Route::prefix('sponsors')->group(function () {
     Route::get('/delete/{id}', [App\Http\Controllers\EventController::class, 'deleteSponsor'])->name('sponsor.delete');
 });
 
+Route::prefix('extra_ranking_points')->group(function () {
+
+    Route::get('/index', [App\Http\Controllers\EventController::class, 'showExtraRankingPoints'])->name('extra_ranking_points.index');
+    Route::get('/create', [App\Http\Controllers\EventController::class, 'addExtraRankingPoint'])->name('extra_ranking_point.create');
+    Route::post('/store', [App\Http\Controllers\EventController::class, 'storeExtraRankingPoint'])->name('extra_ranking_points.store');
+    Route::get('/delete/{id}', [App\Http\Controllers\EventController::class, 'deleteExtraRankingPoint'])->name('extra_ranking_point.delete');
+});
+
 Route::prefix('roles')->group(function () {
 
     Route::get('/index', [App\Http\Controllers\RoleController::class, 'index'])->name('roles.index');

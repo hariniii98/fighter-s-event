@@ -155,8 +155,6 @@ class EventController extends Controller
         $payment->payment_mode = $request->payment_mode;
         $payment->reference_number = $request->reference_number;
         $payment->save();
-
-        auth()->user()->notify(new WhatsappPushNotification(auth()->user()));
         return redirect('/home');
     }
 

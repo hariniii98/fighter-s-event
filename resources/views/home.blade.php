@@ -22,7 +22,7 @@
 
     <div id="output-status"></div>
     <div class="row justify-content-center">
-        <div class="col-8 offset-2">
+        <div class="col-8 offset-1">
             @role('fighter|user')
             <div class="card">
                 <div class="card-header">

@@ -65,7 +65,7 @@
                             <div class="col-6">
                                 <div class="row justify-content-center align-items-center">
                                     <div class="col-12 d-flex flex-column justify-content-center align-items-center">
-                                        <img src="agsva" class="wh40 mb-3" align="center">
+                                        <img src="{{asset('assets/dark-red-background.jpg')}}" class="wh40 mb-3" align="center">
                                         <p>Round1</p>
                                         <div class="form-group col-12">
                                             <label for="score_round1">Score</label><span class="text-danger"> *</span>
@@ -87,7 +87,7 @@
                             <div class="col-6">
                                 <div class="row justify-content-center align-items-center">
                                     <div class="col-12 d-flex flex-column justify-content-center align-items-center">
-                                        <img src="agsva" class="wh40 mb-3">
+                                        <img src="{{asset('assets/dark-blue-color-solid-background-1920x1080.png')}}" class="wh40 mb-3">
                                         <p>Round1</p>
                                         <div class="form-group col-12">
                                             <label for="score_round1">Score</label><span class="text-danger"> *</span>

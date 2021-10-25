@@ -30,6 +30,10 @@
             <a href="{{route('users')}}" class="nav-link"><i class="fas fa-user"></i><span>Users</span></a>
 
           </li>
+          <li>
+            <a href="{{route('tournament.draws')}}" class="nav-link"><i class="fas fa-user"></i><span>Tournament Draw</span></a>
+
+          </li>
         @endrole
 
 

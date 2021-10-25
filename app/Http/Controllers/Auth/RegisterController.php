@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Role;
 use App\Models\FighterProfile;
 use Carbon\Carbon;
+use Twilio\Rest\Client;
 
 class RegisterController extends Controller
 {
@@ -68,6 +69,8 @@ class RegisterController extends Controller
                 'height' => ['required','integer'],
                 'mobile_number' => ['required','string','max:10'],
                 'mobile_number2' => ['required','string','max:10'],
+                'state' => ['required'],
+                'ranking' =>['required'],
                 'blood_group' => ['required','string'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'user_image' => ['required'],
@@ -113,6 +116,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
+
         if(isset($data['role'])&&$data['role']!=null&&$data['role']=='fighter'){
             $fighter = new FighterProfile();
             $fighter->user_id = $user->id;
@@ -124,6 +128,10 @@ class RegisterController extends Controller
             $fighter->address = $data['address'];
             $fighter->facebook_id = $data['facebook_id'];
             $fighter->instagram_id = $data['instagram_id'];
+            if($data['ranking']!="none"){
+                $fighter->ranking_id = $data['ranking'];
+            }
+            $fighter->state = $data['state'];
             $fighter->blood_group = $data['blood_group'];
             $fighter->save();
             $role = Role::where('slug',$data['role'])->first();
@@ -136,5 +144,17 @@ class RegisterController extends Controller
 
         $user->attachRole($role);
         return $user;
+    }
+
+    private function whatsappNotification(string $recipient)
+    {
+        $sid    = config('app.twilio_sid');
+        $token  = config('app.twilio_token');
+        $wa_from= config('app.twilio_from');
+        $twilio = new Client($sid, $token);
+
+        $body = "Hello, welcome to Event";
+
+        return $twilio->messages->create("whatsapp:$recipient",["from" => "whatsapp:$wa_from", "body" => $body]);
     }
 }

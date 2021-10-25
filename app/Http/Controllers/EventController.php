@@ -12,6 +12,7 @@ use App\Models\Event;
 use App\Models\User;
 use App\Notifications\WhatsappPushNotification;
 use Auth;
+use App\Models\ExtraRankingPoint;
 
 use Illuminate\Http\Request;
 
@@ -170,4 +171,26 @@ class EventController extends Controller
         return view('events.payments')->with($data);
     }
 
+    public function showExtraRankingPoints(){
+        $data['extra_ranking_points'] = ExtraRankingPoint::all();
+        return view('events.extra_ranking_points_show')->with($data);
+    }
+
+    public function addExtraRankingPoint(){
+        return view('events.add_extra_ranking_points');
+    }
+
+    public function storeExtraRankingPoint(Request $request){
+        $extra = new ExtraRankingPoint();
+        $extra->name = $request->name;
+        $extra->additional_points = $request->additional_points;
+        $extra->save();
+        return redirect(route('extra_ranking_points.index'));
+    }
+
+    public function deleteExtraRankingPoint(Request $Request,$id){
+        $extra = ExtraRankingPoint::find($id);
+        $extra->delete();
+        return redirect(route('extra_ranking_points.index'));
+    }
 }

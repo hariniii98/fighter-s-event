@@ -2,7 +2,7 @@
       <ul class="sidebar-menu">
 
         <li class="dropdown active">
-          <a href="{{url('/')}}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+          <a href="{{url('/home')}}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
 
         </li>
         @role('admin')
@@ -24,6 +24,7 @@
               <li><a class="nav-link" href="{{route('weight_categories.index')}}">Weight Categories</a></li>
               <li><a class="nav-link" href="{{route('sponsors.index')}}">Sponsors</a></li>
               <li><a class="nav-link" href="{{route('payments.index')}}">Payments</a></li>
+              <li><a class="nav-link" href="{{route('extra_ranking_points.index')}}">Extra Ranking Points</a></li>
             </ul>
           <li>
             <a href="{{route('users')}}" class="nav-link"><i class="fas fa-user"></i><span>Users</span></a>

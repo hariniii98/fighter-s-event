@@ -103,6 +103,7 @@ Route::get('create_whatsapp_push_notification','App\Http\Controllers\ChannelsCon
 Route::get('send_whatsapp_push_notification','App\Http\Controllers\ChannelsController@sendWhatsappPushNotification');
 
 Route::get('/draw', [App\Http\Controllers\TournamentDrawController::class, 'draw'])->name('tournament.draws');
+Route::post('draws/store', [App\Http\Controllers\TournamentDrawController::class, 'store'])->name('tournament.draws.store');
 
 
 

@@ -102,10 +102,7 @@ Route::get('payments','App\Http\Controllers\EventController@payments')->name('pa
 Route::get('create_whatsapp_push_notification','App\Http\Controllers\ChannelsController@createWhatsappPushNotification');
 Route::get('send_whatsapp_push_notification','App\Http\Controllers\ChannelsController@sendWhatsappPushNotification');
 
-Route::get('/draw', function () {
-
-    return view('draw.tournament_draw');
-});
+Route::get('/draw', [App\Http\Controllers\TournamentDrawController::class, 'draw'])->name('tournament.draws');
 
 
 

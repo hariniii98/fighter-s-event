@@ -42,7 +42,7 @@
       $r=1;
 
   @endphp
-
+@if($count>0)
 <form action="{{route('tournament.draws.store')}}" method="POST">
     @csrf
   <div class="row">
@@ -68,7 +68,7 @@
       @endphp
       @endif
 
-      <div class="@if($d%2==0) even  @else odd @endif" >{{$value[$d]}}</div>
+      <div class="@if($d%2==0) even  @else odd @endif " style="{{$value[$d]==''?'padding: 13px;!important':''}}">{{$value[$d]}}</div>
 
       @if ($d%2==0)
 
@@ -103,6 +103,13 @@
   @endif
 
   </form>
+  @else
+  <div class="row">
+    <div class="container col-sm-1">
+  <div>No Members to Draw</div>
+    </div>
+  </div>
+  @endif
 
 
 

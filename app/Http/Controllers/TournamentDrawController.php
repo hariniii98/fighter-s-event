@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\EventUser;
 use App\Models\TournamentDraw;
 use App\Models\User;
@@ -16,15 +17,24 @@ class TournamentDrawController extends Controller
         $draw_names=[];
         $draw_ids=[];
         $draw_counts=[];
+        $tournament_draws=[];
+        $stage_id=[];$match_id=[];
+        $data['event_name']='';
+        $data['event_id']='';
+        $data['first_name']=[];
+        $data['last_name']=[];
+        $data['id']=[];
 
         $tournaments_participants=EventUser::join('users','event_users.user_id','=','users.id')
-                                 //->join('payments','payments.event_user_id','=','event_users.user_id')
-                                 //->where('payments.payment_status','paid')
+                                 ->join('role_user','event_users.user_id','=','role_user.user_id')
+                                 ->join('roles','role_user.role_id','=','roles.id')
+                                //  ->join('payments','payments.event_user_id','=','event_users.user_id')
+                                //  ->where('payments.status','completed')
                                  ->join('events','event_users.event_id','=','events.id')
                                  ->select('users.id','users.first_name','users.last_name','events.name as event_name','event_users.event_id')
                                  ->get();
 
-
+                           if(count($tournaments_participants)>0){
                                  foreach($tournaments_participants as $key=>$row){
 
                                           $data['event_name']=$row->event_name;
@@ -55,7 +65,7 @@ class TournamentDrawController extends Controller
 
                                                    $draw_names[]='';
                                                    $draw_ids[]='';
-                                                   $draw_counts[$count][]='Match Winner';
+                                                   $draw_counts[$count][]='';
 
                                                 }
 
@@ -74,7 +84,7 @@ class TournamentDrawController extends Controller
 
 
 
-                                 $stage_id=[];$match_id=[];
+
         $tournament_draws=TournamentDraw::where('event_id',$data['event_id'])->get(); // 1 event now
 
         foreach($tournament_draws as $row){
@@ -82,6 +92,7 @@ class TournamentDrawController extends Controller
           $match_id[]=$row->match_ids;
           $user_id[]=$row->user_ids;
         }
+    }
         //return view('draw.tournament_draw',compact('tournaments_participants','data','draw_ids','draw_names','draw_counts','tournament_draws','match_id','stage_id'));
         if(count($tournament_draws)==0){
             return view('draw.tournament_draw',compact('tournaments_participants','data','draw_ids','draw_names','draw_counts','tournament_draws','match_id','stage_id'));
@@ -156,6 +167,51 @@ class TournamentDrawController extends Controller
         $user_name=User::find($id)->first_name;
 
         return $user_name;
+
+    }
+    public function matchesList(){
+
+        $tournament_draws=TournamentDraw::get(); // 1 event now
+        $tournament_count=count($tournament_draws);
+        $match_ids=[];$user_ids=[];
+        $stage_ids=[];$event_name=[];
+
+        foreach($tournament_draws as $key=>$row){
+
+            if($key==($tournament_count-1)){
+
+                break;
+
+            }
+            else{
+            $event=Event::find($row->event_id)->name;
+            $match_nos=json_decode($row->match_ids);
+            $count=count($match_nos);
+            $user_nos=json_decode($row->user_ids);
+
+
+            if(count($match_nos)>0){
+                for($i=0;$count>0;$i++){
+
+                    $event_name[]=$event;
+                    $stage_ids[]=$row->stage_id;
+                    $match=$match_nos[$i];
+                    $user_ids[$match]=isset($user_nos[$i])?$user_nos[$i]:null;
+                    $match_ids[]=$match;
+
+                    $count--;
+
+                }
+            }
+
+        }
+
+        }
+
+
+        return view('draw.match_list',compact('tournament_draws','stage_ids','match_ids','user_ids','event_name'));
+
+
 
     }
 }

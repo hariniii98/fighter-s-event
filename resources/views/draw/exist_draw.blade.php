@@ -22,7 +22,7 @@
     .won{
         background-color:#63ed7a !important;
         color:#fff !important;
-        padding:5px;
+        padding: 13px;
         border-radius: 10px;
         justify-content: center;
         text-align: center;
@@ -99,7 +99,7 @@
 
       @endfor
       @elseif($key==($count-1))
-      <div class="won" >Match Winner</div>
+      <div class="won"></div>
       @else
       @php
         if($temp_count!=1){
@@ -116,7 +116,7 @@
 
       @endphp
       @for($e=0;$exit_count>0;$e++)
-      <div class="@if($e%2==0) even @else odd @endif" >Match Winner</div>
+      <div class="@if($e%2==0) even @else odd @endif" style="padding: 13px;!important"></div>
       @php
           $exit_count--;
       @endphp

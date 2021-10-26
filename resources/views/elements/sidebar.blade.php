@@ -34,6 +34,10 @@
             <a href="{{route('tournament.draws')}}" class="nav-link"><i class="fas fa-user"></i><span>Tournament Draw</span></a>
 
           </li>
+          <li>
+            <a href="{{route('tournament.matches.list')}}" class="nav-link"><i class="fas fa-user"></i><span>Matches</span></a>
+
+          </li>
         @endrole
 
 

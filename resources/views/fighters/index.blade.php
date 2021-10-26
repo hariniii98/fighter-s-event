@@ -65,7 +65,7 @@
                         <td>{{$row->last_name}}</td>
                         <td>{{$row->email}}</td>
                         <td>{{$row->mobile_number}}</td>
-                        <td></td>
+                        <td><a href="{{route('event.fighters.profile',$row->id)}}" class="btn btn-success"><i class="fa fa-eye"></i></a></td>
                         <td class="noExl"><a href="{{route('users.edit',$row->id)}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a></td>
                       </tr>
                       @endforeach

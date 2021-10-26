@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return redirect(route('login'));
 });
+
+Route::get('check_role','App\Http\Controllers\Auth\RegisterController@checkRole')->name('role.check');
 
 Auth::routes();
 Route::get('{role}/register',[App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('role.register');
@@ -93,6 +95,7 @@ Route::resource('events', 'App\Http\Controllers\EventsController');
 Route::post('events/update/{id}','App\Http\Controllers\EventsController@updateEvent')->name('event.update');
 
 Route::get('/events/fighters/{id}','App\Http\Controllers\EventController@showFighters')->name('event.fighters');
+Route::get('/events/fighters/profile/{id}','App\Http\Controllers\EventController@showFightersProfile')->name('event.fighters.profile');
 Route::get('/judges','App\Http\Controllers\EventController@showAllJudges')->name('event.judges');
 Route::get('events/judge/edit/{id}','App\Http\Controllers\EventController@editJudge')->name('judge.edit');
 Route::post('events/rings/ajax','App\Http\Controllers\EventController@checkEventRings')->name('event.rings');

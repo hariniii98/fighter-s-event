@@ -169,6 +169,49 @@
                     </div>
                 </div>
             @endrole
+            @role('superjudge')
+            <div class="card">
+                <div class="card-header">
+                    <h4>Update remarks and technique</h4>
+                </div>
+                <div class="card-body">
+                    <div id="accordion">
+
+                        <form method="POST" action="" enctype="multipart/form-data">
+                            @csrf
+                        <div class="row">
+
+                            <div class="col-12">
+                                <label for="remarks">Remarks</label><span class="text-danger"> *</span>
+                                <textarea name="remarks[]" class="form-control" id="remarks" col="20" rows="10"></textarea>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <input type="radio" id="TKO" name="technique[]" value="TKO">
+                                <label for="TKO" class="mr-3">TKO</label>
+                                <input type="radio" id="KO" name="technique[]" value="KO">
+                                <label for="KO" class="mr-3">KO</label>
+                                <input type="radio" id="SD" name="technique[]" value="SD">
+                                <label for="SD" class="mr-3">SD</label>
+                                <input type="radio" id="UD" name="technique[]" value="UD">
+                                <label for="UD" class="mr-3">UD</label>
+                                <input type="radio" id="SUB" name="technique[]" value="SUB">
+                                <label for="SUB" class="mr-3">SUB</label>
+                                <input type="radio" id="DRAW" name="technique[]" value="DRAW">
+                                <label for="DRAW" class="mr-3">DRAW</label>
+                                <input type="radio" id="DRAW" name="technique[]" value="OTHERS">
+                                <label for="OTHERS" class="mr-3">OTHERS</label>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                Submit
+                                </button>
+                            </div>
+                        </div>
+                        </form>
+
+                    </div>
+                </div>
+            @endrole
         </div>
     </div>
 </div>

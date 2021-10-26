@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Notifications\WhatsappPushNotification;
 use Auth;
 use App\Models\ExtraRankingPoint;
+use App\Models\FighterProfile;
 use App\Models\JudgeEventRing;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -205,10 +206,22 @@ class EventController extends Controller
         return view('fighters.index')->with($data);
     }
 
+    public function showFightersProfile($id){
+        $data['fighter'] = User::find($id);
+        $data['fighter_profile'] = FighterProfile::where('user_id',$id)->first();
+        if(isset($data['fighter_profile']->ranking_id)){
+            $data['ranking_name'] = ExtraRankingPoint::find($data['fighter_profile']->ranking_id);
+        }else{
+            $data['ranking_name'] = 'None';
+        }
+
+        return view('fighters.profile')->with($data);
+    }
+
     public function showAllJudges(){
         $data['judges']=User::join('role_user','role_user.user_id','=','users.id')
                ->join('roles','role_user.role_id','=','roles.id')
-               ->select('users.*','roles.name as role')->where('roles.slug','judge')
+               ->select('users.*','roles.name as role')->where('roles.slug','judge')->orWhere('roles.slug','superjudge')
                ->get();
 
         return view('judges.index')->with($data);

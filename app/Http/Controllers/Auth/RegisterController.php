@@ -174,4 +174,9 @@ class RegisterController extends Controller
         }
         return $cities;
     }
+
+    public function checkRole(){
+        $data['roles'] = Role::all();
+        return view('check_role')->with($data);
+    }
 }

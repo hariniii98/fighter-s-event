@@ -114,6 +114,10 @@ Route::get('send_whatsapp_push_notification','App\Http\Controllers\ChannelsContr
 
 Route::get('/draw', [App\Http\Controllers\TournamentDrawController::class, 'draw'])->name('tournament.draws');
 Route::post('draws/store', [App\Http\Controllers\TournamentDrawController::class, 'store'])->name('tournament.draws.store');
+Route::get('matches/list', [App\Http\Controllers\TournamentDrawController::class, 'matchesList'])->name('tournament.matches.list');
+Route::get('matches/create', [App\Http\Controllers\TournamentDrawController::class, 'matchesCreate'])->name('tournament.matches.create');
+Route::get('matches/store', [App\Http\Controllers\TournamentDrawController::class, 'matchesStore'])->name('tournament.matches.store');
+Route::get('matches/edit', [App\Http\Controllers\TournamentDrawController::class, 'matchesEdit'])->name('tournament.matches.edit');
 
 });
 

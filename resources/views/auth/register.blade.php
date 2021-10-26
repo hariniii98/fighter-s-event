@@ -114,7 +114,7 @@ $states = CountryState::getStates('IN');
                             </div>
                             <div class="form-group col-lg-4 col-md-4 col-sm-12">
                                 <label for="weight">Weight(in kgs)</label><span class="text-danger"> *</span>
-                                <input id="weight" type="number" class="form-control" @error('weight') step="0.01" is-invalid @enderror value="{{ old('weight') }}" name="weight" autocomplete="off">
+                                <input id="weight" type="number" class="form-control" step="0.01" @error('weight') is-invalid @enderror value="{{ old('weight') }}" name="weight" autocomplete="off">
                                 @error('weight')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -124,12 +124,22 @@ $states = CountryState::getStates('IN');
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6 col-sm-12">
-                                <label for="facebook_id">Facebook Id</label>
-                                <input id="facebook_id" type="text" class="form-control" value="{{ old('facebook_id') }}" name="facebook_id" autocomplete="off">
+                                <label for="facebook_id">Facebook Id</label><span class="text-danger"> *</span>
+                                <input id="facebook_id" type="text" class="form-control" value="{{ old('facebook_id') }}" @error('facebook_id') is-invalid @enderror name="facebook_id" autocomplete="off">
+                                @error('facebook_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group col-md-6 col-sm-12">
-                                <label for="instagram_id">Instagram Id</label>
-                                <input id="instagram_id" type="text" class="form-control" value="{{ old('instagram_id') }}" name="instagram_id" autocomplete="off">
+                                <label for="instagram_id">Instagram Id</label><span class="text-danger"> *</span>
+                                <input id="instagram_id" type="text" class="form-control" value="{{ old('instagram_id') }}" @error('instagram_id') is-invalid @enderror name="instagram_id" autocomplete="off">
+                                @error('instagram_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="row">
@@ -162,6 +172,15 @@ $states = CountryState::getStates('IN');
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="coach_name">Coach Name</label><span class="text-danger"> *</span>
+                            <input id="coach_name" type="text" class="form-control" @error('coach_name') is-invalid @enderror value="{{ old('coach_name') }}" name="coach_name" autocomplete="off">
+                            @error('coach_name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="address">Complete Address</label><span class="text-danger"> *</span>
                             <input id="address" type="text" class="form-control" step="0.01" @error('address') is-invalid @enderror value="{{ old('address') }}" name="address" autocomplete="off">
                             @error('address')
@@ -175,10 +194,24 @@ $states = CountryState::getStates('IN');
                             <select id="state" class="form-control" @error('state') is-invalid @enderror value="{{ old('state') }}" name="state">
                                 <option value="">--select--</option>
                                 @foreach($states as $key=>$state)
-                                <option value="{{$key}}">{{$state}}</option>
+                                <option value="{{$state}}">{{$state}}</option>
                                 @endforeach
                             </select>
                             @error('state')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City</label><span class="text-danger"> *</span>
+                            <select id="city" class="form-control" @error('city') is-invalid @enderror value="{{ old('city') }}" name="city">
+                                <option value="">--select--</option>
+                                {{-- @foreach($citys as $key=>$city)
+                                <option value="{{$key}}">{{$city}}</option>
+                                @endforeach --}}
+                            </select>
+                            @error('city')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -244,6 +277,22 @@ $states = CountryState::getStates('IN');
                             </span>
                             @enderror
                             </div>
+                            <div class="form-group row px-3">
+                                <div class="col-12">
+                                    <label for="terms_and_conditions">Indemnity</label><span class="text-danger"> *</span>
+                                </div>
+                                <div class="col-1">
+                                    <input id="terms_and_conditions" type="checkbox" class="form-control" name="terms_and_conditions" @error('terms_and_conditions') is-invalid @enderror>
+                                </div>
+                                <div class="col-11">
+                                    <p>I understand that I will be participating in combat fight event and solely reponsible for any injuries during my fight in MMA Open Championship. I promise to represent myself with good sportsmanship through out the event and shall not do any misbehaviour or not encourage anyone to do it either. I hereby declare that I am medically fit to undergo the Mixed Martial Arts fight under my own will and responsibility.</p>
+                                </div>
+                                @error('terms_and_conditions')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -258,3 +307,28 @@ $states = CountryState::getStates('IN');
         </div>
 
 @endsection
+@push('scripts')
+<script>
+    $('#state').change(function(){
+        var state = $(this).val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+        url: "{{route('city.ajax')}}",
+        type: "POST",
+        data:{state:state},
+        success: function(data){
+            $.each(data, function(key, value) {
+                $('#city').append($("<option></option>")
+                                .attr("value", value)
+                                .text(value));
+            });
+        }
+    });
+    });
+
+</script>
+@endpush

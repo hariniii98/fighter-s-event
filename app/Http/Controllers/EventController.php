@@ -13,8 +13,9 @@ use App\Models\User;
 use App\Notifications\WhatsappPushNotification;
 use Auth;
 use App\Models\ExtraRankingPoint;
-
+use App\Models\JudgeEventRing;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -192,5 +193,65 @@ class EventController extends Controller
         $extra = ExtraRankingPoint::find($id);
         $extra->delete();
         return redirect(route('extra_ranking_points.index'));
+    }
+
+    public function showFighters($id){
+        $data['event_users_ids'] = EventUser::where('event_id',$id)->pluck('user_id')->toArray();
+        $data['fighters']=User::join('role_user','role_user.user_id','=','users.id')
+               ->join('roles','role_user.role_id','=','roles.id')
+               ->select('users.*','roles.name as role')->where('roles.slug','fighter')->whereIn('users.id',$data['event_users_ids'])
+               ->get();
+
+        return view('fighters.index')->with($data);
+    }
+
+    public function showAllJudges(){
+        $data['judges']=User::join('role_user','role_user.user_id','=','users.id')
+               ->join('roles','role_user.role_id','=','roles.id')
+               ->select('users.*','roles.name as role')->where('roles.slug','judge')
+               ->get();
+
+        return view('judges.index')->with($data);
+    }
+
+    public function editJudge($id){
+        $data['judge_id'] = $id;
+        $data['check_judge'] = JudgeEventRing::where('judge_id',$id)->first();
+        if($data['check_judge']){
+             $event = Event::where('id',$data['check_judge']->event_id)->first();
+             $data['event_name'] = $event->name;
+        }
+        $data['events'] = Event::where('end_date','>=',Carbon::today())->get();
+        return view('judges.edit')->with($data);
+    }
+
+    public function checkEventRings(Request $request){
+        $event = Event::find($request->event_id);
+        $count = $event->no_of_rings;
+        for($i=0;$i<$count;$i++){
+            $rings[$i] = $i+1;
+        }
+        return $rings;
+    }
+
+    public function storeJudgeEventRing(Request $request,$id){
+        //check for existing row
+        $check = JudgeEventRing::where('judge_id',$id)->first();
+            if(isset($check)&&$check!=null){
+                $check->ring_id = $request->ring_id;
+                $check->update();
+            }else{
+                $check=new JudgeEventRing();
+                $check->judge_id = $id;
+                $check->event_id = $request->event_id;
+                $check->ring_id = $request->ring_id;
+                $check->save();
+            }
+
+            return redirect(route('event.judges'));
+    }
+
+    public function showFighterInstructions(){
+        return view('fighters.instructions');
     }
 }

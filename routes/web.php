@@ -20,8 +20,10 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('{role}/register',[App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('role.register');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/city/ajax','App\Http\Controllers\Auth\RegisterController@searchCity')->name('city.ajax');
 
 /** Settings */
+Route::group(['middleware' => ['auth','role:admin']], function () {
 Route::prefix('settings')->group(function () {
 
     Route::get('/index', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
@@ -89,7 +91,12 @@ Route::prefix('roles')->group(function () {
 
 Route::resource('events', 'App\Http\Controllers\EventsController');
 Route::post('events/update/{id}','App\Http\Controllers\EventsController@updateEvent')->name('event.update');
-Route::post('/event_user/store','App\Http\Controllers\EventController@storeEventUser')->name('event_user.store');
+
+Route::get('/events/fighters/{id}','App\Http\Controllers\EventController@showFighters')->name('event.fighters');
+Route::get('/judges','App\Http\Controllers\EventController@showAllJudges')->name('event.judges');
+Route::get('events/judge/edit/{id}','App\Http\Controllers\EventController@editJudge')->name('judge.edit');
+Route::post('events/rings/ajax','App\Http\Controllers\EventController@checkEventRings')->name('event.rings');
+Route::post('events/judge/store/{id}','App\Http\Controllers\EventController@storeJudgeEventRing')->name('judge_event_ring.store');
 
 Route::prefix('users')->group(function () {
 
@@ -105,6 +112,10 @@ Route::get('send_whatsapp_push_notification','App\Http\Controllers\ChannelsContr
 Route::get('/draw', [App\Http\Controllers\TournamentDrawController::class, 'draw'])->name('tournament.draws');
 Route::post('draws/store', [App\Http\Controllers\TournamentDrawController::class, 'store'])->name('tournament.draws.store');
 
+});
 
+Route::post('/event_user/store','App\Http\Controllers\EventController@storeEventUser')->name('event_user.store');
 
-
+Route::group(['middleware' => ['auth','role:fighter']], function () {
+    Route::get('tournament_instructions','App\Http\Controllers\EventController@showFighterInstructions')->name('fighter.instructions');
+});

@@ -8,6 +8,7 @@
 </style>
 @endpush
 @section('content')
+@include('elements.settings_section')
 <div class="section-header">
 
     <h1>Dashboard</h1>

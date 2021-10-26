@@ -72,6 +72,7 @@ class EventsController extends Controller
         $event->age_category_id = $request->age_category_id;
         $event->weight_category_id = $request->weight_category_id;
         $event->location = $request->location;
+        $event->no_of_rings = $request->no_of_rings;
         $event->sponsors_ids = json_encode($request->sponsors_ids);
         $event->allowances_ids = json_encode($request->allowances_ids);
         $event->save();
@@ -149,6 +150,7 @@ class EventsController extends Controller
         $event->age_category_id = $request->age_category_id;
         $event->weight_category_id = $request->weight_category_id;
         $event->location = $request->location;
+        $event->no_of_rings = $request->no_of_rings;
         $event->sponsors_ids = json_encode($request->sponsors_ids);
         $event->allowances_ids = json_encode($request->allowances_ids);
         $event->update();

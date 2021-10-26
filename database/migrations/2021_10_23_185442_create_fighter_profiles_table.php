@@ -27,6 +27,8 @@ class CreateFighterProfilesTable extends Migration
             $table->string('instagram_id')->nullable();
             $table->string('blood_group');
             $table->string('state');
+            $table->string('city');
+            $table->enum('terms_and_conditions',[0,1])->default(0);
             $table->unsignedBigInteger('ranking_id')->unsigned()->index()->nullable();
             $table->foreign('ranking_id')->references('id')->on('extra_ranking_points')->onDelete('cascade');
             $table->timestamps();

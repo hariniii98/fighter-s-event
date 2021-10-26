@@ -138,7 +138,13 @@
                             <div class="form-group row align-items-center">
                                 <label for="location" class="form-control-label col-sm-3 text-md-right">Location<span class="text-danger"> *</span></label>
                                 <div class="col-sm-6 col-md-9">
-                                <input type="test" name="location" class="form-control" id="location" autocomplete="off" required>
+                                <input type="text" name="location" class="form-control" id="location" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-center">
+                                <label for="no_of_rings" class="form-control-label col-sm-3 text-md-right">Number of rings<span class="text-danger"> *</span></label>
+                                <div class="col-sm-6 col-md-9">
+                                <input type="number" name="no_of_rings" class="form-control" id="no_of_rings" autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">

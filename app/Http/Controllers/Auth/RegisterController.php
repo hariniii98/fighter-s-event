@@ -11,6 +11,7 @@ use App\Models\Role;
 use App\Models\FighterProfile;
 use Carbon\Carbon;
 use Twilio\Rest\Client;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -62,11 +63,14 @@ class RegisterController extends Controller
                 'first_name' => ['required', 'string', 'max:255'],
                 'last_name' => ['nullable', 'string', 'max:255'],
                 'date_of_birth' => ['required'],
-                'occupation' => ['string','required', 'string', 'max:255'],
-                'club_name' => ['string','required', 'string'],
-                'address' => ['string','required', 'string'],
+                'occupation' => ['string','required', 'max:255'],
+                'club_name' => ['string','required'],
+                'coach_name' => ['string','required'],
+                'address' => ['string','required'],
                 'weight' => ['required','integer'],
                 'height' => ['required','integer'],
+                'instagram_id' => ['required'],
+                'facebook_id' => ['required'],
                 'mobile_number' => ['required','string','max:10'],
                 'mobile_number2' => ['required','string','max:10'],
                 'state' => ['required'],
@@ -76,6 +80,7 @@ class RegisterController extends Controller
                 'user_image' => ['required'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
                 'password_confirmation' => ['required_with:password|same:password|min:6'],
+                'terms_and_conditions'=>'accepted',
             ]);
         }else{
             return Validator::make($data, [
@@ -132,6 +137,7 @@ class RegisterController extends Controller
                 $fighter->ranking_id = $data['ranking'];
             }
             $fighter->state = $data['state'];
+            $fighter->city = $data['city'];
             $fighter->blood_group = $data['blood_group'];
             $fighter->save();
             $role = Role::where('slug',$data['role'])->first();
@@ -156,5 +162,16 @@ class RegisterController extends Controller
         $body = "Hello, welcome to Event";
 
         return $twilio->messages->create("whatsapp:$recipient",["from" => "whatsapp:$wa_from", "body" => $body]);
+    }
+
+    public function searchCity(Request $request){
+        $path = public_path()."/json/cities.json";
+        $json = json_decode(file_get_contents($path), true);
+        foreach($json as $key=>$row){
+            if($request->state==$key){
+                $cities = $row;
+            }
+        }
+        return $cities;
     }
 }

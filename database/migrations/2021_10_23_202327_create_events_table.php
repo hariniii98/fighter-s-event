@@ -30,6 +30,7 @@ class CreateEventsTable extends Migration
             $table->json('allowances_ids');
             $table->json('sponsors_ids');
             $table->text('description')->nullable();
+            $table->integer('no_of_rings');
             $table->timestamps();
             $table->softDeletes();
         });

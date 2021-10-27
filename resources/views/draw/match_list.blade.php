@@ -26,12 +26,13 @@
 
 
 
+
         <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
                 <h4>Matches</h4>
-
+                <span><a href="{{route('tournament.matches.create')}}" class="btn btn-icon icon-left btn-info"><i class="fas fa-plus"></i> Add</a></span>
               </div>
 
               <div class="card-body">
@@ -54,8 +55,12 @@
                     </thead>
                     <tbody>
 
+                        @php
+                            $count=count($match_ids);
 
+                        @endphp
                         @foreach($match_ids as $key=>$value)
+
                       <tr>
                         <td>
                           <div class="custom-checkbox custom-control">
@@ -73,16 +78,21 @@
                             $users=isset($user_ids[$value])?$user_ids[$value]:[];
 
                             $user_count=count($users);
+                            $user_value='';
                         @endphp
                         @if($user_count>0)
                         <td class="btn btn-danger">
                         @for($u=0;$user_count>0;$u++)
-                        <span>{{App\Models\User::find($users[$u])->first_name}}</span>
+                        @php
+                            $user_value=isset(App\Models\User::find($users[$u])->first_name)?App\Models\User::find($users[$u])->first_name:''
+                        @endphp
+                        <span>{{$user_value}}</span>
                         @if ($u==0)
                         <span class="badge badge-transparent">Vs</span>
                         @endif
 
                         @php
+
                             $user_count--;
                         @endphp
                         @endfor
@@ -95,17 +105,23 @@
                            --
                        </td>
                        @endif
-                       @if (count($match_ids)>0)
+
+
                        <td>
+                        @if (count($match_ids)>0)
                         <a href="{{route('tournament.matches.edit',[$tournament_draw_ids[$key],$value])}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a>
-                       @if (count($users)>0)
+                        @endif
+                       @if ($user_value!='')
                        <a href="{{route('tournament.matches.edit',[$tournament_draw_ids[$key],$value])}}" class="btn btn-icon icon-left btn-dark"><i class="fa fa-tasks"></i> Assign to Ring</a>
                        @endif
                        </td>
-                       @endif
+
+
+
 
 
                       </tr>
+
                       @endforeach
 
 

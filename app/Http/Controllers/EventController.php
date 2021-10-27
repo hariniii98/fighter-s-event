@@ -364,4 +364,33 @@ class EventController extends Controller
         $pdf = PDF::loadView('id_card');
         return $pdf->download('itsolutionstuff.pdf');
     }
+
+    public function createWhatsappPushNotification(){
+        $data['events'] = Event::where('end_date','>=',Carbon::today())->get();
+        $data['roles'] = Role::all();
+        return view('create_push_notification')->with($data);
+    }
+
+    public function sendWhatsappPushNotification(Request $request){
+        if($request->role_slug=='admin'||$request->role_slug=='manager'){
+            $users=User::join('role_user','role_user.user_id','=','users.id')
+                ->join('roles','role_user.role_id','=','roles.id')
+                ->select('users.*','roles.name as role')->where('roles.name',$request->role_slug)
+                ->get();
+            foreach($users as $row){
+                sendSMS('+91'.$row->mobile_number,$request->content);
+            }
+        }else{
+            $check_all_event_users = EventUser::where('event_id',$request->event_id)->pluck('user_id')->toArray();
+            $users=User::join('role_user','role_user.user_id','=','users.id')
+                ->join('roles','role_user.role_id','=','roles.id')
+                ->select('users.*','roles.name as role')->where('roles.name',$request->role_slug)->whereIn('users.id',$check_all_event_users)
+                ->get();
+            foreach($users as $row){
+                sendSMS('+91'.$row->mobile_number,$request->content);
+            }
+        }
+
+        return redirect('/home');
+    }
 }

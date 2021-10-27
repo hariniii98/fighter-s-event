@@ -63,7 +63,7 @@ gtag('config', 'UA-94034622-3');
           <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
               <div class="sidebar-brand">
-                <a href="{{url('/')}}"><img src="@yield('logo')" width="150" height="75" class="img-fluid"></a>
+                <a href="{{url('/')}}"><img src="@yield('logo')" width="150" height="75" class="img-fluid" style="height:70px;"></a>
               </div>
 
                     @include('elements.sidebar')

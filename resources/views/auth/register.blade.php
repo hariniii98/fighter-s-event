@@ -277,6 +277,7 @@ $states = CountryState::getStates('IN');
                             </span>
                             @enderror
                             </div>
+                            @if(isset($role)&&$role=="fighter")
                             <div class="form-group row px-3">
                                 <div class="col-12">
                                     <label for="terms_and_conditions">Indemnity</label><span class="text-danger"> *</span>
@@ -293,6 +294,7 @@ $states = CountryState::getStates('IN');
                                 </span>
                                 @enderror
                             </div>
+                            @endif
                         </div>
 
                         <div class="form-group">
@@ -301,9 +303,15 @@ $states = CountryState::getStates('IN');
                             </button>
                             <p align="center">Already have an account? <a href="{{route('login')}}">Login</a></p>
                         </div>
+                        @if(isset($role))
+                        <a href="{{route('register')}}" class="btn btn-primary btn-lg btn-block">
+                            Register as User
+                        </a>
+                        @else
                         <a href="{{route('role.check')}}" class="btn btn-primary btn-lg btn-block">
                             Register as Participant
                         </a>
+                        @endif
                     </form>
                 </div>
             </div>

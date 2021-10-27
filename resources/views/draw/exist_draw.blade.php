@@ -139,16 +139,17 @@ bottom:0;
     </div>
 
 
-    @if($value->stage_id==2)
+    @if(count($scores_data)==0)
 
-    @if($temp_count==($temp_user_count*2))
+
 <div class="re-draw">
     <a href="{{route('tournament.matches.redraw',$value->event_id)}}" class="btn btn-warning">Re Draw</a>
 </div>
 
 
     @endif
-    @endif
+
+
 
 
     @endforeach

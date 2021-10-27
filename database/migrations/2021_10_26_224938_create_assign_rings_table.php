@@ -15,6 +15,11 @@ class CreateAssignRingsTable extends Migration
     {
         Schema::create('assign_rings', function (Blueprint $table) {
             $table->id();
+            $table->integer('stage_id');
+            $table->integer('match_id');
+            $table->bigInteger('event_id')->unsigned();
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->integer('ring_id');
             $table->timestamps();
         });
     }

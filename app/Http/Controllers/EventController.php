@@ -19,6 +19,11 @@ use App\Models\SuperJudgeEventRing;
 use App\Models\RefereeEventRing;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use PDF;
+use SPDF;
+use Illuminate\Support\Facades\DB;
+use App\Models\Settings;
+use App\Models\Role;
 
 class EventController extends Controller
 {
@@ -348,5 +353,15 @@ class EventController extends Controller
         }
         $data['events'] = Event::where('end_date','>=',Carbon::today())->get();
         return view('referees.edit')->with($data);
+    }
+
+    public function getIdCard($id){
+        $data['settings'] = Settings::find(1);
+        $data['user'] = User::find($id);
+        $role = DB::table('role_user')->where('user_id',$id)->first();
+        $data['role'] = Role::find($role->role_id);
+        return view('id_card')->with($data);
+        $pdf = PDF::loadView('id_card');
+        return $pdf->download('itsolutionstuff.pdf');
     }
 }

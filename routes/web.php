@@ -23,9 +23,11 @@ Auth::routes();
 Route::get('{role}/register',[App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('role.register');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/city/ajax','App\Http\Controllers\Auth\RegisterController@searchCity')->name('city.ajax');
-
+Route::get('card/{id}','App\Http\Controllers\EventController@getIdCard')->name('user.id_card');
 /** Settings */
 Route::group(['middleware' => ['auth','role:admin']], function () {
+
+
 Route::prefix('settings')->group(function () {
 
     Route::get('/index', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
@@ -135,6 +137,8 @@ Route::post('matches/assing_rings/store', [App\Http\Controllers\TournamentDrawCo
 
 
 
+
+
 });
 
 Route::post('/event_user/store','App\Http\Controllers\EventController@storeEventUser')->name('event_user.store');
@@ -142,3 +146,4 @@ Route::post('/event_user/store','App\Http\Controllers\EventController@storeEvent
 Route::group(['middleware' => ['auth','role:fighter']], function () {
     Route::get('tournament_instructions','App\Http\Controllers\EventController@showFighterInstructions')->name('fighter.instructions');
 });
+

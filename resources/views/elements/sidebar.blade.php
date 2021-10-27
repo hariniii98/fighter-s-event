@@ -47,6 +47,7 @@
             <a href="{{route('tournament.matches.list')}}" class="nav-link"><i class="fas fa-user"></i><span>Matches</span></a>
 
           </li>
+
         @endrole
 
 

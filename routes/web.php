@@ -98,8 +98,17 @@ Route::get('/events/fighters/{id}','App\Http\Controllers\EventController@showFig
 Route::get('/events/fighters/profile/{id}','App\Http\Controllers\EventController@showFightersProfile')->name('event.fighters.profile');
 Route::get('/judges','App\Http\Controllers\EventController@showAllJudges')->name('event.judges');
 Route::get('events/judge/edit/{id}','App\Http\Controllers\EventController@editJudge')->name('judge.edit');
-Route::post('events/rings/ajax','App\Http\Controllers\EventController@checkEventRings')->name('event.rings');
 Route::post('events/judge/store/{id}','App\Http\Controllers\EventController@storeJudgeEventRing')->name('judge_event_ring.store');
+
+Route::get('/super_judges','App\Http\Controllers\EventController@showAllSuperJudges')->name('event.super_judges');
+Route::get('events/super_judge/edit/{id}','App\Http\Controllers\EventController@editSuperJudge')->name('super_judge.edit');
+Route::post('events/super_judge/store/{id}','App\Http\Controllers\EventController@storeSuperJudgeEventRing')->name('super_judge_event_ring.store');
+
+Route::get('/referees','App\Http\Controllers\EventController@showAllReferees')->name('event.referees');
+Route::get('events/referee/edit/{id}','App\Http\Controllers\EventController@editReferee')->name('referee.edit');
+Route::post('events/referee/store/{id}','App\Http\Controllers\EventController@storeRefereeEventRing')->name('referee_event_ring.store');
+
+Route::post('events/rings/ajax','App\Http\Controllers\EventController@checkEventRings')->name('event.rings');
 
 Route::prefix('users')->group(function () {
 

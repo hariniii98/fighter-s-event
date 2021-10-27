@@ -81,7 +81,7 @@
                   <p><strong>Facebook ID : </strong>{{$fighter_profile->facebook_id}}</p>
                   <p><strong>Instagram ID : </strong>{{$fighter_profile->instagram_id}}</p>
                   <p><strong>Blood Group : </strong>{{$fighter_profile->blood_group}}</p>
-                  <p><strong>Ranking : </strong>{{$rank_name}}</p>
+                  <p><strong>Ranking : </strong>{{$ranking_name}}</p>
               </div>
             </div>
           </div>

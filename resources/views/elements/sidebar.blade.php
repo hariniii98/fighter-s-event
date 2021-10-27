@@ -25,7 +25,9 @@
             <ul class="dropdown-menu">
               <li><a class="nav-link" href="{{route('events.index')}}">Events</a></li>
               <li><a class="nav-link" href="{{route('event_categories.index')}}">Event Categories</a></li>
-              <li><a class="nav-link" href="{{route('event.judges')}}">Assign Judges and Super judges to Event and Ring</a></li>
+              <li><a class="nav-link my-3" href="{{route('event.judges')}}">Assign Judges to Event and Ring</a></li>
+              <li><a class="nav-link my-3" href="{{route('event.super_judges')}}">Assign Super Judges to Event and Ring</a></li>
+              <li><a class="nav-link my-3" href="{{route('event.referees')}}">Assign Referees to Event and Ring</a></li>
               <li><a class="nav-link" href="{{route('allowances.index')}}">Allowances</a></li>
               <li><a class="nav-link" href="{{route('age_categories.index')}}">Age Categories</a></li>
               <li><a class="nav-link" href="{{route('weight_categories.index')}}">Weight Categories</a></li>

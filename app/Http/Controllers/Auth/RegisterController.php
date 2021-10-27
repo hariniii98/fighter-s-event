@@ -121,7 +121,6 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-
         if(isset($data['role'])&&$data['role']!=null&&$data['role']=='fighter'){
             $fighter = new FighterProfile();
             $fighter->user_id = $user->id;
@@ -147,6 +146,12 @@ class RegisterController extends Controller
             $role = config('roles.models.role')::where('slug','user')->first();  //set the user role
         }
 
+        //send welcome sms to the registered user
+        $mobile_number = '+91'.$data['mobile_number'];
+        if($mobile_number){
+            $sms_message = "Welcome!. You have been successfully registered for the event.";
+            sendSMS($mobile_number,$sms_message);
+        }
 
         $user->attachRole($role);
         return $user;

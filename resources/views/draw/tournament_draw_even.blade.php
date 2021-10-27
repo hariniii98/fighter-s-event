@@ -35,6 +35,7 @@
     </div>
   </div>
 
+
   @php
       $count=count($draw_counts);
       $m=1;
@@ -68,7 +69,19 @@
       @endphp
       @endif
 
-      <div class="@if($d%2==0) even  @else odd @endif " style="{{$value[$d]==''?'padding: 13px;!important':''}}">{{$value[$d]}}</div>
+      <div class="@if($d%2==0) even  @else odd @endif " @if(isset($direct_pass_member)) @if($d==0 && $s==2) style='' @else  style="{{$value[$d]==''?'padding: 13px;!important':''}}"@endif @else style="{{$value[$d]==''?'padding: 13px;!important':''}}"@endif>
+        @if(isset($direct_pass_member))
+        @if($d==0 && $s==2)
+        <input type="hidden" name="direct_pass_member[{{$s}}][{{$r}}][]" value="{{$direct_pass_member}}">
+        {{App\Models\User::find($direct_pass_member)->first_name}}
+        @else
+        {{$value[$d]}}
+        @endif
+        @else
+        {{$value[$d]}}
+        @endif
+
+    </div>
 
       @if ($d%2==0)
 
@@ -96,10 +109,11 @@
 
   </div>
   @if(count($tournament_draws)==0)
-  {{-- <div class="buttons">
-    <a href="javascript:void(0);" class="btn btn-primary" id="draw" type="submit">Draw</a>
-  </div> --}}
+
   <button type="submit" class="btn btn-primary">Draw</button>
+  @if (isset($direct_pass_member))
+  <a href="{{route('tournament.draws')}}" class="btn btn-warning">Undo</a>
+  @endif
   @endif
 
   </form>
@@ -114,46 +128,8 @@
 
 
 
+
     @endsection
-    @push('scripts')
-        <script>
-    //         $("#draw").on("click",function(){
-	// 	    var event_id = "{{$data['event_id']}}";
-    //         var stage_ids=[]; match_ids=[]; user_ids=[];
-    //         $('input[name^="stage"]').each(function() {
-    //             stage_ids.push($(this).val());
 
-    //         });
-    //         $('input[name^="match"]').each(function() {
-    //             match_ids.push($(this).val());
-
-    //         });
-    //         $('input[name^="user"]').each(function() {
-    //             user_ids.push($(this).val());
-
-    //         });
-
-
-
-
-
-	// 	$.ajaxSetup({
-	// 		headers: {
-	// 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	// 		}
-	// 	});
-	// 	$.ajax({
-	// 		type: "POST",
-	// 		url: "{{route('tournament.draws.store')}}",
-	// 		data:{event_id:event_id,stage_ids:stage_ids,match_ids:match_ids,user_ids:user_ids} ,
-	// 		success: function(data){
-
-    //             //window.location.href="{{url('/draw')}}";
-
-	// 		}
-	// 	});
-	// });
-        </script>
-    @endpush
 
 

@@ -301,6 +301,9 @@ $states = CountryState::getStates('IN');
                             </button>
                             <p align="center">Already have an account? <a href="{{route('login')}}">Login</a></p>
                         </div>
+                        <a href="{{route('role.check')}}" class="btn btn-primary btn-lg btn-block">
+                            Register as Participant
+                        </a>
                     </form>
                 </div>
             </div>

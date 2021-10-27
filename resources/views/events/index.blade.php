@@ -54,7 +54,6 @@
                         <th>End Date</th>
                         <th>Registration Deadline</th>
                         <th>View Fighters</th>
-                        <th>View Judges</th>
                         <th>Action</th>
                     </tr>
                     @php $s_no=1; @endphp
@@ -73,7 +72,6 @@
                         <td>{{$row->end_date}}</td>
                         <td>{{$row->registration_deadline}}</td>
                         <td><a href="{{route('event.fighters',$row->id)}}" class="btn btn-success"><i class="fa fa-eye"></i></a></td>
-                        <td><a href="{{route('event.judges',$row->id)}}" class="btn btn-success"><i class="fa fa-eye"></i></a></td>
                         <td>
                             <div class="d-flex">
                                 <a href="{{url('events/'.$row->id.'/edit')}}" class="btn btn-secondary"><i class="fa fa-pencil btn-success"></i></a>

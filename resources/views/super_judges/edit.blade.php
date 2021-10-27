@@ -10,10 +10,10 @@
 
       <div class="section-header">
 
-        <h1>Judges</h1>
+        <h1>Super Judges</h1>
         <div class="section-header-breadcrumb">
           <div class="breadcrumb-item active"><a href="{{url('/')}}">Events</a></div>
-          <div class="breadcrumb-item">Judges</div>
+          <div class="breadcrumb-item">Super Judges</div>
         </div>
       </div>
 
@@ -24,17 +24,18 @@
             <div class="row">
 
                 <div class="col-md-12">
-                    <form id="setting-form" method="POST" action="{{route('judge_event_ring.store',$judge_id)}}" enctype="multipart/form-data">
+                    <form id="setting-form" method="POST" action="{{route('super_judge_event_ring.store',$judge_id)}}" enctype="multipart/form-data">
                     @csrf
                         <div class="card" id="settings-card">
                         <div class="card-header">
-                        <h4>Edit Judge {{$judge->first_name}}&nbsp;{{$judge->last_name}}</h4>
+                        <h4>Edit Super Judge {{$judge->first_name}}&nbsp;{{$judge->last_name}}</h4>
                         </div>
                         <div class="card-body">
                             <div class="form-group row align-items-center">
                                 <label for="event_id" class="form-control-label col-sm-3 text-md-right">Event Name<span class="text-danger"> *</span></label>
                                 <div class="col-sm-6 col-md-9">
                                 <select name="event_id" class="form-control" id="event_id" required>
+
                                     <option value="{{isset($check_judge->event_id)?$check_judge->event_id:''}}" @if(isset($check_judge)&&$check_judge!=null) selected @endif>{{isset($event_name)?$event_name:'--select--'}}</option>
                                     @foreach($events as $event)
                                     @if(isset($check_judge)&&$check_judge!=null&&$check_judge->event_id!=$event->id)

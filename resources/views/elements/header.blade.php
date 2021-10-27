@@ -194,7 +194,7 @@
         </div>
       </li> --}}
       <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-        <img alt="image" src="{{asset('assets/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
+        <img alt="image" src="{{asset('assets/images/user_images/'.auth()->user()->user_image)}}" class="rounded-circle mr-1">
         <div class="d-sm-none d-lg-inline-block">Hi, {{isset(auth()->user()->first_name)?auth()->user()->first_name:''}}&nbsp;{{isset(auth()->user()->last_name)?auth()->user()->last_name:''}}</div></a>
         <div class="dropdown-menu dropdown-menu-right">
           {{-- <a href="features-profile.html" class="dropdown-item has-icon">

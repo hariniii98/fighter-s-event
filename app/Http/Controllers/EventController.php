@@ -13,7 +13,10 @@ use App\Models\User;
 use App\Notifications\WhatsappPushNotification;
 use Auth;
 use App\Models\ExtraRankingPoint;
+use App\Models\FighterProfile;
 use App\Models\JudgeEventRing;
+use App\Models\SuperJudgeEventRing;
+use App\Models\RefereeEventRing;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -205,6 +208,18 @@ class EventController extends Controller
         return view('fighters.index')->with($data);
     }
 
+    public function showFightersProfile($id){
+        $data['fighter'] = User::find($id);
+        $data['fighter_profile'] = FighterProfile::where('user_id',$id)->first();
+        if(isset($data['fighter_profile']->ranking_id)){
+            $data['ranking_name'] = ExtraRankingPoint::find($data['fighter_profile']->ranking_id)->value('name');
+        }else{
+            $data['ranking_name'] = 'None';
+        }
+
+        return view('fighters.profile')->with($data);
+    }
+
     public function showAllJudges(){
         $data['judges']=User::join('role_user','role_user.user_id','=','users.id')
                ->join('roles','role_user.role_id','=','roles.id')
@@ -216,6 +231,7 @@ class EventController extends Controller
 
     public function editJudge($id){
         $data['judge_id'] = $id;
+        $data['judge'] = User::find($id);
         $data['check_judge'] = JudgeEventRing::where('judge_id',$id)->first();
         if($data['check_judge']){
              $event = Event::where('id',$data['check_judge']->event_id)->first();
@@ -239,6 +255,7 @@ class EventController extends Controller
         $check = JudgeEventRing::where('judge_id',$id)->first();
             if(isset($check)&&$check!=null){
                 $check->ring_id = $request->ring_id;
+                $check->event_id = $request->event_id;
                 $check->update();
             }else{
                 $check=new JudgeEventRing();
@@ -253,5 +270,83 @@ class EventController extends Controller
 
     public function showFighterInstructions(){
         return view('fighters.instructions');
+    }
+
+    public function showAllSuperJudges(){
+        $data['super_judges']=User::join('role_user','role_user.user_id','=','users.id')
+               ->join('roles','role_user.role_id','=','roles.id')
+               ->select('users.*','roles.name as role')->where('roles.slug','superjudge')
+               ->get();
+
+        return view('super_judges.index')->with($data);
+    }
+
+    public function storeSuperJudgeEventRing(Request $request,$id){
+        //check for existing row
+        $check = SuperJudgeEventRing::where('super_judge_id',$id)->first();
+            if(isset($check)&&$check!=null){
+                $check->event_id = $request->event_id;
+                $check->ring_id = $request->ring_id;
+                $check->update();
+            }else{
+                $check=new SuperJudgeEventRing();
+                $check->super_judge_id = $id;
+                $check->event_id = $request->event_id;
+                $check->ring_id = $request->ring_id;
+                $check->save();
+            }
+
+            return redirect(route('event.super_judges'));
+    }
+
+    public function editSuperJudge($id){
+        $data['judge_id'] = $id;
+        $data['judge'] = User::find($id);
+        $data['check_judge'] = SuperJudgeEventRing::where('super_judge_id',$id)->first();
+        if($data['check_judge']){
+             $event = Event::where('id',$data['check_judge']->event_id)->first();
+             $data['event_name'] = $event->name;
+        }
+        $data['events'] = Event::where('end_date','>=',Carbon::today())->get();
+        return view('super_judges.edit')->with($data);
+    }
+
+    public function showAllReferees(){
+        $data['referees']=User::join('role_user','role_user.user_id','=','users.id')
+               ->join('roles','role_user.role_id','=','roles.id')
+               ->select('users.*','roles.name as role')->where('roles.slug','referee')
+               ->get();
+
+        return view('referees.index')->with($data);
+    }
+
+    public function storeRefereeEventRing(Request $request,$id){
+        //check for existing row
+        $check = RefereeEventRing::where('referee_id',$id)->first();
+            if(isset($check)&&$check!=null){
+                $check->event_id = $request->event_id;
+                $check->ring_id = $request->ring_id;
+                $check->update();
+            }else{
+                $check=new RefereeEventRing();
+                $check->referee_id = $id;
+                $check->event_id = $request->event_id;
+                $check->ring_id = $request->ring_id;
+                $check->save();
+            }
+
+            return redirect(route('event.referees'));
+    }
+
+    public function editReferee($id){
+        $data['judge_id'] = $id;
+        $data['judge'] = User::find($id);
+        $data['check_judge'] = RefereeEventRing::where('referee_id',$id)->first();
+        if($data['check_judge']){
+             $event = Event::where('id',$data['check_judge']->event_id)->first();
+             $data['event_name'] = $event->name;
+        }
+        $data['events'] = Event::where('end_date','>=',Carbon::today())->get();
+        return view('referees.edit')->with($data);
     }
 }

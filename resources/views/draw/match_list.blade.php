@@ -99,8 +99,9 @@
                        <td>
                         <a href="{{route('tournament.matches.edit',[$tournament_draw_ids[$key],$value])}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a>
                        @if (count($users)>0)
-                       <a href="{{route('tournament.matches.edit',[$tournament_draw_ids[$key],$value])}}" class="btn btn-icon icon-left btn-dark"><i class="fa fa-tasks"></i> Assign to Ring</a>
+                       <a href="{{route('tournament.matches.assign_ring',[$stage_ids[$key],$value,$event_id[$key]])}}" class="btn btn-icon icon-left btn-dark"><i class="fa fa-tasks"></i>@if($assigned[$key]=="Unassigned") Assign to Ring @else Edit Ring @endif</a>
                        @endif
+                       <span class="@if($assigned[$key]=='Unassigned') btn btn-danger @else btn btn-success @endif">{{$assigned[$key]}}</span>
                        </td>
                        @endif
 

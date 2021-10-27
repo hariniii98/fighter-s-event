@@ -8,6 +8,8 @@ use App\Models\Score;
 use App\Models\TournamentDraw;
 use App\Models\User;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Assign;
+use App\Models\AssignRing;
 
 class TournamentDrawController extends Controller
 {
@@ -298,7 +300,7 @@ class TournamentDrawController extends Controller
             }
             else{
             $event=Event::find($row->event_id)->name;
-
+            $event__id=$row->event_id;
             $match_nos=json_decode($row->match_ids);
             $count=count($match_nos);
             $user_nos=json_decode($row->user_ids);
@@ -306,8 +308,14 @@ class TournamentDrawController extends Controller
 
             if(count($match_nos)>0){
                 for($i=0;$count>0;$i++){
-
+                    $check_match_ring[$i] = AssignRing::where('match_id',$match_nos[$i])->first();
+                    if($check_match_ring[$i]){
+                        $assigned[] = 'Assigned to '.$check_match_ring[$i]->ring_id;
+                    }else{
+                        $assigned[] = 'Unassigned';
+                    }
                     $event_name[]=$event;
+                    $event_id[]=$event__id;
                     $stage_ids[]=$row->stage_id;
                     $tournament_draw_ids[]=$row->id;
                     $match=$match_nos[$i];
@@ -326,7 +334,7 @@ class TournamentDrawController extends Controller
 
 
 
-        return view('draw.match_list',compact('tournament_draws','stage_ids','match_ids','user_ids','event_name','tournament_draw_ids'));
+        return view('draw.match_list',compact('tournament_draws','stage_ids','match_ids','user_ids','event_name','event_id','tournament_draw_ids','assigned'));
 
 
 
@@ -488,6 +496,7 @@ class TournamentDrawController extends Controller
 
     }
 
+
     public function stageSearch(Request $request){
         $event_id=$request->event_id;
 
@@ -572,6 +581,36 @@ class TournamentDrawController extends Controller
 
 
 
+
+
+    public function storeMatchesAssignToRings(Request $request){
+        //dd($request->match_id);
+        //check for existing column
+        $check=AssignRing::where('match_id',$request->match_id)->where('stage_id',$request->stage_id)->where('event_id',$request->event_id)->first();
+        if($check){
+            $check->ring_id = $request->ring_id;
+            $check->update();
+        }else{
+            $match = new AssignRing();
+            $match->match_id = $request->match_id;
+            $match->stage_id = $request->stage_id;
+            $match->event_id = $request->event_id;
+            $match->ring_id = $request->ring_id;
+            $match->save();
+        }
+
+
+        return redirect('/matches/list');
+    }
+
+    public function matchesAssignToRings($stage_id,$match_id,$event_id){
+        $data['check'] = AssignRing::where('match_id',$match_id)->where('stage_id',$stage_id)->where('event_id',$event_id)->first();
+        $data['stage_id'] = $stage_id;
+        $data['match_id'] = $match_id;
+        $data['event_id'] = $event_id;
+        $event = Event::find($event_id);
+        $data['rings'] = $event->no_of_rings;
+        return view('draw.assign_match_ring')->with($data);
 
     }
 }

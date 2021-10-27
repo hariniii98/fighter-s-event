@@ -78,7 +78,7 @@ gtag('config', 'UA-94034622-3');
                     <!--**********************************
                         Content body start
                     ***********************************-->
-                    <div class="main-content">
+                    <div class="main-content mb-5 pb-5">
                         <section class="section">
 
                         <!-- row -->

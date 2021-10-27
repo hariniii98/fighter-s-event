@@ -5,6 +5,7 @@
         width:50px !important;
         height:50px !important;
     }
+
 </style>
 @endpush
 @section('content')
@@ -70,17 +71,32 @@
                                         <p>Round1</p>
                                         <div class="form-group col-12">
                                             <label for="score_round1">Score</label><span class="text-danger"> *</span>
-                                            <input id="score_round1" type="number" class="form-control" name="score[]" autocomplete="off">
+                                            <input type="radio" id="round1_score_user1" name="round1_score_user1[]" value="8">
+                                            <label for="round1_score_user1" class="mr-3">8</label>
+                                            <input type="radio" id="round1_score_user1" name="round1_score_user1[]" value="9">
+                                            <label for="round1_score_user1" class="mr-3">9</label>
+                                            <input type="radio" id="round1_score_user1" name="round1_score_user1[]" value="10">
+                                            <label for="round2_score_user1" class="mr-3">10</label>
                                         </div>
                                         <p>Round2</p>
                                         <div class="form-group col-12">
                                             <label for="score_round2">Score</label><span class="text-danger"> *</span>
-                                            <input id="score_round2" type="number" class="form-control" name="score[]" autocomplete="off">
+                                            <input type="radio" id="round2_score_user1" name="round2_score_user1[]" value="8">
+                                            <label for="round2_score_user1" class="mr-3">8</label>
+                                            <input type="radio" id="round2_score_user1" name="round2_score_user1[]" value="9">
+                                            <label for="round2_score_user1" class="mr-3">9</label>
+                                            <input type="radio" id="round2_score_user1" name="round2_score_user1[]" value="10">
+                                            <label for="round2_score_user1" class="mr-3">10</label>
                                         </div>
                                         <p>Round3</p>
                                         <div class="form-group col-12">
                                             <label for="score_round3">Score</label><span class="text-danger"> *</span>
-                                            <input id="score_round3" type="number" class="form-control" name="score[]" autocomplete="off">
+                                            <input type="radio" id="round3_score_user1" name="round3_score_user1[]" value="8">
+                                            <label for="round3_score_user1" class="mr-3">8</label>
+                                            <input type="radio" id="round3_score_user1" name="round3_score_user1[]" value="9">
+                                            <label for="round3_score_user1" class="mr-3">9</label>
+                                            <input type="radio" id="round3_score_user1" name="round3_score_user1[]" value="10">
+                                            <label for="round3_score_user1" class="mr-3">10</label>
                                         </div>
                                     </div>
                                 </div>
@@ -92,20 +108,98 @@
                                         <p>Round1</p>
                                         <div class="form-group col-12">
                                             <label for="score_round1">Score</label><span class="text-danger"> *</span>
-                                            <input id="score_round1" type="number" class="form-control" name="score[]" autocomplete="off">
+                                            <input type="radio" id="round1_score_user2" name="round1_score_user2[]" value="8">
+                                            <label for="round1_score_user2" class="mr-3">8</label>
+                                            <input type="radio" id="round1_score_user2" name="round1_score_user2[]" value="9">
+                                            <label for="round1_score_user2" class="mr-3">9</label>
+                                            <input type="radio" id="round1_score_user2" name="round1_score_user2[]" value="10">
+                                            <label for="round1_score_user2" class="mr-3">10</label>
                                         </div>
                                         <p>Round2</p>
                                         <div class="form-group col-12">
                                             <label for="score_round2">Score</label><span class="text-danger"> *</span>
-                                            <input id="score_round2" type="number" class="form-control" name="score[]" autocomplete="off">
+                                            <input type="radio" id="round2_score_user2" name="round2_score_user2[]" value="8">
+                                            <label for="round2_score_user2" class="mr-3">8</label>
+                                            <input type="radio" id="round2_score_user2" name="round2_score_user2[]" value="9">
+                                            <label for="round2_score_user2" class="mr-3">9</label>
+                                            <input type="radio" id="round2_score_user2" name="round2_score_user2[]" value="10">
+                                            <label for="round2_score_user2" class="mr-3">10</label>
                                         </div>
                                         <p>Round3</p>
                                         <div class="form-group col-12">
                                             <label for="score_round3">Score</label><span class="text-danger"> *</span>
-                                            <input id="score_round3" type="number" class="form-control" name="score[]" autocomplete="off">
+                                            <input type="radio" id="round3_score_user2" name="round3_score_user2[]" value="8">
+                                            <label for="round3_score_user2" class="mr-3">8</label>
+                                            <input type="radio" id="round3_score_user2" name="round3_score_user2[]" value="9">
+                                            <label for="round3_score_user2" class="mr-3">9</label>
+                                            <input type="radio" id="round3_score_user2" name="round3_score_user2[]" value="10">
+                                            <label for="round3_score_user2" class="mr-3">10</label>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="remarks">Remarks</label><span class="text-danger"> *</span>
+                                <textarea name="remarks[]" class="form-control" id="remarks" col="5" rows="10"></textarea>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <input type="radio" id="TKO" name="technique[]" value="TKO">
+                                <label for="TKO" class="mr-3">TKO</label>
+                                <input type="radio" id="KO" name="technique[]" value="KO">
+                                <label for="KO" class="mr-3">KO</label>
+                                <input type="radio" id="SD" name="technique[]" value="SD">
+                                <label for="SD" class="mr-3">SD</label>
+                                <input type="radio" id="UD" name="technique[]" value="UD">
+                                <label for="UD" class="mr-3">UD</label>
+                                <input type="radio" id="SUB" name="technique[]" value="SUB">
+                                <label for="SUB" class="mr-3">SUB</label>
+                                <input type="radio" id="DRAW" name="technique[]" value="DRAW">
+                                <label for="DRAW" class="mr-3">DRAW</label>
+                                <input type="radio" id="DRAW" name="technique[]" value="OTHERS">
+                                <label for="OTHERS" class="mr-3">OTHERS</label>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                Submit
+                                </button>
+                            </div>
+                        </div>
+                        </form>
+
+                    </div>
+                </div>
+            @endrole
+            @role('superjudge')
+            <div class="card">
+                <div class="card-header">
+                    <h4>Update remarks and technique</h4>
+                </div>
+                <div class="card-body">
+                    <div id="accordion">
+
+                        <form method="POST" action="" enctype="multipart/form-data">
+                            @csrf
+                        <div class="row">
+
+                            <div class="col-12">
+                                <label for="remarks">Remarks</label><span class="text-danger"> *</span>
+                                <textarea name="remarks[]" class="form-control" id="remarks" col="20" rows="10"></textarea>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <input type="radio" id="TKO" name="technique[]" value="TKO">
+                                <label for="TKO" class="mr-3">TKO</label>
+                                <input type="radio" id="KO" name="technique[]" value="KO">
+                                <label for="KO" class="mr-3">KO</label>
+                                <input type="radio" id="SD" name="technique[]" value="SD">
+                                <label for="SD" class="mr-3">SD</label>
+                                <input type="radio" id="UD" name="technique[]" value="UD">
+                                <label for="UD" class="mr-3">UD</label>
+                                <input type="radio" id="SUB" name="technique[]" value="SUB">
+                                <label for="SUB" class="mr-3">SUB</label>
+                                <input type="radio" id="DRAW" name="technique[]" value="DRAW">
+                                <label for="DRAW" class="mr-3">DRAW</label>
+                                <input type="radio" id="DRAW" name="technique[]" value="OTHERS">
+                                <label for="OTHERS" class="mr-3">OTHERS</label>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-lg btn-block">

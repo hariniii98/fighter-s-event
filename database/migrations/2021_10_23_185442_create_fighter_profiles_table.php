@@ -22,6 +22,7 @@ class CreateFighterProfilesTable extends Migration
             $table->integer('height');
             $table->float('weight');
             $table->string('club_name');
+            $table->string('coach_name');
             $table->string('address');
             $table->string('facebook_id')->nullable();
             $table->string('instagram_id')->nullable();

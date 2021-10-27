@@ -14,15 +14,15 @@
 
       <div class="section-header">
 
-        <h1>Fighters</h1>
+        <h1>Super Judges</h1>
         <div class="section-header-breadcrumb">
           <div class="breadcrumb-item"><a href="{{url('/events/index')}}">Events</a></div>
-          <div class="breadcrumb-item active">Fighters</div>
+          <div class="breadcrumb-item active">Super Judges</div>
         </div>
       </div>
 
       <div class="section-body">
-        <h2 class="section-title">Fighters</h2>
+        <h2 class="section-title">Super Judges</h2>
 
 
 
@@ -30,7 +30,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h4>Fighters</h4>
+                <h4>Super Judges</h4>
                 </div>
 
               <div class="card-body">
@@ -48,12 +48,11 @@
                         <th>Last Name</th>
                         <th>Email</th>
                         <th>Mobile Number</th>
-                        <th>View Profile</th>
                         <th class="noExl">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                        @foreach($fighters as $row)
+                        @foreach($super_judges as $row)
                       <tr>
                         <td>
                           <div class="custom-checkbox custom-control">
@@ -65,8 +64,7 @@
                         <td>{{$row->last_name}}</td>
                         <td>{{$row->email}}</td>
                         <td>{{$row->mobile_number}}</td>
-                        <td><a href="{{route('event.fighters.profile',$row->id)}}" class="btn btn-success"><i class="fa fa-eye"></i></a></td>
-                        <td class="noExl"><a href="{{route('users.edit',$row->id)}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a></td>
+                        <td class="noExl"><a href="{{route('super_judge.edit',$row->id)}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a></td>
                       </tr>
                       @endforeach
 
@@ -94,28 +92,6 @@
 
   <!-- Export to Excel/Csv -->
   <script src="{{asset('assets/js/jquery.table2excel.js')}}"></script>
-  <script>
-    $(function() {
-        $(".exportToExcel").click(function(e){
 
-            var table = $('.table2excel');
-
-            if(table && table.length){
-                var preserveColors = (table.hasClass('table2excel_with_colors') ? true : false);
-                $(table).table2excel({
-                    exclude: ".noExl",
-                    name: "Excel Document Name",
-                    filename: "UserList" + new Date().toISOString().replace(/[\-\:\.]/g, "") + ".xls",
-                    fileext: ".xls",
-                    exclude_img: true,
-                    exclude_links: true,
-                    exclude_inputs: true,
-                    preserveColors: preserveColors
-                });
-            }
-        });
-
-    });
-</script>
 @endpush
 

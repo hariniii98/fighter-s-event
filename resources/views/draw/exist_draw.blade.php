@@ -27,6 +27,10 @@
         justify-content: center;
         text-align: center;
     }
+    .re-draw{
+        position:absolute;
+bottom:0;
+    }
 </style>
 @endpush
 
@@ -78,12 +82,20 @@
             $user_key=$users[$d];
 
             $user_count=count($user_key);
+            $temp_user_count=$user_count;
 
         @endphp
 
 
       @for($u=0;$user_count>0;$u++)
-      <div class="@if($u%2==0) even @else odd @endif" >{{$instance->userName($user_key[$u])}}</div>
+      <div class="@if($u%2==0) even @else odd @endif" >
+        @if ($user_key[$u]!='')
+            {{$instance->userName($user_key[$u])}}
+            @else
+            <span>&nbsp;&nbsp;</span>
+        @endif
+
+    </div>
       @php
       $user_count--;
 
@@ -127,10 +139,19 @@
     </div>
 
 
+    @if($value->stage_id==2)
+
+    @if($temp_count==($temp_user_count*2))
+<div class="re-draw">
+    <a href="{{route('tournament.matches.redraw',$value->event_id)}}" class="btn btn-warning">Re Draw</a>
+</div>
+
+
+    @endif
+    @endif
 
 
     @endforeach
-
 
   </div>
 

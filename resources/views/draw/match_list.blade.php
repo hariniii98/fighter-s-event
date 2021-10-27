@@ -97,9 +97,9 @@
                        @endif
                        @if (count($match_ids)>0)
                        <td>
-                        <a href="{{route('tournament.matches.edit',$stage_ids[$key])}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a>
+                        <a href="{{route('tournament.matches.edit',[$tournament_draw_ids[$key],$value])}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a>
                        @if (count($users)>0)
-                       <a href="{{route('tournament.matches.edit',$stage_ids[$key])}}" class="btn btn-icon icon-left btn-dark"><i class="fa fa-tasks"></i> Assign to Ring</a>
+                       <a href="{{route('tournament.matches.edit',[$tournament_draw_ids[$key],$value])}}" class="btn btn-icon icon-left btn-dark"><i class="fa fa-tasks"></i> Assign to Ring</a>
                        @endif
                        </td>
                        @endif

@@ -114,7 +114,12 @@ Route::post('draws/store', [App\Http\Controllers\TournamentDrawController::class
 Route::get('matches/list', [App\Http\Controllers\TournamentDrawController::class, 'matchesList'])->name('tournament.matches.list');
 Route::get('matches/create', [App\Http\Controllers\TournamentDrawController::class, 'matchesCreate'])->name('tournament.matches.create');
 Route::get('matches/store', [App\Http\Controllers\TournamentDrawController::class, 'matchesStore'])->name('tournament.matches.store');
-Route::get('matches/edit', [App\Http\Controllers\TournamentDrawController::class, 'matchesEdit'])->name('tournament.matches.edit');
+Route::get('matches/edit/{draw_id}/{match_id}', [App\Http\Controllers\TournamentDrawController::class, 'matchesEdit'])->name('tournament.matches.edit');
+Route::post('matches/update/{id}', [App\Http\Controllers\TournamentDrawController::class, 'matchesUpdate'])->name('tournament.matches.update');
+Route::post('matches/direct_pass', [App\Http\Controllers\TournamentDrawController::class, 'matchesDirectPass'])->name('tournament.matches.direct_pass');
+Route::get('matches/redraw/{event_id}', [App\Http\Controllers\TournamentDrawController::class, 'matchesRedraw'])->name('tournament.matches.redraw');
+
+
 
 });
 

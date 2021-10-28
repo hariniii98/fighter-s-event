@@ -10,6 +10,10 @@
             <a href="{{route('fighter.instructions')}}" class="nav-link"><i class="fas fa-book"></i><span>Instructions for Touranament</span></a>
 
         </li>
+        <li>
+            <a href="{{route('fighter.report',Auth::id())}}" class="nav-link"><i class="fas fa-book"></i><span>My Results</span></a>
+
+        </li>
         @endrole
         @role('admin')
         <li class="dropdown">

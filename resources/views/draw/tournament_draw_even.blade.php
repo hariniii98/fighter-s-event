@@ -19,7 +19,10 @@
         justify-content: center;
         text-align: center;
     }
-
+    .wh-40{
+        width: 40px;
+        height:40px;
+    }
 </style>
 @endpush
 
@@ -76,7 +79,7 @@
         <input type="hidden" name="direct_pass_member[{{$s}}][{{$r}}][]" value="{{$direct_pass_member}}">
         @if($d==0 && $s==2)
         <input type="hidden" name="direct_pass_member[{{$s}}][{{$r}}][]" value="{{$direct_pass_member}}">
-        {{App\Models\User::find($direct_pass_member)->first_name}}
+        {{App\Models\User::find($direct_pass_member)->first_name}}<img src="{{App\Models\User::find($direct_pass_member)->user_image}}" class="wh-40">
         @else
         {{$value[$d]}}
         @endif

@@ -58,7 +58,11 @@
                                     @endphp
                                     @if ($count>0)
                                     @for ($i=1;$count>0;$i++)
+                                    @if(isset($check_judge->ring_id))
                                     @if ($i!=$check_judge->ring_id)
+                                    <option>{{$i}}</option>
+                                    @endif
+                                    @else
                                     <option>{{$i}}</option>
                                     @endif
 

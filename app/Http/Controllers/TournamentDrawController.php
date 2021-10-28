@@ -14,7 +14,8 @@ use App\Models\AssignRing;
 class TournamentDrawController extends Controller
 {
     /** Draw the tournament */
-    public function draw($direct_pass_member=null){
+    public function draw(Request $request,$direct_pass_member=null){
+
 
 
 
@@ -31,15 +32,50 @@ class TournamentDrawController extends Controller
         $data['last_name']=[];
         $data['id']=[];
         $member_details=[];
+        $total_member_count=0;
+
+         if(isset($request->event_id)){
+
 
 
         if(isset($direct_pass_member)){
             $tournaments_participants=EventUser::join('users','event_users.user_id','=','users.id')
             ->join('role_user','event_users.user_id','=','role_user.user_id')
             ->join('roles','role_user.role_id','=','roles.id')
-           //  ->join('payments','payments.event_user_id','=','event_users.user_id')
-           //  ->where('payments.status','completed')
-           ->join('events','event_users.event_id','=','events.id')
+            ->join('payments','payments.event_user_id','=','event_users.id')
+            ->where('payments.status','completed')
+            ->join('events','event_users.event_id','=','events.id')
+            ->where('event_users.user_id','!=',$direct_pass_member)
+            ->where('events.id',$request->event_id)
+            ->whereIn('roles.slug',['fighter'])
+            ->select('users.id','users.first_name','users.last_name','events.name as event_name','event_users.event_id')
+            ->get();
+
+        }
+        else{
+            $tournaments_participants=EventUser::join('users','event_users.user_id','=','users.id')
+                                 ->join('role_user','event_users.user_id','=','role_user.user_id')
+                                 ->join('roles','role_user.role_id','=','roles.id')
+                                 ->join('payments','payments.event_user_id','=','event_users.id')
+                                 ->join('events','event_users.event_id','=','events.id')
+                                 ->whereIn('roles.slug',['fighter'])
+                                 ->where('events.id',$request->event_id)
+                                 ->where('payments.status','completed')
+                                 ->select('users.id','users.first_name','users.last_name','events.name as event_name','event_users.event_id')
+                                 ->get();
+
+        }
+
+    }else{
+
+
+        if(isset($direct_pass_member)){
+            $tournaments_participants=EventUser::join('users','event_users.user_id','=','users.id')
+            ->join('role_user','event_users.user_id','=','role_user.user_id')
+            ->join('roles','role_user.role_id','=','roles.id')
+            ->join('payments','payments.event_user_id','=','event_users.id')
+            ->where('payments.status','completed')
+            ->join('events','event_users.event_id','=','events.id')
             ->where('event_users.user_id','!=',$direct_pass_member)
             ->whereIn('roles.slug',['fighter'])
             ->select('users.id','users.first_name','users.last_name','events.name as event_name','event_users.event_id')
@@ -50,13 +86,16 @@ class TournamentDrawController extends Controller
             $tournaments_participants=EventUser::join('users','event_users.user_id','=','users.id')
                                  ->join('role_user','event_users.user_id','=','role_user.user_id')
                                  ->join('roles','role_user.role_id','=','roles.id')
-                                //  ->join('payments','payments.event_user_id','=','event_users.user_id')
-                                //  ->where('payments.status','completed')
+                                 ->join('payments','payments.event_user_id','=','event_users.id')
                                  ->join('events','event_users.event_id','=','events.id')
                                  ->whereIn('roles.slug',['fighter'])
+                                 ->where('payments.status','completed')
                                  ->select('users.id','users.first_name','users.last_name','events.name as event_name','event_users.event_id')
                                  ->get();
+
         }
+
+    }
 
 
 
@@ -210,10 +249,9 @@ class TournamentDrawController extends Controller
 
 
         $scores_data=Score::join('tournament_draws','scores.event_id','=','tournament_draws.event_id')
-            ->join('super_judge_decisions','super_judge_decisions.event_id','=','tournament_draws.event_id')
             ->where('scores.event_id',$event_id)
             ->where('scores.stage_id',$stage_id)
-            ->groupBy('super_judge_decisions.match_id')
+            ->groupBy('scores.match_id')
             ->get();
 
 
@@ -344,6 +382,14 @@ class TournamentDrawController extends Controller
         return $user_name;
 
     }
+    public function userImage($id){
+
+
+        $image=User::find($id)->user_image;
+
+        return $image;
+
+    }
     public function matchesList(){
 
         $tournament_draws=TournamentDraw::get(); // 1 event now
@@ -419,8 +465,8 @@ class TournamentDrawController extends Controller
         $tournaments_participants=EventUser::join('users','event_users.user_id','=','users.id')
         ->join('role_user','event_users.user_id','=','role_user.user_id')
         ->join('roles','role_user.role_id','=','roles.id')
-       //  ->join('payments','payments.event_user_id','=','event_users.user_id')
-       //  ->where('payments.status','completed')
+        ->join('payments','payments.event_user_id','=','event_users.id')
+        ->where('payments.status','completed')
         ->join('events','event_users.event_id','=','events.id')
         ->whereIn('roles.slug',['fighter'])
         ->select('users.id','users.first_name','users.last_name','events.name as event_name','event_users.event_id')
@@ -443,8 +489,8 @@ class TournamentDrawController extends Controller
         $tournaments_participants=EventUser::join('users','event_users.user_id','=','users.id')
                                  ->join('role_user','event_users.user_id','=','role_user.user_id')
                                  ->join('roles','role_user.role_id','=','roles.id')
-                                //  ->join('payments','payments.event_user_id','=','event_users.user_id')
-                                //  ->where('payments.status','completed')
+                                  ->join('payments','payments.event_user_id','=','event_users.id')
+                                 ->where('payments.status','completed')
                                  ->join('events','event_users.event_id','=','events.id')
                                  ->whereIn('roles.slug',['fighter'])
                                  ->select('users.id','users.first_name','users.last_name','events.name as event_name','event_users.event_id')
@@ -665,6 +711,29 @@ class TournamentDrawController extends Controller
         $event = Event::find($event_id);
         $data['rings'] = $event->no_of_rings;
         return view('draw.assign_match_ring')->with($data);
+
+    }
+
+    public function userDirectPass($tournament_draws,$user){
+
+
+        $tournament_count=count($tournament_draws);
+
+
+        $user_ids=[];$is_exist=false;
+        foreach($tournament_draws as $row){
+
+            $user_ids=$this->drawJsonDecode($row->user_ids);
+            if(array_search($user[0],$user_ids)){
+                $is_exist=true;
+                return $is_exist;
+            }
+
+
+
+        }
+        return $is_exist;
+
 
     }
 }

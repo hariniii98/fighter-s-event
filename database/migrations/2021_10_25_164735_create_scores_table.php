@@ -20,6 +20,7 @@ class CreateScoresTable extends Migration
             $table->integer('match_id');
             $table->bigInteger('judge_id')->unsigned();
             $table->text('score_details');
+            $table->text('remarks')->nullable();
             $table->foreign('judge_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->timestamps();

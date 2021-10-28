@@ -58,6 +58,7 @@
                         @php
                             $count=count($match_ids);
 
+
                         @endphp
                         @foreach($match_ids as $key=>$value)
 
@@ -112,8 +113,6 @@
                         <a href="{{route('tournament.matches.edit',[$tournament_draw_ids[$key],$value])}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a>
 
                         @endif
-                       @if ($user_value!='')
-                       <a href="{{route('tournament.matches.edit',[$tournament_draw_ids[$key],$value])}}" class="btn btn-icon icon-left btn-dark"><i class="fa fa-tasks"></i> Assign to Ring</a>
 
                        @if (count($users)>0)
                        <a href="{{route('tournament.matches.assign_ring',[$stage_ids[$key],$value,$event_id[$key]])}}" class="btn btn-icon icon-left btn-dark"><i class="fa fa-tasks"></i>@if($assigned[$key]=="Unassigned") Assign to Ring @else Edit Ring @endif</a>

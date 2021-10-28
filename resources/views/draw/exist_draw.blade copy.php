@@ -59,8 +59,6 @@ bottom:0;
      $instance=new App\Http\Controllers\TournamentDrawController();
      $matches=$instance->drawJsonDecode($value->match_ids);
      $users=$instance->drawJsonDecode($value->user_ids);
-     $scores_data=$instance->scoreStage($value->event_id,$value->stage_id);
-
 
     @endphp
 
@@ -71,20 +69,16 @@ bottom:0;
 
 
 
-
     @endphp
-  @if(count($scores_data)>0 & $value->stage_id==1)
-  <h5>Matches In Progress</h5>
-  @endif
+
+
     <!-- Stage -->
     <div class="container col-sm-1">
-
         <!-- Match -->
         @if(count($users)>0)
       @for($d=0;$draw_count>0;$d++)
 
         @php
-
             $user_key=$users[$d];
 
             $user_count=count($user_key);
@@ -127,7 +121,7 @@ bottom:0;
             $temp_count=2;
         }
 
-
+        //$temp_count=($temp_count!=1)?$temp_count+2:$temp_count+1;
 
 
           $exit_count=$temp_count;
@@ -144,19 +138,12 @@ bottom:0;
 
     </div>
 
-    @if ($value->stage_id==1 & count($scores_data)==0)
-    <div class="re-draw">
-        <a href="{{route('tournament.matches.redraw',[$value->event_id,$value->stage_id])}}" class="btn btn-primary">Re Draw the Stage {{$value->stage_id}}</a>
-    </div>
-    @endif
-    @if(count($scores_data)==$temp_count)
+
+    @if(count($scores_data)==0)
+
 
 <div class="re-draw">
-    <a href="{{route('tournament.matches.redraw',[$value->event_id,$value->stage_id])}}" class="btn btn-primary">Re Draw the Stage {{$value->stage_id}}</a>
-    @if (count($scores_data)%2!=0 & count($scores_data)>0)
-    <a href="{{route('tournament.direct_pass',[$value->event_id,$value->stage_id])}}" class="btn btn-warning">Direct Pass</a>
-    @endif
-
+    <a href="{{route('tournament.matches.redraw',$value->event_id)}}" class="btn btn-warning">Re Draw</a>
 </div>
 
 

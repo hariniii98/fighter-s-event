@@ -15,10 +15,13 @@ class CreateScoresTable extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('tournament_draw_id')->unsigned();
+            $table->bigInteger('event_id')->unsigned();
+            $table->integer('stage_id');
+            $table->integer('match_id');
             $table->bigInteger('judge_id')->unsigned();
             $table->text('score_details');
             $table->foreign('judge_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->timestamps();
         });
     }

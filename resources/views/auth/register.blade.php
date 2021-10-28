@@ -333,6 +333,7 @@ $states = CountryState::getStates('IN');
         data:{state:state},
         success: function(data){
             $.each(data, function(key, value) {
+                $('#city').empty();
                 $('#city').append($("<option></option>")
                                 .attr("value", value)
                                 .text(value));

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EventUser;
 use App\Models\ExtraRankingPoint;
+use App\Models\FighterProfile;
 use App\Models\Score;
 use App\Models\SuperJudgeDecision;
 use App\Models\TournamentDraw;
@@ -149,9 +150,88 @@ class SuperJudgeDecisionController extends Controller
         ->select('users.id','users.first_name','users.last_name')
         ->get();
 
-        $extra_rankings=ExtraRankingPoint::where('');
+        $count=count($fighters);
+        $additional_points=[];
+        $scores_arr=[];$event_arr=[];$round_arr=[];$user_arr=[];
+        foreach($fighters as $row){
 
-        dd($fighters);
+            /** Additional ponits */
+            $extra_rankings=FighterProfile::join('extra_ranking_points','extra_ranking_points.id','=','fighter_profiles.ranking_id')
+            ->join('event_users','event_users.user_id','=','fighter_profiles.user_id')
+            ->where('fighter_profiles.user_id',$row->id)
+            ->first();
+
+            if(in_array($row->user_id,$user_arr)==false){
+                $user_arr[]=$row->id;
+            }
+
+            if(isset($extra_rankings)){
+                if(in_array($extra_rankings->event_id,$event_arr)==false){
+                    $event_arr[]=$extra_rankings->event_id;
+                }
+
+                $additional_points[$row->id]=$extra_rankings->additional_points;
+
+
+            }
+            else{
+                $additional_points[$row->id]=0;
+            }
+
+
+
+        }
+        /** Match scores */
+
+    $count=count($event_arr);
+    $score_user_arr=[];
+     for($e=0;$count>0;$e++){
+
+        $scores=Score::where('event_id',$event_arr[$e])->get();
+        $user_count=count($user_arr);
+
+
+
+            for($u=0;$user_count>0;$u++){
+
+
+            foreach($scores as $score){
+
+                   $user_json_decode=json_decode($score->score_details);
+
+
+                   if(isset($user_json_decode[$u])){
+                    $round_arr[$user_arr[$u]][]=($user_json_decode[$u]->round1+$user_json_decode[$u]->round2+$user_json_decode[$u]->round3);
+                    if(in_array($user_arr[$u],$score_user_arr)==false){
+                     $score_user_arr[]=$user_arr[$u];
+                    }
+                   }
+
+
+
+
+
+            // if(count($scores)>0){
+            //     dd($scores);
+            // }
+        }
+
+        $user_count--;
+    }
+
+
+        $count--;
+    }
+    $total_score='';$user=[];$rank_user=[];
+      foreach($score_user_arr as $key){
+
+        $total_score=array_sum($round_arr[$key]) + $additional_points[$key];
+        $rank_user[$total_score]=$key;
+        $user[]=$key;
+      }
+      krsort($rank_user);
+
+
 
 //         $count=count($fighters);
 //         foreach($fighters as $row){
@@ -169,7 +249,7 @@ class SuperJudgeDecisionController extends Controller
 
 
 
-        return view('player.rankings');
+        return view('player.rankings',compact('rank_user','user'));
 
     }
 

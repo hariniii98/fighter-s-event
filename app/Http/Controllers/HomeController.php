@@ -11,8 +11,8 @@ use App\Models\Event;
 use App\Models\EventUser;
 use App\Models\JudgeEventRing;
 use App\Models\SuperJudgeEventRing;
-use Auth;
 use CountryState;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -39,6 +39,7 @@ class HomeController extends Controller
         ->select('assign_rings.event_id','assign_rings.stage_id','assign_rings.match_id')->where('judge_event_rings.judge_id',Auth::id())->get();
         if($request->match_id){
         $data['judge_matches_list']=JudgeEventRing::join('assign_rings','assign_rings.ring_id','=','judge_event_rings.ring_id')
+
         ->select('assign_rings.event_id','assign_rings.stage_id','assign_rings.match_id')->where('assign_rings.match_id',$request->match_id)->where('judge_event_rings.judge_id',Auth::id())->get();
         }else{
             $data['judge_matches_list']=array();
@@ -55,6 +56,7 @@ class HomeController extends Controller
         }else{
             $data['super_judge_matches_list']=array();
         }
+
 
 
         return view('home')->with($data);

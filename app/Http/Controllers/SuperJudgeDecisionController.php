@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EventUser;
+use App\Models\ExtraRankingPoint;
 use App\Models\Score;
 use App\Models\SuperJudgeDecision;
 use App\Models\TournamentDraw;
@@ -148,9 +149,13 @@ class SuperJudgeDecisionController extends Controller
         ->select('users.id','users.first_name','users.last_name')
         ->get();
 
+        $extra_rankings=ExtraRankingPoint::where('');
+
+        dd($fighters);
+
 //         $count=count($fighters);
 //         foreach($fighters as $row){
-//             $scores=Score::where('score_details->"$.user_id"', $row->id)->get();
+//             $scores=Score::whereJsonContains('score_details', [['user_id' =>2]])->get();
 //             $count=count($scores);
 //             if($count>0){
 

@@ -152,9 +152,10 @@ Route::post('/event_user/store','App\Http\Controllers\EventController@storeEvent
 
 Route::group(['middleware' => ['auth','role:fighter']], function () {
     Route::get('tournament_instructions','App\Http\Controllers\EventController@showFighterInstructions')->name('fighter.instructions');
+    Route::get('my_results/{id}','App\Http\Controllers\TournamentDrawController@fighterReport')->name('fighter.report');
 });
 
-
+Route::group(['middleware' => ['auth']], function () {
 Route::prefix('scores')->group(function () {
 
     Route::post('/store', [App\Http\Controllers\ScoreController::class, 'store'])->name('scores.store');
@@ -169,3 +170,4 @@ Route::prefix('super_judge_d')->group(function () {
 Route::get('/direct_pass/{event_id}/{stage_id}', [App\Http\Controllers\TournamentDrawController::class, 'directPassPage'])->name('tournament.direct_pass');
 Route::get('player/rankings', [App\Http\Controllers\SuperJudgeDecisionController::class, 'rankings'])->name('player.rankings');
 
+});

@@ -54,6 +54,14 @@
             </div>
             @endrole
             @role('judge')
+            <label>Select Match</label>
+            <select id="match_id_filter" name="match_id_filter" class="form-control">
+                @foreach($judge_matches_numbers_list as $su_list)
+                <option value="{{$su_list['match_id']}}">Match {{$su_list['match_id']}}</option>
+                @endforeach
+            </select>
+            <button type="button" class="btn btn-primary my-2" id="search">Search</button>
+
             @foreach ($judge_matches_list as $row)
             @php
 
@@ -161,12 +169,19 @@
 
                 @else
                 <div class="buttons">
-                  Already You have scored for this match
+                    <p align="center">Already You have scored for this match</p>
                 </div>
                 @endif
                 @endforeach
             @endrole
             @role('superjudge')
+            <label>Select Match</label>
+            <select id="match_id_filter" name="match_id_filter" class="form-control">
+                @foreach($super_judge_matches_numbers_list as $su_list)
+                <option value="{{$su_list['match_id']}}">Match {{$su_list['match_id']}}</option>
+                @endforeach
+            </select>
+            <button type="button" class="btn btn-primary my-2" id="search">Search</button>
             @foreach ($super_judge_matches_list as $row)
             @php
 
@@ -253,7 +268,7 @@
                 @endif
                 @else
                 <div class="buttons">
-                  Already You have scored for this match
+                  <p align="center">Already You have scored for this match</p>
                 </div>
                 @endif
 
@@ -285,4 +300,10 @@
 
         });
     </script>
+    <script>
+        $('#search').click(function(){
+            var id = $('#match_id_filter').val();
+            location.replace('home?match_id='+id);
+        });
+        </script>
 @endpush

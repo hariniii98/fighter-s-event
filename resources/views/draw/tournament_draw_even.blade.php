@@ -19,7 +19,10 @@
         justify-content: center;
         text-align: center;
     }
-
+    .wh-40{
+        width: 40px;
+        height:40px;
+    }
 </style>
 @endpush
 
@@ -104,8 +107,10 @@
         <input type="hidden" name="direct_pass_member[{{$s}}][{{$r}}][]" value="{{$direct_pass_member}}">
         @if($d==0 && $s==2)
         <input type="hidden" name="direct_pass_member[{{$s}}][{{$r}}][]" value="{{$direct_pass_member}}">
+
         <img class="rounded-circle" width="100" height="70" alt="100x100" src="{{asset('assets/images/user_images/'.$instance->userImage($direct_pass_member))}}"
         data-holder-rendered="true"><span>&nbsp;&nbsp;</span>{{App\Models\User::find($direct_pass_member)->first_name}}
+
         @else
         <img class="rounded-circle" width="100" height="70" alt="100x100" src="{{asset('assets/images/user_images/'.$instance->userImage($draw_ids[$d]))}}"
         data-holder-rendered="true"><span>&nbsp;&nbsp;</span>{{$value[$d]}}

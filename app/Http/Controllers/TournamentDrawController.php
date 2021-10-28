@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Assign;
 use App\Models\AssignRing;
+use App\Models\SuperJudgeDecision;
 
 class TournamentDrawController extends Controller
 {
@@ -714,6 +715,70 @@ class TournamentDrawController extends Controller
 
     }
 
+
+    public function fighterReport($id){
+        $matches = TournamentDraw::all();
+        $my_matches_array = array();
+        $my_matches_events_array = array();
+        $my_matches_events_ids_array = array();
+        $my_matches_stages_array = array();
+        $match_status = array();
+        $match_decision = array();
+        $my_opponents_images_array = array();
+        $my_opponents_names_array = array();
+        $opponent_match_status = array();
+        foreach($matches as $key=>$match){
+            $match_numbers[$key] = json_decode($match->match_ids);
+            $match_participants[$key] = json_decode($match->user_ids);
+                $s=0;
+                foreach($match_participants[$key] as $key1=>$row){
+                    foreach($row as $rowww){
+                        if($rowww!=$id){
+                             $opponent = User::find($rowww);
+                             $my_opponents_names_array[] = $opponent->first_name.' '.$opponent->last_name;
+                             $my_opponents_images_array[] = $opponent->user_image;
+                        }
+                    }
+                    if(count($row)==2&&in_array($id,$row)){
+                        $my_matches_array[]=(int)$match_numbers[$key][$s];
+                        $event[$key1] = Event::find($match->event_id);
+                        $my_matches_events_ids_array[] = $match->event_id;
+                         $my_matches_events_array[] = $event[$key1]->name;
+                         $my_matches_stages_array[] = $match->stage_id;
+                    }
+                    $s++;
+                }
+
+        }
+        //dd($my_matches_array,$my_matches_events_array,$my_matches_stages_array);
+        foreach($my_matches_array as $key3=>$row1){
+            $check_decision[$key3] = SuperJudgeDecision::where('match_id',$row1)->where('stage_id',$my_matches_stages_array[$key3])->where('event_id',$my_matches_events_ids_array[$key3])->first();
+            if($check_decision[$key3]){
+                $check_row[$key3] = SuperJudgeDecision::find($check_decision[$key3]->id);
+                $check_condition[$key3] = $check_row[$key3]->decision_type;
+                if($check_row[$key3]->decision_type=="can"){
+                    $match_status[] = "Cancelled";
+                    $opponent_match_status[] = "Cancelled";
+                    $match_decision[] = "CANCEL";
+                }else if($check_row[$key3]->decision_type=="draw"){
+                    $match_status[] = "Draw";
+                    $opponent_match_status[] = "Draw";
+                    $match_decision[] = "DRAW";
+                }else{
+                    if($check_row[$key3]->winner_id==3){
+                        $match_status[] = "WON";
+                        $opponent_match_status[] = "LOST";
+                        $match_decision[] = $check_row[$key3]->decision_type;
+                    }else{
+                        $match_status[] = "LOST";
+                        $opponent_match_status[] = "WON";
+                        $match_decision[] = $check_row[$key3]->decision_type;
+                    }
+                }
+            }
+        }
+        return view('fighters.my_results',compact('my_matches_array','my_matches_events_ids_array','my_matches_events_array','my_matches_stages_array','match_status','match_decision','my_opponents_images_array','my_opponents_names_array','opponent_match_status'));
+
     public function userDirectPass($tournament_draws,$user){
 
 
@@ -733,6 +798,7 @@ class TournamentDrawController extends Controller
 
         }
         return $is_exist;
+
 
 
     }

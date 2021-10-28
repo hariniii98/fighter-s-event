@@ -42,7 +42,7 @@ class RoleController extends Controller
 
         $roles=new Role();
         $roles->name=$request->role_name;
-        $roles->slug=Str::slug($request->role_name, '-');
+        $roles->slug=Str::slug($request->role_name, '');
         $roles->description=$request->role_description;
         $roles->level=$request->role_level;
         $roles->save();
@@ -87,7 +87,7 @@ class RoleController extends Controller
     {
         $roles=Role::find($id);
         $roles->name=$request->role_name;
-        $roles->slug=Str::slug($request->role_name, '-');
+        $roles->slug=Str::slug($request->role_name, '');
         $roles->description=$request->role_description;
         $roles->level=$request->role_level;
         $roles->save();

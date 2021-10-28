@@ -32,7 +32,9 @@
             <div class="card">
               <div class="card-header">
                 <h4>Matches</h4>
+                @role('admin')
                 <span><a href="{{route('tournament.matches.create')}}" class="btn btn-icon icon-left btn-info"><i class="fas fa-plus"></i> Add</a></span>
+                @endrole
               </div>
 
               <div class="card-body">
@@ -50,7 +52,9 @@
                         <th>Stage No</th>
                         <th>Match No</th>
                         <th>Participants</th>
+                        @role('admin')
                         <th>Action</th>
+                        @endrole
                       </tr>
                     </thead>
                     <tbody>
@@ -107,7 +111,7 @@
                        </td>
                        @endif
 
-
+                       @role('admin')
                        <td>
                         @if (count($match_ids)>0)
                         <a href="{{route('tournament.matches.edit',[$tournament_draw_ids[$key],$value])}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a>
@@ -120,7 +124,7 @@
                        @endif
                        <span class="@if($assigned[$key]=='Unassigned') btn btn-danger @else btn btn-success @endif">{{$assigned[$key]}}</span>
                        </td>
-
+                       @endrole
 
 
 

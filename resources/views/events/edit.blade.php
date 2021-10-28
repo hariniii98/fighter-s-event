@@ -90,7 +90,7 @@
                             <div class="form-group row align-items-center">
                                 <label for="reg_deadline" class="form-control-label col-sm-3 text-md-right">Registration Deadline</label>
                                 <div class="col-sm-6 col-md-9">
-                                <input type="date" name="reg_deadline" value="{{$event->reg_deadline}}" class="form-control" id="reg_deadline" autocomplete="off">
+                                <input type="date" name="reg_deadline" value="{{$event->reg_deadine}}" class="form-control" id="reg_deadline" autocomplete="off">
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">
@@ -157,7 +157,7 @@
                             <div class="form-group row align-items-center">
                                 <label for="no_of_rings" class="form-control-label col-sm-3 text-md-right">Number of rings<span class="text-danger"> *</span></label>
                                 <div class="col-sm-6 col-md-9">
-                                <input type="number" name="no_of_rings" class="form-control" id="no_of_rings" value="{{$event->rings}}" autocomplete="off" required>
+                                <input type="number" name="no_of_rings" class="form-control" id="no_of_rings" value="{{$event->no_of_rings}}" autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">

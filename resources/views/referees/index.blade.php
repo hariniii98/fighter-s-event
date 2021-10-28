@@ -48,7 +48,9 @@
                         <th>Last Name</th>
                         <th>Email</th>
                         <th>Mobile Number</th>
+                        @role('admin')
                         <th class="noExl">Action</th>
+                        @endrole
                       </tr>
                     </thead>
                     <tbody>
@@ -64,8 +66,10 @@
                         <td>{{$row->last_name}}</td>
                         <td>{{$row->email}}</td>
                         <td>{{$row->mobile_number}}</td>
+                        @role('admin')
                         <td class="noExl"><a href="{{route('referee.edit',$row->id)}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a></td>
-                      </tr>
+                        @endrole
+                    </tr>
                       @endforeach
 
                     </tbody>

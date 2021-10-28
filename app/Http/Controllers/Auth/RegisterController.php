@@ -71,7 +71,7 @@ class RegisterController extends Controller
                 'height' => ['required','integer'],
                 'instagram_id' => ['required'],
                 'facebook_id' => ['required'],
-                'mobile_number' => ['required','string','max:10'],
+                'mobile_number' => ['required','string','max:10', 'unique:users'],
                 'mobile_number2' => ['required','string','max:10'],
                 'state' => ['required'],
                 'ranking' =>['required'],
@@ -87,7 +87,7 @@ class RegisterController extends Controller
                 'first_name' => ['required', 'string', 'max:255'],
                 'last_name' => ['nullable', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'mobile_number' => ['required','string','max:10'],
+                'mobile_number' => ['required','string','max:10', 'unique:users'],
                 'user_image' => ['required'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
                 'password_confirmation' => ['required_with:password|same:password|min:6'],
@@ -140,7 +140,7 @@ class RegisterController extends Controller
             $fighter->blood_group = $data['blood_group'];
             $fighter->save();
             $role = Role::where('slug',$data['role'])->first();
-        }else if(isset($data['role'])&&$data['role']!="fighter"&&$data['role']!="user"){
+        }else if(isset($data['role'])&&($data['role']!="fighter"||$data['role']!="user")&&$data['role']!='admin'&&$data['role']!='manager'){
             $role = Role::where('slug',$data['role'])->first();
         }else{
             $role = config('roles.models.role')::where('slug','user')->first();  //set the user role

@@ -25,7 +25,7 @@
             <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                <h4>Event Categories <a href="{{route('event_category.create')}}" class="btn btn-primary">Add Event Category</a></h4>
+                <h4>Event Categories @role('admin') <a href="{{route('event_category.create')}}" class="btn btn-primary">Add Event Category</a> @endrole </h4>
                 <div class="card-header-form">
                     <form>
                     <div class="input-group">

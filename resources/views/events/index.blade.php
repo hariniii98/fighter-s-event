@@ -25,7 +25,7 @@
             <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                <h4>Events <a href="{{route('events.create')}}" class="btn btn-primary">Add Event</a></h4>
+                <h4>Events @role('admin') <a href="{{route('events.create')}}" class="btn btn-primary">Add Event</a>@endrole</h4>
                 <div class="card-header-form">
                     <form>
                     <div class="input-group">
@@ -54,7 +54,9 @@
                         <th>End Date</th>
                         <th>Registration Deadline</th>
                         <th>View Fighters</th>
+                        @role('admin')
                         <th>Action</th>
+                        @endrole
                     </tr>
                     @php $s_no=1; @endphp
                     @foreach($events as $row)
@@ -70,14 +72,16 @@
                         <td>{{$row->event_category_name}}</td>
                         <td>{{$row->start_date}}</td>
                         <td>{{$row->end_date}}</td>
-                        <td>{{$row->registration_deadline}}</td>
+                        <td>{{$row->reg_deadine}}</td>
                         <td><a href="{{route('event.fighters',$row->id)}}" class="btn btn-success"><i class="fa fa-eye"></i></a></td>
+                        @role('admin')
                         <td>
                             <div class="d-flex">
                                 <a href="{{url('events/'.$row->id.'/edit')}}" class="btn btn-secondary"><i class="fa fa-pencil btn-success"></i></a>
                                 <a href="{{url('events/delete'.'/'.$row->id)}}" class="btn btn-secondary" onclick="return confirm('Are you sure,you want to delete?')"><i class="fa fa-trash btn-danger"></i></a>
                             </div>
                         </td>
+                        @endrole
                     </tr>
                     @endforeach
                     </table>

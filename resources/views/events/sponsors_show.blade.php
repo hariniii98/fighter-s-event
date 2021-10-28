@@ -32,7 +32,7 @@
             <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                <h4>Sponsors <a href="{{route('sponsor.create')}}" class="btn btn-primary">Add Sponsor</a></h4>
+                <h4>Sponsors @role('admin') <a href="{{route('sponsor.create')}}" class="btn btn-primary">Add Sponsor</a> @endrole </h4>
                 <div class="card-header-form">
                     <form>
                     <div class="input-group">

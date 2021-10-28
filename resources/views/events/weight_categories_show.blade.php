@@ -25,7 +25,7 @@
             <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                <h4>Weight Categories <a href="{{route('weight_category.create')}}" class="btn btn-primary">Add Weight Category</a></h4>
+                <h4>Weight Categories @role('admin') <a href="{{route('weight_category.create')}}" class="btn btn-primary">Add Weight Category</a> @endrole </h4>
                 <div class="card-header-form">
                     <form>
                     <div class="input-group">

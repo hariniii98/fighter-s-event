@@ -31,8 +31,10 @@
             <div class="card">
               <div class="card-header">
                 <h4>Roles</h4>
+                @role('admin')
                 <span><a href="{{route('roles.create')}}" class="btn btn-icon icon-left btn-info"><i class="fas fa-plus"></i> Add</a></span>
-              </div>
+                @endrole
+            </div>
 
               <div class="card-body">
                 <div class="table-responsive">
@@ -49,7 +51,9 @@
                         <th>Slug</th>
                         <th>Description</th>
                         <th>Level</th>
+                        @role('admin')
                         <th>Action</th>
+                        @endrole
                       </tr>
                     </thead>
                     <tbody>
@@ -65,8 +69,10 @@
                         <td>{{$row->slug}}</td>
                         <td>{{$row->description}}</td>
                         <td><div class="badge badge-success">{{$row->level}}</div></td>
+                        @role('admin')
                         <td><a href="{{route('roles.edit',$row->id)}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a></td>
-                      </tr>
+                        @endrole
+                    </tr>
                       @endforeach
 
                     </tbody>

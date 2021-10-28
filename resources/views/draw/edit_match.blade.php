@@ -42,13 +42,28 @@
                     <label for="member_1" class="form-control-label col-sm-3 text-md-right">Member 1<span class="text-danger"> *</span></label>
                     <div class="col-sm-6 col-md-9">
                       <select class="form-control" name="member_1" id="member_1"  required>
-                        <option value="{{$user_list[0]}}">{{$instance->userName($user_list[0])}}</option>
+                          @if(count($user_list)>0)
+
+                        <option value="{{isset($user_list[0])?$user_list[0]:''}}">{{isset($user_list[0])?$instance->userName($user_list[0]):'--select--'}}</option>
                           @foreach ($tournaments_participants as $row)
+                          @if(isset($user_list[1]))
                            @if($user_list[0]!=$row->id)
+                          <option value="{{$row->id}}">{{$row->first_name}}</option>
+                          @endif
+                          @else
                           <option value="{{$row->id}}">{{$row->first_name}}</option>
                           @endif
 
                           @endforeach
+                          @else
+                          <option value="">--select--</option>
+                          @foreach ($tournaments_participants as $row)
+
+                            <option value="{{$row->id}}">{{$row->first_name}}</option>
+
+
+                            @endforeach
+                          @endif
                       </select>
                     </div>
                   </div>
@@ -56,13 +71,29 @@
                     <label for="member_2" class="form-control-label col-sm-3 text-md-right">Member 2<span class="text-danger"> *</span></label>
                     <div class="col-sm-6 col-md-9">
                     <select class="form-control" name="member_2" id="member_2" required>
-                        <option value="{{$user_list[1]}}">{{$instance->userName($user_list[1])}}</option>
+                        @if(count($user_list)>0)
+                        <option value="{{isset($user_list[1])?$user_list[1]:''}}">{{isset($user_list[1])?$instance->userName($user_list[1]):'--select--'}}</option>
                         @foreach ($tournaments_participants as $row)
-                        @if($user_list[1]!=$row->id)
+                        @if(isset($user_list[1]))
+                          @if($user_list[1]!=$row->id)
+                          <option value="{{$row->id}}">{{$row->first_name}}</option>
+                          @endif
+                          @else
                           <option value="{{$row->id}}">{{$row->first_name}}</option>
                           @endif
 
                           @endforeach
+
+                          @else
+                          <option value="">--select--</option>
+                          @foreach ($tournaments_participants as $row)
+
+                            <option value="{{$row->id}}">{{$row->first_name}}</option>
+
+
+                            @endforeach
+                          @endif
+
                     </select>
                     </div>
                   </div>

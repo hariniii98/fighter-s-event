@@ -127,11 +127,15 @@ Route::get('/draw', [App\Http\Controllers\TournamentDrawController::class, 'draw
 Route::post('draws/store', [App\Http\Controllers\TournamentDrawController::class, 'store'])->name('tournament.draws.store');
 Route::get('matches/list', [App\Http\Controllers\TournamentDrawController::class, 'matchesList'])->name('tournament.matches.list');
 Route::get('matches/create', [App\Http\Controllers\TournamentDrawController::class, 'matchesCreate'])->name('tournament.matches.create');
-Route::get('matches/store', [App\Http\Controllers\TournamentDrawController::class, 'matchesStore'])->name('tournament.matches.store');
+Route::post('matches/store', [App\Http\Controllers\TournamentDrawController::class, 'matchesStore'])->name('tournament.matches.store');
 Route::get('matches/edit/{draw_id}/{match_id}', [App\Http\Controllers\TournamentDrawController::class, 'matchesEdit'])->name('tournament.matches.edit');
 Route::post('matches/update/{id}', [App\Http\Controllers\TournamentDrawController::class, 'matchesUpdate'])->name('tournament.matches.update');
 Route::post('matches/direct_pass', [App\Http\Controllers\TournamentDrawController::class, 'matchesDirectPass'])->name('tournament.matches.direct_pass');
-Route::get('matches/redraw/{event_id}', [App\Http\Controllers\TournamentDrawController::class, 'matchesRedraw'])->name('tournament.matches.redraw');
+Route::get('matches/redraw/{event_id}/{stage_id}', [App\Http\Controllers\TournamentDrawController::class, 'matchesRedraw'])->name('tournament.matches.redraw');
+
+Route::post('stage/search', [App\Http\Controllers\TournamentDrawController::class, 'stageSearch'])->name('stage.search');
+Route::post('matches/auto_increment', [App\Http\Controllers\TournamentDrawController::class, 'matchNoAutoIncreament'])->name('tournament.matches.auto-increment');
+
 Route::get('matches/assing_rings/{stage_id}/{match_id}/{event_id}', [App\Http\Controllers\TournamentDrawController::class, 'matchesAssignToRings'])->name('tournament.matches.assign_ring');
 Route::post('matches/assing_rings/store', [App\Http\Controllers\TournamentDrawController::class, 'storeMatchesAssignToRings'])->name('tournament.matches.assign_ring.store');
 
@@ -145,4 +149,19 @@ Route::post('/event_user/store','App\Http\Controllers\EventController@storeEvent
 Route::group(['middleware' => ['auth','role:fighter']], function () {
     Route::get('tournament_instructions','App\Http\Controllers\EventController@showFighterInstructions')->name('fighter.instructions');
 });
+
+
+Route::prefix('scores')->group(function () {
+
+    Route::post('/store', [App\Http\Controllers\ScoreController::class, 'store'])->name('scores.store');
+
+});
+Route::prefix('super_judge_d')->group(function () {
+
+    Route::post('/store', [App\Http\Controllers\SuperJudgeDecisionController::class, 'store'])->name('super_judge_d.store');
+
+
+});
+Route::get('/direct_pass/{event_id}/{stage_id}', [App\Http\Controllers\TournamentDrawController::class, 'directPassPage'])->name('tournament.direct_pass');
+Route::get('player/rankings', [App\Http\Controllers\SuperJudgeDecisionController::class, 'rankings'])->name('player.rankings');
 

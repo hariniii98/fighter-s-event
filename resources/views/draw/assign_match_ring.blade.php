@@ -38,7 +38,7 @@
                                     <input type="number" id="stage_id" name="stage_id" value="{{$stage_id}}" style="display:none;">
                                     <input type="number" id="event_id" name="event_id" value="{{$event_id}}" style="display:none;">
                                 <select name="ring_id" class="form-control" id="ring_id" required>
-                                    <option value="{{$check->ring_id}}">{{$check->ring_id}}</option>
+                                    <option value="{{isset($check->ring_id)?$check->ring_id:''}}">{{isset($check->ring_id)?$check->ring_id:'--select--'}}</option>
                                     @for($i=1;$i<=$count;$i++)
                                     {{-- @if(isset($check) && $check->ring_id!=$i) --}}
                                     <option value="{{$i}}">{{$i}}</option>

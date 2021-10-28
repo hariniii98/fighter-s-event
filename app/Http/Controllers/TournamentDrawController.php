@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventUser;
+use App\Models\Score;
 use App\Models\TournamentDraw;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class TournamentDrawController extends Controller
 {
     /** Draw the tournament */
     public function draw($direct_pass_member=null){
+
 
 
 
@@ -170,11 +172,53 @@ class TournamentDrawController extends Controller
         }
         else{
 
+            // $scores_data=Score::join('tournament_draws','scores.tournament_draw_id','=','tournament_draws.id')
+            // ->where('tournament_draws.event_id',$data['event_id'])->get();//,'scores_data'
+
+
+
             return view('draw.exist_draw',compact('data','draw_counts','tournament_draws'));
         }
     }
 
 
+    }
+    public function directPassPage($event_id,$stage_id){
+
+
+
+
+                $tournament_draws=TournamentDraw::where('event_id',$event_id)->where('stage_id',$stage_id)->first();
+                $user_ids=$this->drawJsonDecode($tournament_draws->user_ids);
+                $total_member_count=count($user_ids);
+                $event_name=Event::find($event_id)->name;
+
+
+
+
+
+
+                        return view('draw.direct_pass',compact('user_ids','event_name'));
+
+
+
+
+
+
+    }
+    public function scoreStage($event_id,$stage_id){
+
+
+        $scores_data=Score::join('tournament_draws','scores.event_id','=','tournament_draws.event_id')
+            ->join('super_judge_decisions','super_judge_decisions.event_id','=','tournament_draws.event_id')
+            ->where('scores.event_id',$event_id)
+            ->where('scores.stage_id',$stage_id)
+            ->groupBy('super_judge_decisions.match_id')
+            ->get();
+
+
+
+            return $scores_data;
     }
 
     public function store(Request $request)
@@ -182,6 +226,17 @@ class TournamentDrawController extends Controller
         $stage_ids=isset($request->stage)?$request->stage:[];
         $match_ids=isset($request->match)?$request->match:[];
         //$user_ids=isset($request->user)?$request->user:[];
+
+
+        $s=$stage_ids[0];
+        $max_value=(string)count($match_ids[$s])+1;
+        $m_arr[]=$max_value;
+
+
+        // $match_id=($max_value+1);
+        // dd($match_id);
+
+
 
         $stage_count=count($stage_ids);
 
@@ -240,7 +295,7 @@ class TournamentDrawController extends Controller
             }
         // }
     }
-
+//dd($request->direct_pass_member);
 
         $tournament_draws=new TournamentDraw();
         $tournament_draws->event_id=$request->event_id;
@@ -254,6 +309,16 @@ class TournamentDrawController extends Controller
         $stage_count--;
 
     }
+
+    if(isset($request->direct_pass_member[$s][$max_value])){
+        $tournament_draws=new TournamentDraw();
+        $tournament_draws->event_id=$request->event_id;
+        $tournament_draws->stage_id=($s+1);
+        $tournament_draws->match_ids=json_encode($m_arr);
+        $tournament_draws->user_ids=json_encode(array($request->direct_pass_member[$s][$max_value]));
+        $tournament_draws->save();
+     }
+
 
 
     return redirect('/draw');
@@ -273,7 +338,8 @@ class TournamentDrawController extends Controller
 
     public function userName($id){
 
-        $user_name=User::find($id)->first_name;
+
+        $user_name=isset(User::find($id)->first_name)?User::find($id)->first_name:'--select--';
 
         return $user_name;
 
@@ -283,16 +349,12 @@ class TournamentDrawController extends Controller
         $tournament_draws=TournamentDraw::get(); // 1 event now
         $tournament_count=count($tournament_draws);
         $match_ids=[];$user_ids=[];
-        $stage_ids=[];$event_name=[];$tournament_draw_ids=[];
+        $stage_ids=[];$event_name=[];$tournament_draw_ids=[];$event_id=[];$assigned=[];
 
         foreach($tournament_draws as $key=>$row){
 
-            if($key==($tournament_count-1)){
 
-                break;
 
-            }
-            else{
             $event=Event::find($row->event_id)->name;
             $event__id=$row->event_id;
             $match_nos=json_decode($row->match_ids);
@@ -322,7 +384,7 @@ class TournamentDrawController extends Controller
                 }
             }
 
-        }
+
 
         }
 
@@ -347,10 +409,33 @@ class TournamentDrawController extends Controller
         $tournament_draws=$response['tournament_draws'];
         $match_id=$response['match_id'];
         $stage_id=$response['stage_id'];
+
         return view('draw.tournament_draw_even',compact('tournaments_participants','data','draw_ids','draw_names','draw_counts','tournament_draws','match_id','stage_id','direct_pass_member'));
 
 
     }
+    public function matchesCreate(){
+
+        $tournaments_participants=EventUser::join('users','event_users.user_id','=','users.id')
+        ->join('role_user','event_users.user_id','=','role_user.user_id')
+        ->join('roles','role_user.role_id','=','roles.id')
+       //  ->join('payments','payments.event_user_id','=','event_users.user_id')
+       //  ->where('payments.status','completed')
+        ->join('events','event_users.event_id','=','events.id')
+        ->whereIn('roles.slug',['fighter'])
+        ->select('users.id','users.first_name','users.last_name','events.name as event_name','event_users.event_id')
+        ->get();
+
+        $events=TournamentDraw::join('events','tournament_draws.event_id','=','events.id')
+        ->select('events.id','events.name')
+        ->groupBy('tournament_draws.event_id')->get();
+
+
+
+        return view('draw.create_match',compact('tournaments_participants','events'));
+
+    }
+
     public function matchesEdit($tournament_draw_id,$match_id){
 
         $tournament_draws=TournamentDraw::find($tournament_draw_id); // 1 event now
@@ -366,14 +451,17 @@ class TournamentDrawController extends Controller
                                  ->get();
 
         $user_ids=isset($tournament_draws->user_ids)?json_decode($tournament_draws->user_ids):[];
+        $match_ids=isset($tournament_draws->match_ids)?json_decode($tournament_draws->match_ids):[];
+
+
+        $users=[];
+
         $user_list=[];
-        $match_count=$match_id;
-        if(count($user_ids)>0){
-        for($m=0;$match_count>0;$m++){
-            $user_list=$user_ids[$m];
-            $match_count--;
-        }
-        }
+        $match_count=count($match_ids);
+
+        $key=array_search($match_id,$match_ids);
+        $user_list=isset($user_ids[$key])?$user_ids[$key]:[];
+
 
        return view('draw.edit_match',compact('tournament_draws','match_id','tournaments_participants','user_list'));
 
@@ -385,10 +473,13 @@ class TournamentDrawController extends Controller
         $user_json_decode=json_decode($tournament_draws->user_ids);
         $match_json_decode=json_decode($tournament_draws->match_ids);
         $count=count($match_json_decode);
+        $key=array_search($request->match_id,$match_json_decode);
+
+
         $user_arr=[];
         for($m=0;$count>0;$m++){
 
-            if($m==($request->match_id-1)){
+            if($m==$key){
                 $user_arr[]=array($request->member_1,$request->member_2);
             }
             else{
@@ -397,6 +488,7 @@ class TournamentDrawController extends Controller
 
             $count--;
         }
+
         $tournament_draws->user_ids=json_encode($user_arr);
 
         $tournament_draws->save();
@@ -406,10 +498,10 @@ class TournamentDrawController extends Controller
 
 
     }
-    public function matchesRedraw($event_id){
+    public function matchesRedraw($event_id,$stage_id){
 
 
-        $tournament_draws=TournamentDraw::where('event_id',$event_id)->where('stage_id','1')->first(); // stage 1 details
+        $tournament_draws=TournamentDraw::where('event_id',$event_id)->where('stage_id',$stage_id)->first();
         $user_ids=json_decode($tournament_draws->user_ids);
         $user_arr_count=count($user_ids);
         $total_user_arr=[];
@@ -461,6 +553,90 @@ class TournamentDrawController extends Controller
 
     }
 
+
+    public function stageSearch(Request $request){
+        $event_id=$request->event_id;
+
+        $stages=Event::join('tournament_draws','events.id','=','tournament_draws.event_id')
+        ->select('tournament_draws.stage_id')
+        ->get();
+
+        $html='<option value="">--select--</option>';
+        foreach($stages as $row){
+
+        $html.='<option value="'.$row->stage_id.'">Stage '.$row->stage_id.'</option>';
+
+        }
+        return response()->json($html);
+    }
+
+    public function matchNoAutoIncreament(Request $request){
+
+
+        $tournament_draws=TournamentDraw::where('event_id',$request->event_id)->where('stage_id',$request->stage_id)->first();
+        $match_ids=json_decode($tournament_draws->match_ids);
+        $max_value=max($match_ids);
+        $match_id=($max_value+1);
+
+
+        return response()->json($match_id);
+    }
+
+    public function matchesStore(Request $request){
+
+        $tournament_draws=TournamentDraw::where('event_id',$request->event)->where('stage_id',$request->stage)->first();
+        $user_ids=json_decode($tournament_draws->user_ids);
+        $match_ids=json_decode($tournament_draws->match_ids);
+        array_push($match_ids,$request->match_id);
+        $user_arr=array($request->member_1,$request->member_2);
+        array_push($user_ids,$user_arr);
+
+
+
+        $all_matches=TournamentDraw::where('event_id',$request->event)->get();
+        $stages_count=count($all_matches);
+        $row_no=1;
+
+        foreach($all_matches as $all){
+
+
+            $stage_id=($request->stage+$row_no);
+            if($stages_count>=$stage_id){
+
+            $match=TournamentDraw::where('event_id',$request->event)->where('stage_id',$stage_id)->first();
+            $match_arr=json_decode($match->match_ids);
+            $match_id_count=count($match_arr);
+
+           for($m=0;$match_id_count>0;$m++){
+
+            $match_id_inc=($match_arr[$m]+1);
+
+            $match_arr[$m]=(string)$match_id_inc;
+
+
+           $match_id_count--;
+          }
+           $match->match_ids=json_encode($match_arr);
+           $match->save();
+           $row_no++;
+        }
+
+
+        }
+        $user_json_encode=json_encode($user_ids);
+        $match_json_encode=json_encode($match_ids);
+
+        $tournament_draws->user_ids=$user_json_encode;
+        $tournament_draws->match_ids=$match_json_encode;
+        $tournament_draws->save();
+
+
+        return redirect('/matches/list');
+
+
+
+    }
+
     public function storeMatchesAssignToRings(Request $request){
         //dd($request->match_id);
         //check for existing column
@@ -489,5 +665,6 @@ class TournamentDrawController extends Controller
         $event = Event::find($event_id);
         $data['rings'] = $event->no_of_rings;
         return view('draw.assign_match_ring')->with($data);
+
     }
 }

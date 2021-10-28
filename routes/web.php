@@ -23,9 +23,11 @@ Auth::routes();
 Route::get('{role}/register',[App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('role.register');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/city/ajax','App\Http\Controllers\Auth\RegisterController@searchCity')->name('city.ajax');
-
+Route::get('card/{id}','App\Http\Controllers\EventController@getIdCard')->name('user.id_card');
 /** Settings */
 Route::group(['middleware' => ['auth','role:admin']], function () {
+
+
 Route::prefix('settings')->group(function () {
 
     Route::get('/index', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
@@ -118,8 +120,8 @@ Route::prefix('users')->group(function () {
 
 });
 Route::get('payments','App\Http\Controllers\EventController@payments')->name('payments.index');
-Route::get('create_whatsapp_push_notification','App\Http\Controllers\ChannelsController@createWhatsappPushNotification');
-Route::get('send_whatsapp_push_notification','App\Http\Controllers\ChannelsController@sendWhatsappPushNotification');
+Route::get('create_whatsapp_push_notification','App\Http\Controllers\EventController@createWhatsappPushNotification')->name('whatsapp_push_notification.create');
+Route::post('send_whatsapp_push_notification','App\Http\Controllers\EventController@sendWhatsappPushNotification')->name('whatsapp_push_notification.send');
 
 Route::get('/draw', [App\Http\Controllers\TournamentDrawController::class, 'draw'])->name('tournament.draws');
 Route::post('draws/store', [App\Http\Controllers\TournamentDrawController::class, 'store'])->name('tournament.draws.store');
@@ -148,6 +150,7 @@ Route::group(['middleware' => ['auth','role:fighter']], function () {
     Route::get('tournament_instructions','App\Http\Controllers\EventController@showFighterInstructions')->name('fighter.instructions');
 });
 
+
 Route::prefix('scores')->group(function () {
 
     Route::post('/store', [App\Http\Controllers\ScoreController::class, 'store'])->name('scores.store');
@@ -161,3 +164,4 @@ Route::prefix('super_judge_d')->group(function () {
 });
 Route::get('/direct_pass/{event_id}/{stage_id}', [App\Http\Controllers\TournamentDrawController::class, 'directPassPage'])->name('tournament.direct_pass');
 Route::get('player/rankings', [App\Http\Controllers\SuperJudgeDecisionController::class, 'rankings'])->name('player.rankings');
+

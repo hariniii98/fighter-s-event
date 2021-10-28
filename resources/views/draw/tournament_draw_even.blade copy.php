@@ -42,7 +42,6 @@
       $s=1;
       $r=1;
 
-
   @endphp
 @if($count>0)
 <form action="{{route('tournament.draws.store')}}" method="POST">
@@ -50,7 +49,6 @@
   <div class="row">
     <input type="hidden" name="event_id" value="{{$data['event_id']}}">
     @foreach($draw_counts as $key=>$value)
-    @if($s==1)
     @if($key>0)
     @php
         $draw_count=(int)$key;
@@ -73,7 +71,6 @@
 
       <div class="@if($d%2==0) even  @else odd @endif " @if(isset($direct_pass_member)) @if($d==0 && $s==2) style='' @else  style="{{$value[$d]==''?'padding: 13px;!important':''}}"@endif @else style="{{$value[$d]==''?'padding: 13px;!important':''}}"@endif>
         @if(isset($direct_pass_member))
-        <input type="hidden" name="direct_pass_member[{{$s}}][{{$r}}][]" value="{{$direct_pass_member}}">
         @if($d==0 && $s==2)
         <input type="hidden" name="direct_pass_member[{{$s}}][{{$r}}][]" value="{{$direct_pass_member}}">
         {{App\Models\User::find($direct_pass_member)->first_name}}
@@ -106,7 +103,7 @@
         $s++;
     @endphp
     @endif
-    @endif
+
     @endforeach
 
 

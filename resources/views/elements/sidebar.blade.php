@@ -48,6 +48,11 @@
 
           </li>
 
+          <li>
+            <a href="{{route('player.rankings')}}" class="nav-link"><i class="fas fa-user"></i><span>Rankings</span></a>
+
+          </li>
+
         @endrole
 
 

@@ -51,6 +51,27 @@
                                 <div class="col-sm-6 col-md-9">
                                 <select name="ring_id" class="form-control" id="ring_id" required>
                                     <option value="{{isset($check_judge->ring_id)?$check_judge->ring_id:''}}" @if(isset($check_judge)&&$check_judge!=null) selected @endif>{{isset($check_judge->ring_id)?$check_judge->ring_id:'--select--'}}</option>
+
+                                    @foreach($ring_list as $row)
+                                    @php
+                                    $count=isset($row->no_of_rings)?$row->no_of_rings:0;
+                                    @endphp
+                                    @if ($count>0)
+                                    @for ($i=1;$count>0;$i++)
+                                    @if ($i!=$check_judge->ring_id)
+                                    <option>{{$i}}</option>
+                                    @endif
+
+                                    @php
+                                        $count--;
+                                    @endphp
+                                    @endfor
+
+                                    @else
+                                    <option>{{$row->ring_id}}</option>
+                                    @endif
+
+                                    @endforeach
                                 </select>
                                 </div>
                             </div>

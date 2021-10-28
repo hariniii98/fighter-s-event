@@ -243,6 +243,7 @@ class EventController extends Controller
              $data['event_name'] = $event->name;
         }
         $data['events'] = Event::where('end_date','>=',Carbon::today())->get();
+        $data['ring_list']=Event::all();
         return view('judges.edit')->with($data);
     }
 

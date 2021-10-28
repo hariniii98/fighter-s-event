@@ -20,6 +20,10 @@
 
             </ul>
           </li>
+          <li>
+            <a href="{{route('main_events.index')}}" class="nav-link"><i class="fa fa-calendar"></i><span>Main Events</span></a>
+
+          </li>
           <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-calendar-alt"></i> <span>Events</span></a>
             <ul class="dropdown-menu">
@@ -58,7 +62,7 @@
 
           </li>
 
-       
+
 
 
         @endrole

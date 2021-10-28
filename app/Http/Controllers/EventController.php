@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Settings;
 use App\Models\Role;
 use Twilio\TwiML\Voice\Pay;
+use App\Models\CreateMainEvent;
 
 class EventController extends Controller
 {
@@ -408,5 +409,51 @@ class EventController extends Controller
         $payment->status = $request->status;
         $payment->update();
         return redirect(route('payments.index'));
+    }
+
+    public function showMainEvents(){
+        $data['main_events'] = CreateMainEvent::all();
+        foreach($data['main_events'] as $key=>$row){
+            $event_ids[$key] = json_decode($row->sub_event_ids);
+            if($event_ids[$key]!=null){
+                foreach($event_ids[$key] as $key1=>$id){
+                    $event[$key1] = Event::find($id);
+                    $data['sub_events_names'][$key][$key1] = $event[$key1]->name;
+                }
+            }else{
+                $data['sub_events_names'][$key] = array();
+            }
+        }
+        return view('main_events.show')->with($data);
+    }
+
+    public function createMainEvent(){
+        $data['events'] = Event::all();
+        return view('main_events.create')->with($data);
+    }
+
+    public function storeMainEvent(Request $request){
+        $main_event = new CreateMainEvent();
+        $main_event->name = $request->name;
+        if($request->event_id){
+            $main_event->sub_event_ids = json_encode($request->event_id);
+        }
+        $main_event->save();
+        return redirect(route('main_events.index'));
+    }
+
+    public function updateMainEvent(Request $request,$id){
+        $main_event = CreateMainEvent::find($id);
+        $main_event->name = $request->name;
+        $main_event->sub_event_ids = json_encode($request->event_id);
+        $main_event->update();
+        return redirect(route('main_events.index'));
+    }
+
+    public function editMainEvent($id){
+        $data['main_event'] = CreateMainEvent::find($id);
+        $data['sub_ev_ids'] = json_decode($data['main_event']->sub_event_ids);
+        $data['events'] = Event::all();
+        return view('main_events.edit')->with($data);
     }
 }

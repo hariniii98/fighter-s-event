@@ -47,15 +47,19 @@
             <a href="{{route('tournament.matches.list')}}" class="nav-link"><i class="fas fa-book"></i><span>Matches</span></a>
 
           </li>
+
+          {{-- <li>
+            <a href="{{route('player.rankings')}}" class="nav-link"><i class="fas fa-user"></i><span>Rankings</span></a>
+
+          </li> --}}
+
           <li>
             <a href="{{route('whatsapp_push_notification.create')}}" class="nav-link"><i class="fas fa-phone"></i><span>Send Whatsapp Push Notification</span></a>
 
           </li>
 
-          <li>
-            <a href="{{route('player.rankings')}}" class="nav-link"><i class="fab fa-hackerrank"></i><span>Rankings</span></a>
+       
 
-          </li>
 
         @endrole
 

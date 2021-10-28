@@ -284,6 +284,8 @@ class EventController extends Controller
                ->select('users.*','roles.name as role')->where('roles.slug','superjudge')
                ->get();
 
+
+
         return view('super_judges.index')->with($data);
     }
 
@@ -314,6 +316,7 @@ class EventController extends Controller
              $data['event_name'] = $event->name;
         }
         $data['events'] = Event::where('end_date','>=',Carbon::today())->get();
+        $data['ring_list']=Event::all();
         return view('super_judges.edit')->with($data);
     }
 

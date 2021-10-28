@@ -40,14 +40,54 @@ bottom:0;
 <div class="section-header">
 
     <h1>{{$data['event_name']}}</h1>
+    <span>&nbsp;&nbsp;</span>
+    @php
+    $events=App\Models\Event::all();
+   @endphp
+    <form method="GET" action="{{route('tournament.draws')}}">
+
+        <div class="row">
+            <div class="form-group col-sm-10">
+    <label>Filter</label>
+    <select class="form-control form-control-sm" name="event_id" id="event-filter">
+        <option value="{{$data['event_id']!=''?$data['event_id']:''}}">{{$data['event_name']!=''?$data['event_name']:'--select--'}}</option>
+        @foreach ($events as $row)
+        @if($row->id!=$data['event_id'])
+        <option value="{{$row->id}}">{{$row->name}}</option>
+        @endif
+     @endforeach
+    </select>
+  </div>
+  <div class="form-group col-sm-2" style="margin-top: 12%!important;">
+    <button type="submit" class="btn btn-primary">Search</button>
+
+</div>
+        </div>
+
+    </form>
+
+
     <div class="section-header-breadcrumb">
       <div class="breadcrumb-item"><a href="{{url('/')}}">Dashboard</a></div>
       <div class="breadcrumb-item active">Tournament Draw System</div>
     </div>
   </div>
 
+
   @php
-      $count=count($tournament_draws);
+  $instance=new App\Http\Controllers\TournamentDrawController();
+      $tem_c=count($tournament_draws);
+      $count=$tem_c;
+      $user_last_round=$instance->drawJsonDecode($tournament_draws[($tem_c-1)]->user_ids);
+      $last_user_count=count($user_last_round[0]);
+      $is_direct_pass=$instance->userDirectPass($tournament_draws,$user_last_round[0]);
+
+
+
+
+
+
+
 
   @endphp
 
@@ -56,10 +96,14 @@ bottom:0;
     @foreach($tournament_draws as $key=>$value)
     @php
 
-     $instance=new App\Http\Controllers\TournamentDrawController();
+
      $matches=$instance->drawJsonDecode($value->match_ids);
      $users=$instance->drawJsonDecode($value->user_ids);
      $scores_data=$instance->scoreStage($value->event_id,$value->stage_id);
+
+
+
+
 
 
     @endphp
@@ -72,9 +116,15 @@ bottom:0;
 
 
 
+
+
     @endphp
+  @if($last_user_count>1 || $is_direct_pass==false)
   @if(count($scores_data)>0 & $value->stage_id==1)
   <h5>Matches In Progress</h5>
+  @endif
+  @elseif($value->stage_id==1)
+  <h5>Match Winner</h5>
   @endif
     <!-- Stage -->
     <div class="container col-sm-1">
@@ -90,13 +140,15 @@ bottom:0;
             $user_count=count($user_key);
             $temp_user_count=$user_count;
 
+
         @endphp
 
 
       @for($u=0;$user_count>0;$u++)
-      <div class="@if($u%2==0) even @else odd @endif" >
+      <div class="@if($u%2==0) even @else odd @endif">
         @if ($user_key[$u]!='')
-            {{$instance->userName($user_key[$u])}}
+        <img class="rounded-circle" width="100" height="70" alt="100x100" src="{{asset('assets/images/user_images/'.$instance->userImage($user_key[$u]))}}"
+        data-holder-rendered="true"><span>&nbsp;&nbsp;</span> {{$instance->userName($user_key[$u])}}
             @else
             <span>&nbsp;&nbsp;</span>
         @endif
@@ -144,23 +196,37 @@ bottom:0;
 
     </div>
 
+    @if($last_user_count>1)
+@if(count($users[0])>=2)
+
     @if ($value->stage_id==1 & count($scores_data)==0)
     <div class="re-draw">
         <a href="{{route('tournament.matches.redraw',[$value->event_id,$value->stage_id])}}" class="btn btn-primary">Re Draw the Stage {{$value->stage_id}}</a>
     </div>
-    @endif
-    @if(count($scores_data)==$temp_count)
+
+    @elseif(count($scores_data)==$temp_count & $value->stage_id!=1)
 
 <div class="re-draw">
     <a href="{{route('tournament.matches.redraw',[$value->event_id,$value->stage_id])}}" class="btn btn-primary">Re Draw the Stage {{$value->stage_id}}</a>
-    @if (count($scores_data)%2!=0 & count($scores_data)>0)
+    @if (count($users)%2==0 & count($scores_data)>0)
     <a href="{{route('tournament.direct_pass',[$value->event_id,$value->stage_id])}}" class="btn btn-warning">Direct Pass</a>
     @endif
 
 </div>
+@elseif($value->stage_id!=1)
 
+<div class="re-draw">
+    <a href="{{route('tournament.matches.redraw',[$value->event_id,$value->stage_id])}}" class="btn btn-primary">Re Draw the Stage {{$value->stage_id}}</a>
+    @if (count($users)%2==0 & count($scores_data)>0)
+    <a href="{{route('tournament.direct_pass',[$value->event_id,$value->stage_id])}}" class="btn btn-warning">Direct Pass</a>
+    @endif
+
+</div>
+    @endif
 
     @endif
+    @endif
+
 
 
 

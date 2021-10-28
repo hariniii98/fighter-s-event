@@ -92,6 +92,31 @@ label img {
 <div class="section-header">
 
     <h1>{{$data['event_name']}}</h1>
+    <span>&nbsp;&nbsp;</span>
+    @php
+    $events=App\Models\Event::all();
+   @endphp
+    <form method="GET" action="{{route('tournament.draws')}}">
+
+        <div class="row">
+            <div class="form-group col-sm-10">
+    <label>Filter</label>
+    <select class="form-control form-control-sm" name="event_id" id="event-filter">
+        <option value="{{$data['event_id']!=''?$data['event_id']:''}}">{{$data['event_name']!=''?$data['event_name']:'--select--'}}</option>
+        @foreach ($events as $row)
+        @if($row->id!=$data['event_id'])
+        <option value="{{$row->id}}">{{$row->name}}</option>
+        @endif
+     @endforeach
+    </select>
+  </div>
+  <div class="form-group col-sm-2" style="margin-top: 12%!important;">
+    <button type="submit" class="btn btn-primary">Search</button>
+
+</div>
+        </div>
+
+    </form>
     <div class="section-header-breadcrumb">
       <div class="breadcrumb-item"><a href="{{url('/')}}">Dashboard</a></div>
       <div class="breadcrumb-item active">Tournament Draw System</div>
@@ -100,7 +125,7 @@ label img {
 
 
   @php
-
+$instance=new App\Http\Controllers\TournamentDrawController();
       $count=count($draw_counts);
 
 
@@ -122,7 +147,8 @@ label img {
         <li>
             <input type="radio" name="direct_pass_member" id="cb{{$key}}" value="{{$draw_ids[$key]}}" required />
 
-            <label for="cb{{$key}}">{{$value[0]}}</label>
+            <label for="cb{{$key}}"><img class="rounded-circle" width="100" height="70" alt="100x100" src="{{asset('assets/images/user_images/'.$instance->userImage($draw_ids[$key]))}}"
+                data-holder-rendered="true"><span>&nbsp;&nbsp;</span>{{$value[0]}}</label>
         </li>
 
       </ul>

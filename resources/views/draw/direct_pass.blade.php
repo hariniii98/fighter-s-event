@@ -123,7 +123,8 @@ label img {
         <li>
             <input type="radio" name="direct_pass_member" id="cb{{$key}}" value="{{$value[$key]}}" required />
 
-            <label for="cb{{$key}}">{{$instance->userName($value[$key])}}</label>
+            <label for="cb{{$key}}"><img class="rounded-circle" width="100" height="70" alt="100x100" src="{{asset('assets/images/user_images/'.$instance->userImage($value[$key]))}}"
+                data-holder-rendered="true"><span>&nbsp;&nbsp;</span>{{$instance->userName($value[$key])}}</label>
         </li>
 
       </ul>

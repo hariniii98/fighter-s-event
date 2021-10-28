@@ -141,9 +141,11 @@ Route::post('matches/auto_increment', [App\Http\Controllers\TournamentDrawContro
 Route::get('matches/assing_rings/{stage_id}/{match_id}/{event_id}', [App\Http\Controllers\TournamentDrawController::class, 'matchesAssignToRings'])->name('tournament.matches.assign_ring');
 Route::post('matches/assing_rings/store', [App\Http\Controllers\TournamentDrawController::class, 'storeMatchesAssignToRings'])->name('tournament.matches.assign_ring.store');
 
-
-
-
+Route::get('/main_events','App\Http\Controllers\EventController@showMainEvents')->name('main_events.index');
+Route::post('/main_events/store','App\Http\Controllers\EventController@storeMainEvent')->name('main_events.store');
+Route::get('/main_events/create','App\Http\Controllers\EventController@createMainEvent')->name('main_events.create');
+Route::get('/main_events/edit/{id}','App\Http\Controllers\EventController@editMainEvent')->name('main_events.edit');
+Route::post('/main_events/update/{id}','App\Http\Controllers\EventController@updateMainEvent')->name('main_events.update');
 });
 
 Route::post('/event_user/store','App\Http\Controllers\EventController@storeEventUser')->name('event_user.store');

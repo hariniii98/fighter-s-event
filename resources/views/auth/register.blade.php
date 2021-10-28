@@ -18,7 +18,7 @@ $states = CountryState::getStates('IN');
                 <div class="card-body">
                     <div class="login-brand">
 
-                        <a href="{{url('/')}}"><img src="@yield('logo')" alt="logo" width="200" class="shadow-light"></a>
+                        <a href="{{url('/')}}"><img src="@yield('logo')" alt="logo" width="200" class="shadow-light" ></a>
 
                     </div>
 

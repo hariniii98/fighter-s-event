@@ -120,8 +120,8 @@ Route::prefix('users')->group(function () {
 
 });
 Route::get('payments','App\Http\Controllers\EventController@payments')->name('payments.index');
-Route::get('create_whatsapp_push_notification','App\Http\Controllers\ChannelsController@createWhatsappPushNotification');
-Route::get('send_whatsapp_push_notification','App\Http\Controllers\ChannelsController@sendWhatsappPushNotification');
+Route::get('create_whatsapp_push_notification','App\Http\Controllers\EventController@createWhatsappPushNotification')->name('whatsapp_push_notification.create');
+Route::post('send_whatsapp_push_notification','App\Http\Controllers\EventController@sendWhatsappPushNotification')->name('whatsapp_push_notification.send');
 
 Route::get('/draw', [App\Http\Controllers\TournamentDrawController::class, 'draw'])->name('tournament.draws');
 Route::post('draws/store', [App\Http\Controllers\TournamentDrawController::class, 'store'])->name('tournament.draws.store');

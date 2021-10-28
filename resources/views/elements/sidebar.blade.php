@@ -21,7 +21,7 @@
             </ul>
           </li>
           <li class="dropdown">
-            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fa fa-gear"></i> <span>Events</span></a>
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-calendar-alt"></i> <span>Events</span></a>
             <ul class="dropdown-menu">
               <li><a class="nav-link" href="{{route('events.index')}}">Events</a></li>
               <li><a class="nav-link" href="{{route('event_categories.index')}}">Event Categories</a></li>
@@ -36,20 +36,24 @@
               <li><a class="nav-link" href="{{route('extra_ranking_points.index')}}">Extra Ranking Points</a></li>
             </ul>
           <li>
-            <a href="{{route('users')}}" class="nav-link"><i class="fas fa-user"></i><span>Users</span></a>
+            <a href="{{route('users')}}" class="nav-link"><i class="fas fa-users"></i><span>Users</span></a>
 
           </li>
           <li>
-            <a href="{{route('tournament.draws')}}" class="nav-link"><i class="fas fa-user"></i><span>Tournament Draw</span></a>
+            <a href="{{route('tournament.draws')}}" class="nav-link"><i class="fas fa-anchor"></i><span>Tournament Draw</span></a>
 
           </li>
           <li>
-            <a href="{{route('tournament.matches.list')}}" class="nav-link"><i class="fas fa-user"></i><span>Matches</span></a>
+            <a href="{{route('tournament.matches.list')}}" class="nav-link"><i class="fas fa-book"></i><span>Matches</span></a>
+
+          </li>
+          <li>
+            <a href="{{route('whatsapp_push_notification.create')}}" class="nav-link"><i class="fas fa-phone"></i><span>Send Whatsapp Push Notification</span></a>
 
           </li>
 
           <li>
-            <a href="{{route('player.rankings')}}" class="nav-link"><i class="fas fa-user"></i><span>Rankings</span></a>
+            <a href="{{route('player.rankings')}}" class="nav-link"><i class="fab fa-hackerrank"></i><span>Rankings</span></a>
 
           </li>
 

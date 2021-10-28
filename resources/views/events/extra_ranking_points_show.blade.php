@@ -25,7 +25,7 @@
             <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                <h4>Extra Ranking Points <a href="{{route('extra_ranking_point.create')}}" class="btn btn-primary">Add Extra Ranking Points</a></h4>
+                <h4>Extra Ranking Points @role('admin') <a href="{{route('extra_ranking_point.create')}}" class="btn btn-primary">Add Extra Ranking Points</a> @endrole </h4>
                 <div class="card-header-form">
                     <form>
                     <div class="input-group">

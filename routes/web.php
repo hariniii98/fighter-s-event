@@ -25,7 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::post('/city/ajax','App\Http\Controllers\Auth\RegisterController@searchCity')->name('city.ajax');
 Route::get('card/{id}','App\Http\Controllers\EventController@getIdCard')->name('user.id_card');
 /** Settings */
-Route::group(['middleware' => ['auth','role:admin']], function () {
+Route::group(['middleware' => ['auth','role:admin|manager']], function () {
 
 
 Route::prefix('settings')->group(function () {
@@ -120,6 +120,8 @@ Route::prefix('users')->group(function () {
 
 });
 Route::get('payments','App\Http\Controllers\EventController@payments')->name('payments.index');
+Route::get('payments/edit/{id}','App\Http\Controllers\EventController@paymentsEdit')->name('payments.edit');
+Route::post('payments/update/{id}','App\Http\Controllers\EventController@paymentUpdate')->name('payment.update');
 Route::get('create_whatsapp_push_notification','App\Http\Controllers\EventController@createWhatsappPushNotification')->name('whatsapp_push_notification.create');
 Route::post('send_whatsapp_push_notification','App\Http\Controllers\EventController@sendWhatsappPushNotification')->name('whatsapp_push_notification.send');
 

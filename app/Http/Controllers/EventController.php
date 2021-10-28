@@ -24,6 +24,7 @@ use SPDF;
 use Illuminate\Support\Facades\DB;
 use App\Models\Settings;
 use App\Models\Role;
+use Twilio\TwiML\Voice\Pay;
 
 class EventController extends Controller
 {
@@ -393,5 +394,19 @@ class EventController extends Controller
         }
 
         return redirect('/home');
+    }
+
+    public function paymentsEdit($id){
+        $data['payment'] = Payment::find($id);
+        return view('events.edit_payment')->with($data);
+    }
+
+    public function paymentUpdate(Request $request,$id){
+        $payment = Payment::find($id);
+        $payment->payment_mode = $request->payment_mode;
+        $payment->reference_number = $request->ref_number;
+        $payment->status = $request->status;
+        $payment->update();
+        return redirect(route('payments.index'));
     }
 }

@@ -58,6 +58,7 @@ class EventsController extends Controller
             $destinationPath = public_path('/assets/images/event_banners');
             $image->move($destinationPath, $event_banner_image);
         }
+
         $event = new Event();
         $event->name = $request->name;
         $event->description = $request->description;
@@ -65,7 +66,7 @@ class EventsController extends Controller
         $event->event_category_id = $request->event_category_id;
         $event->start_date = $request->start_date;
         $event->end_date = $request->end_date;
-        $event->reg_deadine = $request->reg_deadine;
+        $event->reg_deadine = $request->reg_deadline;
         $event->start_time = $request->start_time;
         $event->end_time = $request->end_time;
         $event->gender = $request->gender;
@@ -133,7 +134,6 @@ class EventsController extends Controller
             $destinationPath = public_path('/assets/images/event_banners');
             $image->move($destinationPath, $event_banner_image);
         }
-
         $event = Event::find($id);
         $event->name = $request->name;
         if(isset($event_banner_image)){
@@ -143,7 +143,7 @@ class EventsController extends Controller
         $event->event_category_id = $request->event_category_id;
         $event->start_date = $request->start_date;
         $event->end_date = $request->end_date;
-        $event->reg_deadine = $request->reg_deadine;
+        $event->reg_deadine = $request->reg_deadline;
         $event->start_time = $request->start_time;
         $event->end_time = $request->end_time;
         $event->gender = $request->gender;

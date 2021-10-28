@@ -25,7 +25,7 @@
     <div id="output-status"></div>
     <div class="row justify-content-center">
         <div class="col-8 offset-1">
-            @role('fighter|user')
+            @role('fighter|user|coach')
             <div class="card">
                 <div class="card-header">
                     <h4>Events</h4>

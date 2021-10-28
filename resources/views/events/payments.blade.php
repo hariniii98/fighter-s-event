@@ -51,6 +51,7 @@
                         <th>Payment Mode</th>
                         <th>Reference Number</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                     @php $s_no=1; @endphp
                     @foreach($payments as $row)
@@ -68,7 +69,7 @@
                         <td>{{$row->payment_mode}}</td>
                         <td>{{$row->reference_number==null?'-':$row->reference_number}}</td>
                         <td>{{$row->status}}</td>
-
+                        <td><a href="{{route('payments.edit',$row->id)}}" class="btn-success"><i class="fa fa-pencil "></i></a></td>
                     </tr>
                     @endforeach
                     </table>

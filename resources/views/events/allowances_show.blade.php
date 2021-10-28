@@ -25,7 +25,7 @@
             <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                <h4>Allowances <a href="{{route('allowance.create')}}" class="btn btn-primary">Add Allowance</a></h4>
+                <h4>Allowances @role('admin') <a href="{{route('allowance.create')}}" class="btn btn-primary">Add Allowance</a> @endrole </h4>
                 <div class="card-header-form">
                     <form>
                     <div class="input-group">

@@ -49,7 +49,9 @@
                         <th>Email</th>
                         <th>Mobile Number</th>
                         <th>View Profile</th>
+                        @role('admin')
                         <th class="noExl">Action</th>
+                        @endrole
                       </tr>
                     </thead>
                     <tbody>
@@ -66,8 +68,10 @@
                         <td>{{$row->email}}</td>
                         <td>{{$row->mobile_number}}</td>
                         <td><a href="{{route('event.fighters.profile',$row->id)}}" class="btn btn-success"><i class="fa fa-eye"></i></a></td>
+                        @role('admin')
                         <td class="noExl"><a href="{{route('users.edit',$row->id)}}" class="btn btn-icon icon-left btn-primary"><i class="far fa-edit"></i> Edit</a></td>
-                      </tr>
+                        @endrole
+                    </tr>
                       @endforeach
 
                     </tbody>

@@ -25,7 +25,7 @@
             <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                <h4>Age Categories <a href="{{route('age_category.create')}}" class="btn btn-primary">Add Age Category</a></h4>
+                <h4>Age Categories @role('admin') <a href="{{route('age_category.create')}}" class="btn btn-primary">Add Age Category</a> @endrole </h4>
                 <div class="card-header-form">
                     <form>
                     <div class="input-group">
@@ -50,7 +50,9 @@
                         <th>S No</th>
                         <th>Minimum Age</th>
                         <th>Maximum Age</th>
+                        @role('admin')
                         <th>Action</th>
+                        @endrole
                     </tr>
                     @php $s_no=1; @endphp
                     @foreach($age_categories as $row)
@@ -64,7 +66,9 @@
                         <td>{{$s_no++}}</td>
                         <td>{{$row->min_age}}</td>
                         <td>{{$row->max_age}}</td>
+                        @role('admin')
                         <td><a href="{{route('age_category.delete',$row->id)}}" class="btn btn-secondary" onclick="return confirm('Are you sure,you want to delete?')"><i class="fa fa-trash btn-danger"></i></a></td>
+                        @endrole
                     </tr>
                     @endforeach
                     </table>

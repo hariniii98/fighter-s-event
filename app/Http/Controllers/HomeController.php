@@ -76,7 +76,7 @@ class HomeController extends Controller
     {
         $users=User::join('role_user','role_user.user_id','=','users.id')
                ->join('roles','role_user.role_id','=','roles.id')
-               ->select('users.*','roles.name as role')
+               ->select('users.*','roles.name as role','roles.id as role_id')
                ->where('users.id',$id)
                ->get();
 

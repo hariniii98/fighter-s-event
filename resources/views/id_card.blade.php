@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="idCard.css">
     <title>ID Card</title>
 <style>
     *{
@@ -123,7 +122,7 @@
 }
 .top{
     display: flex;
-    flex-direction: row;
+    flex-direction: row !important;
 }
 .top .card1{
     width:50%;
@@ -131,7 +130,7 @@
 }
 
 .card1 img {
-    width: 90%;
+    width: 100%;
     padding: 17% 10% 10% 10%;
     height: 61px;
 }
@@ -166,32 +165,32 @@
 </style>
 </head>
 <body>
-        <div class="container">
+        <div class="container-fluid">
                 <div class="font">
-                    <div class="top">
-                        <div class="card1">
-                            <img src="{{asset('assets/images/GAMMA-logo.jpg')}}">
+                    <div class="top" style="padding: 10%;">
+                        <div class="card1" style="margin-left: 20%;">
+                            <img src="{{$gamma_img}}">
                         </div>
-                        <div class="card1" style="padding-right: 5%;">
-                            <img src="{{asset('assets/images/site_logos/'.$settings->site_logo)}}">
+                        <div class="card1" style="margin-left: 40%;">
+                            <img src="{{$site_img}}">
                         </div>
                     </div>
-                    <div class="middle">
-                        <div class="card2" style="padding-right:20px;">
-                            <p>GAMMA ASIAN MMA CHAMPIONSHIP 2021</p>
-                        </div>
+                    <div class="middle" style="padding: 10%;width:120%;">
                         <div class="card2">
-                            <h6>29-31 OCTOBER&nbsp;2021</h6><br>
-                            <h6>BANGALORE</h6>
+                            <p>KEMPEGOWDA NATIONAL MMA CHAMPIONSHIP 2021</p><br>
+                        </div>
+                        <div class="card2 float-right">
+                            <h6>31st OCTOBER&nbsp;2021</h6><br>
+                            <h6>Marathalli, BANGALORE</h6>
                         </div>
                     </div>
                     <div class="bottom">
                         <p>{{$user->first_name}}&nbsp;{{$user->last_name}}</p>
                         <div class="barcode">
-                            <img src="{{asset('assets/images/user_images/'.$user->user_image)}}">
+                            <img src="{{$user_img}}">
                         </div>
                         <br>
-                        <p class="no" style="padding-top:10px;"><b>{{strtoupper($role->name)}}</b></p>
+                        <p class="no" style="padding-top:10px;" class="text-uppercase"><b>{{$role->name}}</b></p>
                     </div>
                 </div>
             </div>

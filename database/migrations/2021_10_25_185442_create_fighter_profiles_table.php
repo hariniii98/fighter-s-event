@@ -18,6 +18,9 @@ class CreateFighterProfilesTable extends Migration
             $table->unsignedBigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('date_of_birth');
+            $table->string('gender');
+            $table->enum('id_card_type',['aadhar','passport']);
+            $table->string('id_card_number');
             $table->string('emergency_number');
             $table->integer('height');
             $table->float('weight');

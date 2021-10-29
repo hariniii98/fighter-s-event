@@ -60,6 +60,49 @@ $states = CountryState::getStates('IN');
                             </div>
 
                         </div>
+                        @if($role=='official')
+                        <div class="form-group">
+                            <label for="official_licence_id">Licence Id</label><span class="text-danger"> *</span>
+                            <input id="official_licence_id" type="official_licence_id" class="form-control" autocomplete="off" @error('official_licence_id') is-invalid @enderror value="{{ old('official_licence_id') }}" name="official_licence_id" >
+                            @error('official_licence_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                        </div>
+                        @endif
+                        @if($role=='coach')
+                        <div class="form-group">
+                            <label for="coach_state">State</label><span class="text-danger"> *</span>
+                            <select id="coach_state" class="form-control" @error('coach_state') is-invalid @enderror value="{{ old('coach_state') }}" name="coach_state">
+                                <option value="">--select--</option>
+                                @foreach($states as $key=>$state)
+                                <option value="{{$state}}">{{$state}}</option>
+                                @endforeach
+                            </select>
+                            @error('coach_state')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="coach_city">City</label><span class="text-danger"> *</span>
+                            <select id="coach_city" class="form-control" @error('coach_city') is-invalid @enderror value="{{ old('coach_city') }}" name="coach_city">
+                                <option value="">--select--</option>
+                                {{-- @foreach($citys as $key=>$city)
+                                <option value="{{$key}}">{{$city}}</option>
+                                @endforeach --}}
+                            </select>
+                            @error('coach_city')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        @endif
+
                         @if(isset($role)&&$role=="fighter")
                         <div class="row">
                             <div class="form-group col-lg-6 col-md-6 col-sm-12">
@@ -78,6 +121,50 @@ $states = CountryState::getStates('IN');
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                <label for="gender">Gender</label><span class="text-danger"> *</span>
+                                <select id="gender" class="form-control" @error('gender') is-invalid @enderror value="{{ old('gender') }}" name="gender">
+                                    <option value="">--select--</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+
+                                </select>
+                                 @error('gender')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                @enderror
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                <label for="id_card_type">Id Card Type</label><span class="text-danger"> *</span>
+                                <select id="id_card_type" class="form-control" @error('id_card_type') is-invalid @enderror value="{{ old('id_card_type') }}" name="id_card_type">
+                                    <option value="">--select--</option>
+                                    <option value="aadhar">Aadhar</option>
+                                    <option value="passport">Passport</option>
+
+                                </select>
+                                 @error('id_card_type')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                @enderror
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                <label for="id_card_number">Id Card Number (Aadhar Card / Passport)</label><span class="text-danger"> *</span>
+                                <input id="id_card_number" type="text" class="form-control" @error('id_card_number') is-invalid @enderror value="{{ old('id_card_number') }}" name="id_card_number" autocomplete="off">
+                                @error('id_card_number')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
                         </div>
@@ -173,7 +260,15 @@ $states = CountryState::getStates('IN');
                         </div>
                         <div class="form-group">
                             <label for="coach_name">Coach Name</label><span class="text-danger"> *</span>
-                            <input id="coach_name" type="text" class="form-control" @error('coach_name') is-invalid @enderror value="{{ old('coach_name') }}" name="coach_name" autocomplete="off">
+                            <select id="coach_name" class="form-control" @error('coach_name') is-invalid @enderror value="{{ old('coach_name') }}" name="coach_name">
+
+                                <option value="none">None</option>
+                                @foreach($coaches as $coach)
+                                    <option value="{{$coach->id}}">{{$coach->name.' ('.$coach->mobile_number.')'}}</option>
+                                @endforeach
+
+
+                            </select>
                             @error('coach_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -182,7 +277,7 @@ $states = CountryState::getStates('IN');
                         </div>
                         <div class="form-group">
                             <label for="address">Complete Address</label><span class="text-danger"> *</span>
-                            <input id="address" type="text" class="form-control" step="0.01" @error('address') is-invalid @enderror value="{{ old('address') }}" name="address" autocomplete="off">
+                            <textarea id="address"  class="form-control" step="0.01" @error('address') is-invalid @enderror value="{{ old('address') }}" name="address">{{ old('address') }}</textarea>
                             @error('address')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -244,6 +339,9 @@ $states = CountryState::getStates('IN');
                         </div>
 
                         @endif
+
+
+
                         <div class="form-group">
                             <label for="email">Email</label><span class="text-danger"> *</span>
                             <input id="email" type="email" class="form-control" autocomplete="off" @error('email') is-invalid @enderror value="{{ old('email') }}" name="email" >
@@ -277,6 +375,7 @@ $states = CountryState::getStates('IN');
                             </span>
                             @enderror
                             </div>
+
                             @if(isset($role)&&$role=="fighter")
                             <div class="form-group row px-3">
                                 <div class="col-12">
@@ -304,12 +403,28 @@ $states = CountryState::getStates('IN');
                             <p align="center">Already have an account? <a href="{{route('login')}}">Login</a></p>
                         </div>
                         @if(isset($role))
-                        <a href="{{route('register')}}" class="btn btn-primary btn-lg btn-block">
-                            Register as User
+                        @if($role!='official')
+                        <a href="{{url('official/register')}}" class="btn btn-primary btn-lg btn-block">
+                            Register as Official
                         </a>
+                        @endif
+                        @if($role!='fighter')
+                        <a href="{{url('fighter/register')}}" class="btn btn-primary btn-lg btn-block">
+                            Register as Fighter
+                        </a>
+                        @endif
+                        @if($role!='coach')
+                        <a href="{{url('coach/register')}}" class="btn btn-primary btn-lg btn-block">
+                            Register as Coach
+                        </a>
+                        @endif
                         @else
-                        <a href="{{route('role.check')}}" class="btn btn-primary btn-lg btn-block">
-                            Register as Participant
+                        <a href="{{url('fighter/register')}}" class="btn btn-primary btn-lg btn-block">
+                            Register as Fighter
+                        </a>
+
+                        <a href="{{url('coach/register')}}" class="btn btn-primary btn-lg btn-block">
+                            Register as Coach
                         </a>
                         @endif
                     </form>

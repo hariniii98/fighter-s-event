@@ -21,6 +21,7 @@ class CreateFighterProfilesTable extends Migration
             $table->string('gender');
             $table->enum('id_card_type',['aadhar','passport']);
             $table->string('id_card_number');
+            $table->string('licence_id');
             $table->string('emergency_number');
             $table->integer('height');
             $table->float('weight');

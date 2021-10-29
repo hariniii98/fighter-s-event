@@ -72,7 +72,7 @@
                                     </a>
                                 @endif
 
-                                <a class="btn btn-link" href="{{route('register')}}"">
+                                <a class="btn btn-link" href="{{url('fighter/register')}}">
                                     Don't have an account?
                                 </a>
 

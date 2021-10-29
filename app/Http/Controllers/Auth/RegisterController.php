@@ -166,6 +166,9 @@ class RegisterController extends Controller
             $fighter->gender = $data['gender'];
             $fighter->id_card_type = $data['id_card_type'];
             $fighter->id_card_number = $data['id_card_number'];
+            /** Licence id */
+            
+            $fighter->licence_id = 1;
             $fighter->emergency_number = $data['mobile_number2'];
             $fighter->height = $data['height'];
             $fighter->weight = $data['weight'];

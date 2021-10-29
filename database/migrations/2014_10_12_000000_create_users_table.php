@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('official_licence_id')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
+            $table->tinyInteger('mobile_verified')->default('0');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

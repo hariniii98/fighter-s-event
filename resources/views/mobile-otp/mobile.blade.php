@@ -147,6 +147,10 @@
   margin-right: 6px;
 }
 
+body{
+    background: #fff !important;
+}
+
 .intl-tel-input.allow-dropdown input,
 .intl-tel-input.allow-dropdown input[type=text],
 .intl-tel-input.allow-dropdown input[type=tel],

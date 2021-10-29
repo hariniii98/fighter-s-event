@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Role;
 use App\Models\FighterProfile;
+use App\Models\User;
 use Carbon\Carbon;
 use Twilio\Rest\Client;
 use Illuminate\Http\Request;
@@ -47,6 +48,11 @@ class RegisterController extends Controller
 
     public function showRegisterForm($role){
         $data['role'] = $role;
+        $data['coaches']=[];
+        if($data['role']=='coach'){
+           $data['coaches']=User::join('role_user','users.id','=','role_user.user_id')
+           ->join('roles','roles.id','=','role_user.role_id')->where('roles.slug',$data['role'])->get();
+        }
         return view('auth.register')->with($data);
     }
 
@@ -63,6 +69,9 @@ class RegisterController extends Controller
                 'first_name' => ['required', 'string', 'max:255'],
                 'last_name' => ['nullable', 'string', 'max:255'],
                 'date_of_birth' => ['required'],
+                'gender' => ['required'],
+                'id_card_type' => ['required'],
+                'id_card_number' => ['required', 'string', 'max:255'],
                 'occupation' => ['string','required', 'max:255'],
                 'club_name' => ['string','required'],
                 'coach_name' => ['string','required'],
@@ -82,7 +91,35 @@ class RegisterController extends Controller
                 'password_confirmation' => ['required_with:password|same:password|min:6'],
                 'terms_and_conditions'=>'accepted',
             ]);
-        }else{
+        }
+        else if($data['role']=='official'){
+            return Validator::make($data, [
+                'first_name' => ['required', 'string', 'max:255'],
+                'last_name' => ['nullable', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'mobile_number' => ['required','string','max:10', 'unique:users'],
+                'user_image' => ['required'],
+                'official_licence_id' => ['required', 'string', 'max:255'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'password_confirmation' => ['required_with:password|same:password|min:6'],
+            ]);
+        }
+        else if($data['role']=='coach'){
+            return Validator::make($data, [
+            'first_name' => ['required', 'string', 'max:255'],
+                'last_name' => ['nullable', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'mobile_number' => ['required','string','max:10', 'unique:users'],
+                'user_image' => ['required'],
+                'coach_state' => ['required'],
+                'coach_city' => ['required'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'password_confirmation' => ['required_with:password|same:password|min:6'],
+            ]);
+        }
+        
+
+        else{
             return Validator::make($data, [
                 'first_name' => ['required', 'string', 'max:255'],
                 'last_name' => ['nullable', 'string', 'max:255'],
@@ -117,6 +154,7 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'mobile_number' => $data['mobile_number'],
             'user_image' => $user_image,
+            'official_licence_id' => $data['official_licence_id'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
@@ -125,6 +163,9 @@ class RegisterController extends Controller
             $fighter = new FighterProfile();
             $fighter->user_id = $user->id;
             $fighter->date_of_birth = $data['date_of_birth'];
+            $fighter->gender = $data['gender'];
+            $fighter->id_card_type = $data['id_card_type'];
+            $fighter->id_card_number = $data['id_card_number'];
             $fighter->emergency_number = $data['mobile_number2'];
             $fighter->height = $data['height'];
             $fighter->weight = $data['weight'];

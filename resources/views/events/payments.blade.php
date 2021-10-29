@@ -36,7 +36,8 @@
                 </div>
                 <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="table-2">
+                        <thead>
                     <tr>
                         <th>
                         <div class="custom-checkbox custom-control">
@@ -53,7 +54,9 @@
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
+                </thead>
                     @php $s_no=1; @endphp
+                   <tbody>
                     @foreach($payments as $row)
                     <tr>
                         <td class="p-0 text-center">
@@ -72,6 +75,7 @@
                         <td><a href="{{route('payments.edit',$row->id)}}" class="btn-success"><i class="fa fa-pencil "></i></a></td>
                     </tr>
                     @endforeach
+                </tbody>
                     </table>
                 </div>
                 </div>

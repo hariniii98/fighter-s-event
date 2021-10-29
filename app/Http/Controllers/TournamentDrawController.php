@@ -778,7 +778,7 @@ class TournamentDrawController extends Controller
             }
         }
         return view('fighters.my_results',compact('my_matches_array','my_matches_events_ids_array','my_matches_events_array','my_matches_stages_array','match_status','match_decision','my_opponents_images_array','my_opponents_names_array','opponent_match_status'));
-
+    }
     public function userDirectPass($tournament_draws,$user){
 
 

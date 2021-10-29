@@ -16,7 +16,7 @@
 
         <h1>Main Events</h1>
         <div class="section-header-breadcrumb">
-          <div class="breadcrumb-item active"><a href="{{routes('main_events.index')}}">Main Events</a></div>
+          <div class="breadcrumb-item active"><a href="{{route('main_events.index')}}">Main Events</a></div>
         </div>
       </div>
 

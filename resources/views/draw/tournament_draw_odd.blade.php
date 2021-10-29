@@ -105,7 +105,7 @@ label img {
         <option value="{{$data['event_id']!=''?$data['event_id']:''}}">{{$data['event_name']!=''?$data['event_name']:'--select--'}}</option>
         @foreach ($events as $row)
         @if($row->id!=$data['event_id'])
-        <option value="{{$row->id}}">{{$row->name}}</option>
+        <option value="{{$row->id}}">{{$row->name}}  (Age:{{isset(App\Models\AgeCategory::find($row->age_category_id)->min_age)?App\Models\AgeCategory::find($row->age_category_id)->min_age.'-'.App\Models\AgeCategory::find($row->age_category_id)->max_age:''}})  (Weight:{{isset(App\Models\WeightCategory::find($row->weight_category_id)->min_weight)?App\Models\WeightCategory::find($row->weight_category_id)->min_weight.'-'.App\Models\WeightCategory::find($row->weight_category_id)->max_weight:''}})</option>
         @endif
      @endforeach
     </select>

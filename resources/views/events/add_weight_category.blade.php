@@ -38,13 +38,13 @@
                             <div class="form-group row align-items-center">
                                 <label for="min_weight" class="form-control-label col-sm-3 text-md-right">Minimum Weight<span class="text-danger"> *</span></label>
                                 <div class="col-sm-6 col-md-9">
-                                <input type="number" name="min_weight" class="form-control" id="min_weight" autocomplete="off" required>
+                                <input type="number" name="min_weight" class="form-control" id="min_weight" autocomplete="off" step="0.01" required>
                                 </div>
                             </div>
                             <div class="form-group row align-items-center">
                                 <label for="max_weight" class="form-control-label col-sm-3 text-md-right">Maximum Weight<span class="text-danger"> *</span></label>
                                 <div class="col-sm-6 col-md-9">
-                                <input type="number" name="max_weight" class="form-control" id="max_weight" autocomplete="off" required>
+                                <input type="number" name="max_weight" class="form-control" id="max_weight" autocomplete="off"  step="0.01" required>
                                 </div>
                             </div>
                             <div class="card-footer bg-whitesmoke text-md-right">

@@ -76,7 +76,7 @@ class RegisterController extends Controller
                 'club_name' => ['string','required'],
                 'coach_name' => ['string','required'],
                 'address' => ['string','required'],
-                'weight' => ['required','integer'],
+                'weight' => ['required'],
                 'height' => ['required','integer'],
                 'instagram_id' => ['required'],
                 'facebook_id' => ['required'],

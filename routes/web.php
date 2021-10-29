@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-
+Route::get('/', function () { 
+//dd(Hash::make('password'));
     return redirect(route('login'));
 });
 

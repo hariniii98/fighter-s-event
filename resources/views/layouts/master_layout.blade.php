@@ -154,8 +154,12 @@ gtag('config', 'UA-94034622-3');
 @stack('scripts')
 {{-- @yield('footer_scripts') --}}
 <script>
-    $('#btn-event').click(function(){
+    $(document).ready(function(){
+
+    
+    $(document).on("click",'#btn-event',function(){
         var event_id = $(this).data("id");
+        
         var event_name = $(this).data("name");
         $('#event__id').val(event_id);
         $('#event_name').text(event_name);
@@ -166,6 +170,7 @@ gtag('config', 'UA-94034622-3');
             $('#ref_code').css('display','block');
         }
     });
+});
 </script>
 </html>
 

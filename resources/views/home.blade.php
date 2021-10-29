@@ -35,7 +35,7 @@
                         @foreach($events as $event)
                         <div class="accordion">
                             <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body{{$event->id}}" aria-expanded="false">
-                                <h4>{{$event->name}}</h4>
+                                <h4>{{$event->name}}  Age:{{isset(App\Models\AgeCategory::find($event->age_category_id)->min_age)?App\Models\AgeCategory::find($event->age_category_id)->min_age.'-'.App\Models\AgeCategory::find($event->age_category_id)->max_age:''}}  Weight:{{isset(App\Models\WeightCategory::find($event->weight_category_id)->min_weight)?App\Models\WeightCategory::find($event->weight_category_id)->min_weight.'-'.App\Models\WeightCategory::find($event->weight_category_id)->max_weight:''}}</h4>
                             </div>
                             <div class="accordion-body collapse show" id="panel-body{{$event->id}}" data-parent="#accordion">
                                   <p class="mb-0">{{$event->description}}</p>

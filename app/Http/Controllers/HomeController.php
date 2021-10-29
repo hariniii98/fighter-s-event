@@ -13,6 +13,7 @@ use App\Models\JudgeEventRing;
 use App\Models\SuperJudgeEventRing;
 use CountryState;
 use Illuminate\Support\Facades\Auth;
+use App\Models\FighterProfile;
 
 class HomeController extends Controller
 {
@@ -33,7 +34,16 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $data['events'] = Event::where('end_date','>',Carbon::today())->get();
+        if(Auth::user()->hasRole('fighter')){
+            $gender=FighterProfile::where('user_id',Auth::id())->first();
+            $gender = $gender->gender;
+            $gender = $gender=='Male'?'M':'F';
+            $data['events'] = Event::where('gender',$gender)->get();
+        }else{
+            $data['events'] = Event::get();
+        }
+        
+        
         $data['events_registered_ids'] = EventUser::where('user_id',Auth::id())->pluck('event_id')->toArray();
         $data['judge_matches_numbers_list']=JudgeEventRing::join('assign_rings','assign_rings.ring_id','=','judge_event_rings.ring_id')
         ->select('assign_rings.event_id','assign_rings.stage_id','assign_rings.match_id')->where('judge_event_rings.judge_id',Auth::id())->get();

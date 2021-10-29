@@ -60,7 +60,7 @@
                 <option value="{{$su_list['match_id']}}">Match {{$su_list['match_id']}}</option>
                 @endforeach
             </select>
-            <button type="button" class="btn btn-primary my-2" id="search">Search</button>
+            <button type="button" class="btn btn-primary my-2" id="search">Start</button>
 
             @foreach ($judge_matches_list as $row)
             @php
@@ -181,7 +181,7 @@
                 <option value="{{$su_list['match_id']}}">Match {{$su_list['match_id']}}</option>
                 @endforeach
             </select>
-            <button type="button" class="btn btn-primary my-2" id="search">Search</button>
+            <button type="button" class="btn btn-primary my-2" id="search">Start</button>
             @foreach ($super_judge_matches_list as $row)
             @php
 

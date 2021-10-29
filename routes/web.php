@@ -177,6 +177,6 @@ Route::get('/direct_pass/{event_id}/{stage_id}', [App\Http\Controllers\Tournamen
 Route::get('player/rankings', [App\Http\Controllers\SuperJudgeDecisionController::class, 'rankings'])->name('player.rankings');
 
 });
-Route::group(['middleware' => ['auth','mobileVerified']], function () {
+Route::group(['middleware' => ['auth']], function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });

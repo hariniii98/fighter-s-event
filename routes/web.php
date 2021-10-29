@@ -26,7 +26,7 @@ Route::get('{role}/register',[App\Http\Controllers\Auth\RegisterController::clas
 Route::post('/city/ajax','App\Http\Controllers\Auth\RegisterController@searchCity')->name('city.ajax');
 Route::get('card/{id}','App\Http\Controllers\EventController@getIdCard')->name('user.id_card');
 /** Settings */
-Route::group(['middleware' => ['auth','role:admin|manager','mobileVerified']], function () {
+Route::group(['middleware' => ['auth','role:admin|manager']], function () {
 
 
 Route::prefix('settings')->group(function () {
@@ -177,6 +177,6 @@ Route::get('/direct_pass/{event_id}/{stage_id}', [App\Http\Controllers\Tournamen
 Route::get('player/rankings', [App\Http\Controllers\SuperJudgeDecisionController::class, 'rankings'])->name('player.rankings');
 
 });
-Route::group(['middleware' => ['auth','mobileVerified']], function () {
+Route::group(['middleware' => ['auth']], function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });

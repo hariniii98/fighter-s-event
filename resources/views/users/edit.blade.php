@@ -60,9 +60,13 @@
                     <label for="role_id" class="form-control-label col-sm-3 text-md-right">Role<span class="text-danger"> *</span></label>
                     <div class="col-sm-6 col-md-9">
                       <select name="role_id" class="form-control" id="role_id" required>
+                        <option value="{{$row->role_id}}">{{$row->role}}</option>
                           @foreach ($roles as $role)
 
+                          @if ($role->id!=$row->role_id)
                           <option value="{{$role->id}}">{{$role->name}}</option>
+                          @endif
+
 
                           @endforeach
 

@@ -366,7 +366,15 @@ class EventController extends Controller
         $user = User::find($id);
         $role = DB::table('role_user')->where('user_id',$id)->first();
         $role= Role::find($role->role_id);
-        $pdf = SPDF::loadView('id_card',compact('settings','user','role'));
+        $gamma_img=asset('assets/images/GAMMA-logo.jpg');
+        $site_img=asset('assets/images/site_logos/'.$settings->site_logo);
+        $user_img=$user->user_image!=''?asset('assets/images/user_images/'.$user->user_image):asset('assets/Deafult-Profile-Picture.png');
+        //return view('id_card',compact('settings','user','role','gamma_img','site_img','user_img'));
+        // $pdf = SPDF::loadFile('http://www.github.com');
+        // return $pdf->download('test.pdf');
+
+        $pdf = SPDF::loadView('id_card',compact('settings','user','role','gamma_img','site_img','user_img'));
+        //dd($pdf);
         return $pdf->stream('itsolutionstuff.pdf');
        // dd();
         //return $pdf->download('itsolutionstuff.pdf');

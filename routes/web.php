@@ -21,11 +21,11 @@ Route::get('check_role','App\Http\Controllers\Auth\RegisterController@checkRole'
 
 Auth::routes();
 Route::get('{role}/register',[App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('role.register');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::post('/city/ajax','App\Http\Controllers\Auth\RegisterController@searchCity')->name('city.ajax');
 Route::get('card/{id}','App\Http\Controllers\EventController@getIdCard')->name('user.id_card');
 /** Settings */
-Route::group(['middleware' => ['auth','role:admin|manager']], function () {
+Route::group(['middleware' => ['auth','role:admin|manager','mobileVerified']], function () {
 
 
 Route::prefix('settings')->group(function () {
@@ -156,6 +156,11 @@ Route::group(['middleware' => ['auth','role:fighter']], function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
+    /** Mobile Otp Verification */
+
+  Route::get('mobile', 'App\Http\Controllers\MobileOtpVerificationController@index');
+  Route::post('otp_verify', 'App\Http\Controllers\MobileOtpVerificationController@mobileOtpVerify')->name('mobile.otp.verify');
+
 Route::prefix('scores')->group(function () {
 
     Route::post('/store', [App\Http\Controllers\ScoreController::class, 'store'])->name('scores.store');
@@ -170,4 +175,7 @@ Route::prefix('super_judge_d')->group(function () {
 Route::get('/direct_pass/{event_id}/{stage_id}', [App\Http\Controllers\TournamentDrawController::class, 'directPassPage'])->name('tournament.direct_pass');
 Route::get('player/rankings', [App\Http\Controllers\SuperJudgeDecisionController::class, 'rankings'])->name('player.rankings');
 
+});
+Route::group(['middleware' => ['auth','mobileVerified']], function () {
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });

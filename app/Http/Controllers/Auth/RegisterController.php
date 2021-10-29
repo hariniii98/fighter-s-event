@@ -117,7 +117,7 @@ class RegisterController extends Controller
                 'password_confirmation' => ['required_with:password|same:password|min:6'],
             ]);
         }
-        
+
 
         else{
             return Validator::make($data, [
@@ -154,7 +154,7 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'mobile_number' => $data['mobile_number'],
             'user_image' => $user_image,
-            'official_licence_id' => $data['official_licence_id'],
+            'official_licence_id' => $data['role']=='official'?$data['official_licence_id']:'',
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
@@ -167,8 +167,7 @@ class RegisterController extends Controller
             $fighter->id_card_type = $data['id_card_type'];
             $fighter->id_card_number = $data['id_card_number'];
             /** Licence id */
-            
-            $fighter->licence_id = 1;
+            $fighter->licence_id = $this->licenceIdGeneration($user->id);
             $fighter->emergency_number = $data['mobile_number2'];
             $fighter->height = $data['height'];
             $fighter->weight = $data['weight'];
@@ -227,5 +226,14 @@ class RegisterController extends Controller
     public function checkRole(){
         $data['roles'] = Role::all();
         return view('check_role')->with($data);
+    }
+    public function licenceIdGeneration($user_id){
+
+
+         $prefix='AIMMAF-FIG-LIC-';
+         $number = intval('1000') + $user_id;
+         $licence=$prefix.''.sprintf('%04d', $number);
+
+         return $licence;
     }
 }

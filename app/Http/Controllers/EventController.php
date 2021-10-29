@@ -20,7 +20,7 @@ use App\Models\RefereeEventRing;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use PDF;
-use SPDF;
+use Barryvdh\Snappy\Facades\SnappyPdf as SPDF;
 use Illuminate\Support\Facades\DB;
 use App\Models\Settings;
 use App\Models\Role;
@@ -362,13 +362,14 @@ class EventController extends Controller
     }
 
     public function getIdCard($id){
-        $data['settings'] = Settings::find(1);
-        $data['user'] = User::find($id);
+        $settings = Settings::find(1);
+        $user = User::find($id);
         $role = DB::table('role_user')->where('user_id',$id)->first();
-        $data['role'] = Role::find($role->role_id);
-        return view('id_card')->with($data);
-        $pdf = PDF::loadView('id_card');
-        return $pdf->download('itsolutionstuff.pdf');
+        $role= Role::find($role->role_id);
+        $pdf = SPDF::loadView('id_card',compact('settings','user','role'));
+        return $pdf->stream('itsolutionstuff.pdf');
+       // dd();
+        //return $pdf->download('itsolutionstuff.pdf');
     }
 
     public function createWhatsappPushNotification(){
